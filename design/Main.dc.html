@@ -10,7 +10,7 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
-:root{--accent:#664B57}
+:root{--accent:#74425C}
 html{scroll-behavior:smooth}
 body{margin:0;background:#3E2A35}
 a{color:#D6C3B2}a:hover{color:#EAE3DA}
@@ -45,24 +45,24 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .val-next:hover{background-color:rgba(234,227,218,.12) !important}
 .val-next:active{transform:scale(.97)}
 .nav-toggle{display:none}
-.hero-shade{background:linear-gradient(to right,rgba(62,42,53,.94) 0%,rgba(62,42,53,.84) 26%,rgba(62,42,53,.6) 44%,rgba(62,42,53,.12) 58%,rgba(62,42,53,0) 76%),linear-gradient(to bottom,rgba(62,42,53,.3),rgba(62,42,53,0) 30%,rgba(62,42,53,0) 70%,rgba(62,42,53,.45))}
+.nav{background:transparent;transition:background-color 300ms ease,border-color 300ms ease}
+.nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(43,22,34,.9);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border-bottom-color:transparent !important}
+.hero-shade{background:linear-gradient(to right,#3A1C2B 0%,#3A1C2B 30%,rgba(58,28,43,.86) 39%,rgba(58,28,43,.42) 52%,rgba(58,28,43,.06) 68%,rgba(58,28,43,0) 80%),linear-gradient(to bottom,rgba(28,10,20,.62) 0%,rgba(28,10,20,0) 24%)}
 @media (max-width:900px){
 .nav-links{display:none !important}
 .nav-toggle{display:inline-flex !important}
 }
 @media (min-width:901px){.nav-panel{display:none !important}}
 @media (max-width:760px){
-.hero{margin-top:-78px;min-height:clamp(760px,200vw,860px) !important;align-items:flex-start !important}
-.hero-media{top:auto !important;height:50%}
-.hero-video{object-position:62% 50% !important}
-.hero-shade{background:linear-gradient(to bottom,#3E2A35 0%,rgba(62,42,53,.82) 16%,rgba(62,42,53,.3) 40%,rgba(62,42,53,.02) 64%,rgba(62,42,53,.3) 100%) !important}
-.hero-copy{padding:112px 24px 0 !important;gap:16px !important;max-width:none !important}
+.hero{min-height:clamp(820px,214vw,920px) !important;align-items:flex-start !important}
+.hero-media{left:0 !important;top:auto !important;bottom:0 !important;height:52%}
+.hero-video{object-position:60% 50% !important}
+.hero-shade{background:linear-gradient(to bottom,#3A1C2B 0%,#3A1C2B 44%,rgba(58,28,43,.84) 52%,rgba(58,28,43,.3) 64%,rgba(58,28,43,0) 78%) !important}
+.hero-silk{height:132px !important}
+.hero-copy{padding:118px 24px 0 !important;gap:16px !important;max-width:none !important}
 .hero-title{font-size:clamp(2.5rem,11.4vw,3.1rem) !important;line-height:1.08 !important}
-.hero-kicker{font-size:10.5px !important;letter-spacing:.12em !important}
-.hero-kicker span{display:none}
+.hero-kicker{font-size:10.5px !important;letter-spacing:.14em !important}
 .hero-cta .btn{width:100%;justify-content:center;box-sizing:border-box;min-height:58px !important}
-.nav{background:transparent !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:background-color 300ms ease}
-.nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(53,35,45,.9) !important;backdrop-filter:blur(18px) saturate(150%) !important;-webkit-backdrop-filter:blur(18px) saturate(150%) !important}
 .nav-cta{min-height:44px !important;padding:0 18px !important;font-size:13.5px !important}
 .svc-panel{display:none !important}
 .tabs{gap:10px !important}
@@ -88,13 +88,13 @@ html{scroll-behavior:auto}
 .btn,.val,.val-next,.tab,.acc-wrap,.acc-clip,.about-img,.thumb{transition:none !important}
 }
 @media (prefers-reduced-transparency:reduce){
-.nav{background:#35232D !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+.nav.scrolled{background:#2B1622 !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
 }
 </style>
 </helmet>
 <div style="--accent: {{accent}}; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; color: #EAE3DA; background: #3E2A35; line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: clip">
 
-<header class="nav" style="position: sticky; top: 0; z-index: 20; background: rgba(53,35,45,0.86); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%)">
+<header class="nav" style="position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(234,227,218,0.12)">
 <div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
 <a href="#top" aria-label="Nuance — naar boven" style="display: flex; align-items: center; min-height: 48px">
 <img src="/_blob/4fbd6d8e0ed5e6ccce173f9f3b031891" alt="Nuance" style="height: 54px; width: auto; display: block">
@@ -125,31 +125,40 @@ html{scroll-behavior:auto}
 
 <main id="top">
 
-<section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; min-height: clamp(560px, 50vw, 740px); background: #3E2A35">
-<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; overflow: hidden">
-<video class="hero-video" src="/_blob/df0cfbdce78da0fe451fc387e4b8374b" poster="/_blob/5c406d3029b07f8ca88c036d4d6fc3e6" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; display: block; pointer-events: none"></video>
+<section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; margin-top: -79px; min-height: clamp(680px, 58vw, 880px); background: #3A1C2B">
+<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; top: 0; bottom: 0; right: 0; left: 30%; overflow: hidden">
+<video class="hero-video" src="/_blob/df0cfbdce78da0fe451fc387e4b8374b" poster="/_blob/5c406d3029b07f8ca88c036d4d6fc3e6" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; display: block; pointer-events: none"></video>
 <canvas class="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
-<div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px"></div>
 </div>
-<div style="position: relative; z-index: 2; width: 100%; max-width: 1240px; margin: 0 auto; box-sizing: border-box">
-<div class="hero-copy" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; max-width: 620px; box-sizing: border-box; padding: clamp(56px, 7vw, 96px) 24px">
-<p class="rise hero-kicker" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2"><span aria-hidden="true" style="width: 28px; height: 1px; background: #D6C3B2"></span>Coaching &amp; begeleiding · Bilzen-Hoeselt</p>
-<h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.3rem); line-height: 1.1; letter-spacing: -0.012em; color: #EAE3DA; text-wrap: balance">Ruimte voor alle kanten van jezelf</h1>
-<p class="rise d2" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(1.2rem, 1.9vw, 1.55rem); color: #EAE3DA">Omdat het leven niet zwart-wit is</p>
-<p class="rise d2" style="margin: 0; max-width: 31em; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Soms heeft het leven meer vragen dan antwoorden. Bij Nuance vind je ruimte om stil te staan bij jouw verhaal, gevoelens en behoeften.</p>
+<div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px; z-index: 1"></div>
+<svg class="hero-silk" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; display: block; width: 100%; height: clamp(150px, 25vw, 370px)">
+<path d="M-20 20 C 140 90, 220 230, 480 296 C 640 336, 780 340, 900 322 L900 380 L-20 380 Z" fill="#2A1220"></path>
+<path d="M-20 120 C 120 210, 330 300, 620 322 C 860 340, 1100 270, 1460 250 L1460 380 L-20 380 Z" fill="#4C2339"></path>
+<path d="M-20 120 C 120 210, 330 300, 620 322 C 860 340, 1100 270, 1460 250" fill="none" stroke="rgba(226,182,190,0.4)" stroke-width="1.5" vector-effect="non-scaling-stroke"></path>
+<path d="M560 334 C 820 326, 1080 252, 1460 234 L1460 300 C 1140 286, 900 340, 620 350 Z" fill="#6E3C57"></path>
+<path d="M560 334 C 820 326, 1080 252, 1460 234" fill="none" stroke="rgba(240,204,206,0.45)" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+<path d="M-20 332 C 200 372, 480 362, 760 330 C 1020 300, 1220 258, 1460 270 L1460 380 L-20 380 Z" fill="#EFE0D5"></path>
+<path d="M-20 332 C 200 372, 480 362, 760 330 C 1020 300, 1220 258, 1460 270" fill="none" stroke="#FBEDE4" stroke-width="2.5" stroke-opacity="0.9" vector-effect="non-scaling-stroke"></path>
+</svg>
+<div style="position: relative; z-index: 3; width: 100%; max-width: 1240px; margin: 0 auto; box-sizing: border-box">
+<div class="hero-copy" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; max-width: 640px; box-sizing: border-box; padding: clamp(120px, 11vw, 170px) 24px clamp(150px, 19vw, 280px)">
+<p class="rise hero-kicker" style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #EAE3DA">Coaching &amp; begeleiding · Bilzen-Hoeselt</p>
+<h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.4rem); line-height: 1.1; letter-spacing: -0.012em; color: #F6EEE8; text-wrap: balance">Ruimte voor alle kanten van jezelf</h1>
+<p class="rise d2" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(1.2rem, 1.9vw, 1.6rem); color: #F6EEE8">Omdat het leven niet zwart-wit is</p>
+<p class="rise d2" style="margin: 0; max-width: 31em; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #EADCD6">Soms heeft het leven meer vragen dan antwoorden. Bij Nuance vind je ruimte om stil te staan bij jouw verhaal, gevoelens en behoeften.</p>
 <div class="rise d3 hero-cta" style="margin-top: 8px; align-self: stretch; display: flex">
-<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 28px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16); min-height: 56px">Vraag een intakegesprek aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 28px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16); min-height: 58px; padding: 0 34px; font-size: 16px">Vraag een intakegesprek aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
 </div>
 </div>
 </div>
 </section>
 
-<section aria-label="Waar Nuance voor staat" style="background: #35232D">
-<ul style="max-width: 1000px; margin: 0 auto; padding: clamp(28px, 4vw, 44px) 16px; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
-<li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(234,227,218,0.14)"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">Persoonlijke begeleiding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(234,227,218,0.14)"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8.5c-2 0-3.5 1.6-3.5 3.5S6 15.5 8 15.5c3 0 5-7 8-7 2 0 3.5 1.6 3.5 3.5s-1.5 3.5-3.5 3.5c-3 0-5-7-8-7z"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">In verbinding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"></path><path d="M5 19c3-5 6-8 10-10"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">In jouw tempo</span></li>
+<section aria-label="Waar Nuance voor staat" style="position: relative; z-index: 1; margin-top: -2px; background: linear-gradient(180deg, #EFE0D5 0%, #E4D3C5 62%, #D6C3B2 100%)">
+<ul style="max-width: 1100px; margin: 0 auto; padding: clamp(20px, 3vw, 40px) 16px clamp(36px, 5vw, 64px); list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(74,35,56,0.3)"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4C2339" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z"></path></svg><span style="font-size: clamp(13px, 1.6vw, 19px); font-weight: 500; line-height: 1.35; color: #3A1C2B">Persoonlijke begeleiding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(74,35,56,0.3)"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4C2339" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8.5c-2 0-3.5 1.6-3.5 3.5S6 15.5 8 15.5c3 0 5-7 8-7 2 0 3.5 1.6 3.5 3.5s-1.5 3.5-3.5 3.5c-3 0-5-7-8-7z"></path></svg><span style="font-size: clamp(13px, 1.6vw, 19px); font-weight: 500; line-height: 1.35; color: #3A1C2B">In verbinding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4C2339" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"></path><path d="M5 19c3-5 6-8 10-10"></path></svg><span style="font-size: clamp(13px, 1.6vw, 19px); font-weight: 500; line-height: 1.35; color: #3A1C2B">In jouw tempo</span></li>
 </ul>
 </section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #35232D"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #D6C3B2"></path></svg>
+
 <section id="praktijk" aria-label="De praktijk" style="background: #D6C3B2; color: #3E2A35; scroll-margin-top: 90px">
 <div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
 <div style="display: flex; flex-direction: column; gap: 20px">
@@ -362,7 +371,7 @@ html{scroll-behavior:auto}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#664B57","options":["#664B57","#7A4A5A","#A58572"]},"$preview":{"width":1440,"height":6950}}'>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#74425C","options":["#74425C","#664B57","#A58572"]},"$preview":{"width":1440,"height":6950}}'>
 class Component extends DCLogic {
 componentDidMount() {
 this.startHero();
@@ -421,7 +430,7 @@ if (this._framesOn) return; this._framesOn = true;
 const FW = 480, FH = 270, COLS = 5, PER = 25, N = 36, FPS = 8;
 const sheets = ['/_blob/3a26f3d3c96b40b019454dbd6741b57b', '/_blob/544904ce97ac633e8df13ff9dbd1c1b2'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
 const t0 = performance.now();
-const small = window.matchMedia('(max-width: 760px)').matches; const px = small ? 0.62 : 0.5, py = small ? 0.5 : 0.58;
+const small = window.matchMedia('(max-width: 760px)').matches; const px = small ? 0.6 : 0.7, py = 0.5;
 const frame = (ctx, i, alpha, w, h) => {
 const im = sheets[Math.floor(i / PER)]; const k = i % PER;
 const sx = (k % COLS) * FW, sy = Math.floor(k / COLS) * FH;
@@ -483,9 +492,9 @@ const MOMENTS = [
 const ab = st.ab || 0;
 const calm = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const auto = !st.picked && !calm;
-const acc = this.props.accent ?? '#664B57';
+const acc = this.props.accent ?? '#74425C';
 return {
-accent: this.props.accent ?? '#664B57',
+accent: this.props.accent ?? '#74425C',
 menuOpen: !!st.menuOpen,
 toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
 closeMenu: () => this.setState({ menuOpen: false }),
