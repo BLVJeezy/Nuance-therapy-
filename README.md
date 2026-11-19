@@ -39,7 +39,8 @@ Een eenvoudige "achterkant" waarin de klant alle teksten en foto's kan aanpassen
 - Openen: `/admin.html`, toegangscode `nuance`. Dit is geen echte beveiliging: de code houdt alleen toevallige bezoekers weg. De pagina staat niet in Google (`noindex` en `robots.txt`).
 - Teksten: rechtstreeks in de website klikken en typen. Diensten, waarden en de foto's bij "Over mij" hebben elk een eigen tabblad met velden.
 - Foto's: tabblad Foto's, per foto "Vervang". Foto's worden in de browser verkleind (max. 1800 px, JPEG).
-- Wijzigingen blijven op het toestel van de klant (localStorage) en gaan **niet** vanzelf online. De klant downloadt `content.js` en stuurt dat naar Solyn.
+- Werkt op telefoon als app: onderaan een tabbalk (Teksten, Foto's, Lijsten, Versturen), panelen schuiven omhoog. Installeerbaar via Chrome ("App installeren" / "Toevoegen aan startscherm") en op iPhone via Safari ("Zet op beginscherm"), dankzij `admin.webmanifest`, `admin-sw.js` en de iconen `assets/app-*.png`.
+- Wijzigingen blijven op het toestel van de klant (localStorage) en gaan **niet** vanzelf online. Met "Versturen" deelt de klant een bestand `nuance-wijzigingen.txt` (via WhatsApp, mail, ...) of downloadt ze `content.js`. De inhoud van beide is dezelfde: hernoem het `.txt`-bestand naar `content.js`.
 - Online zetten: het ontvangen `content.js` nakijken en in de root van deze repo vervangen. `index.html` laadt dat bestand en past de wijzigingen toe. Een leeg `content.js` (`window.NUANCE_CONTENT = {};`) is de site zoals ontworpen.
 - Let op: teksten zijn gekoppeld aan hun oorspronkelijke tekst. Wordt een tekst later in het ontwerp zelf veranderd, dan geldt een oude aanpassing voor die tekst niet meer.
 

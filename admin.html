@@ -2,82 +2,121 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#3E2A35">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nuance Beheer">
 <title>Nuance — Beheer</title>
+<link rel="manifest" href="admin.webmanifest">
 <link rel="icon" type="image/png" href="assets/mark.png">
+<link rel="apple-touch-icon" href="assets/app-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap">
 <script src="content.js"></script>
 <style>
-:root{--dk:#3E2A35;--dk2:#35232D;--panel:#4A3540;--mauve:#74425C;--sand:#D6C3B2;--ivory:#EAE3DA;--body:#DDD0C6;--mut:#BFAEA3;--line:rgba(234,227,218,.14);--ok:#9CC59A}
-*{box-sizing:border-box}
+:root{--dk:#3E2A35;--dk2:#35232D;--panel:#4A3540;--mauve:#74425C;--sand:#D6C3B2;--ivory:#EAE3DA;--body:#DDD0C6;--mut:#BFAEA3;--line:rgba(234,227,218,.14);--ok:#9CC59A;--nav:64px;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none !important}
 html,body{margin:0;height:100%}
-body{font:15px/1.55 Inter,'Helvetica Neue',Arial,sans-serif;background:var(--dk2);color:var(--ivory);-webkit-font-smoothing:antialiased}
+body{font:15px/1.55 Inter,'Helvetica Neue',Arial,sans-serif;background:var(--dk2);color:var(--ivory);-webkit-font-smoothing:antialiased;overscroll-behavior:none}
 button,input,textarea{font:inherit;color:inherit}
 h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--mauve);color:var(--ivory);cursor:pointer;font-weight:500;box-shadow:inset 0 0 0 1px rgba(234,227,218,.16);transition:transform 120ms ease,background-color 200ms ease}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;border:0;background:var(--mauve);color:var(--ivory);cursor:pointer;font-weight:500;text-decoration:none;box-shadow:inset 0 0 0 1px rgba(234,227,218,.16);transition:transform 120ms ease,background-color 200ms ease}
 .btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
-.btn.small{min-height:36px;padding:0 14px;font-size:13.5px}
-.btn:disabled{opacity:.45;cursor:default}
+.btn.light{background:var(--ivory);color:var(--dk)}
+.btn.small{min-height:40px;padding:0 16px;font-size:14px}
+.btn.wide{width:100%}
+.btn svg{width:18px;height:18px;flex:none}
 /* toegangsscherm */
 .gate{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(120% 80% at 20% 0%,#4C2339 0%,var(--dk2) 60%)}
-.gate form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px;background:var(--panel);padding:32px;border-radius:24px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
-.gate img{width:120px;height:auto;align-self:center;margin-bottom:8px}
-.gate p{margin:0;color:var(--body);font-size:14.5px}
+.gate form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px;background:var(--panel);padding:32px 28px;border-radius:24px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.gate img{width:118px;height:auto;align-self:center;margin-bottom:6px}
+.gate p{margin:0;color:var(--body);font-size:15px}
 .field{display:flex;flex-direction:column;gap:6px}
 .field span{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sand)}
-.field input,.field textarea{width:100%;border:0;border-radius:12px;background:var(--ivory);color:var(--dk);padding:11px 13px;outline:none}
-.field textarea{min-height:96px;resize:vertical}
-.field input:focus,.field textarea:focus{box-shadow:0 0 0 3px rgba(214,195,178,.45)}
-.err{color:#F0B4B4;font-size:13.5px;min-height:1.2em}
+.field input,.field textarea{width:100%;border:0;border-radius:14px;background:var(--ivory);color:var(--dk);padding:13px 14px;outline:none;font-size:16px}
+.field textarea{min-height:110px;resize:vertical;line-height:1.5}
+.field input:focus,.field textarea:focus{box-shadow:0 0 0 3px rgba(214,195,178,.5)}
+.err{color:#F0B4B4;font-size:14px;min-height:1.2em}
 /* werkruimte */
-.app{display:grid;grid-template-rows:auto 1fr;height:100%}
-.bar{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--dk);flex-wrap:wrap}
-.bar .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
-.bar .brand img{height:30px}
-.bar .brand b{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:19px}
+.app{display:grid;grid-template-rows:auto 1fr;height:100%;height:100dvh}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));border-bottom:1px solid var(--line);background:var(--dk)}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;min-width:0}
+.brand img{height:30px}
+.brand b{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:19px;white-space:nowrap}
 .seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--dk2);box-shadow:inset 0 0 0 1px var(--line)}
-.seg button{border:0;background:transparent;padding:0 14px;min-height:34px;border-radius:999px;cursor:pointer;font-size:13.5px;color:var(--mut)}
+.seg button{border:0;background:transparent;padding:0 14px;min-height:36px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--mut)}
 .seg button[aria-pressed="true"]{background:var(--ivory);color:var(--dk)}
-.status{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:8px}
-.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
-.work{display:grid;grid-template-columns:1fr 400px;min-height:0}
-.stage{position:relative;min-height:0;display:flex;justify-content:center;background:repeating-linear-gradient(45deg,#2E1D27 0 12px,#30202A 12px 24px)}
+.status{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;flex:none}
+.status.warn i{background:#E8A1A1}
+.work{display:grid;grid-template-columns:1fr 410px;grid-template-rows:auto 1fr;min-height:0}
+.stage{grid-row:1 / 3;position:relative;min-height:0;display:flex;justify-content:center;background:repeating-linear-gradient(45deg,#2E1D27 0 12px,#30202A 12px 24px)}
 .stage iframe{border:0;width:100%;height:100%;background:var(--dk);transition:width 320ms cubic-bezier(.2,.8,.2,1)}
 .stage.phone iframe{width:390px;box-shadow:0 0 0 1px var(--line),0 30px 60px -30px rgba(0,0,0,.7)}
-.side{min-height:0;overflow:auto;border-left:1px solid var(--line);background:var(--dk)}
-.tabs{position:sticky;top:0;z-index:2;display:flex;gap:4px;padding:10px;background:var(--dk);border-bottom:1px solid var(--line);overflow-x:auto}
-.tabs button{flex:none;border:0;background:transparent;color:var(--mut);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:500}
-.tabs button[aria-selected="true"]{background:var(--panel);color:var(--ivory)}
+.nav{grid-column:2;display:flex;gap:4px;padding:10px;background:var(--dk);border-left:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:transparent;color:var(--mut);padding:8px 4px;border-radius:12px;cursor:pointer;font-size:12.5px;font-weight:500;position:relative}
+.nav button svg{width:22px;height:22px}
+.nav button[aria-selected="true"]{background:var(--panel);color:var(--ivory)}
+.badge{position:absolute;top:2px;right:calc(50% - 22px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--sand);color:var(--dk);font-size:11px;font-weight:600;display:grid;place-items:center}
+.badge[data-n="0"]{display:none}
+.side{grid-column:2;min-height:0;overflow:auto;border-left:1px solid var(--line);background:var(--dk);-webkit-overflow-scrolling:touch}
+.sheet-head{display:none}
 .pane{padding:18px;display:none;flex-direction:column;gap:16px}
 .pane.on{display:flex}
-.pane h2{font-size:22px}
-.hint{margin:0;color:var(--body);font-size:14px}
+.pane h2{font-size:23px}
+.hint{margin:0;color:var(--body);font-size:14.5px}
 .card{background:var(--panel);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .card h3{font-size:18px}
 .card .meta{font-size:12px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.photo{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center}
-.photo img{width:88px;height:66px;object-fit:cover;border-radius:10px;background:var(--dk2)}
+.photo{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+.photo img{width:96px;height:72px;object-fit:cover;border-radius:12px;background:var(--dk2)}
+.photo img.contain{object-fit:contain;padding:8px}
 .photo .acts{display:flex;gap:8px;flex-wrap:wrap}
-.photo small{display:block;color:var(--mut);font-size:12.5px;line-height:1.4;margin-bottom:6px}
-.chg{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--body);border-top:1px solid var(--line);padding-top:10px}
+.photo small{display:block;color:var(--body);font-size:13px;line-height:1.4;margin-bottom:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.chg{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:14px;color:var(--body);border-top:1px solid var(--line);padding-top:10px}
 .chg:first-child{border-top:0;padding-top:0}
 .chg span{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--sand);color:var(--dk);font-size:11.5px;font-weight:600;margin-left:6px}
-.steps{margin:0;padding-left:20px;color:var(--body);font-size:14px;display:flex;flex-direction:column;gap:6px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--ivory);color:var(--dk);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;pointer-events:none;transition:opacity 200ms ease,transform 300ms cubic-bezier(.2,.8,.2,1);z-index:50}
+.steps{margin:0;padding-left:20px;color:var(--body);font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.sub{display:flex;padding:3px;border-radius:14px;background:var(--dk2);box-shadow:inset 0 0 0 1px var(--line)}
+.sub button{flex:1;border:0;background:transparent;min-height:40px;border-radius:11px;color:var(--mut);font-size:14px;font-weight:500;cursor:pointer}
+.sub button[aria-pressed="true"]{background:var(--ivory);color:var(--dk)}
+.coach{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:3;display:flex;align-items:center;gap:10px;max-width:calc(100% - 24px);background:rgba(234,227,218,.96);color:var(--dk);padding:10px 12px 10px 16px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 14px 30px -14px rgba(0,0,0,.6);white-space:nowrap}
+.coach button{border:0;background:var(--dk);color:var(--ivory);border-radius:999px;min-height:32px;padding:0 12px;font-size:13px;cursor:pointer}
+.install{display:flex;flex-direction:column;gap:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--ivory);color:var(--dk);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;pointer-events:none;transition:opacity 200ms ease,transform 300ms cubic-bezier(.2,.8,.2,1);z-index:60;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.scrim{display:none}
+/* telefoon: volledige preview, onderaan een tabbalk en een paneel dat omhoog schuift */
 @media (max-width:900px){
-  .work{grid-template-columns:1fr;grid-template-rows:62vh auto}
-  .side{border-left:0;border-top:1px solid var(--line);overflow:visible}
-  .stage.phone iframe{width:100%}
-  .bar .seg{display:none}
-  .app{height:auto}
+  .bar{padding:8px 14px;padding-top:max(8px,env(safe-area-inset-top))}
+  .bar .seg,.bar .site-link{display:none}
+  .brand b{font-size:17px}
+  .status span{display:none}
+  .work{grid-template-columns:1fr;grid-template-rows:1fr}
+  .stage{grid-row:1;padding-bottom:calc(var(--nav) + var(--safe))}
+  .stage.phone iframe{width:100%;box-shadow:none}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;border:0;border-top:1px solid var(--line);padding:6px 8px calc(6px + var(--safe));height:calc(var(--nav) + var(--safe));background:rgba(53,35,45,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .nav button{font-size:11.5px;padding:6px 2px}
+  .side{position:fixed;left:0;right:0;bottom:calc(var(--nav) + var(--safe));z-index:35;max-height:min(78dvh,calc(100dvh - 120px));border:0;border-radius:22px 22px 0 0;box-shadow:0 -24px 50px -20px rgba(0,0,0,.65);transform:translateY(calc(100% + var(--nav) + var(--safe) + 20px));transition:transform 380ms cubic-bezier(.2,.8,.2,1);overscroll-behavior:contain}
+  .side.open{transform:none}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:2;padding:10px 18px 8px;background:var(--dk);border-radius:22px 22px 0 0}
+  .sheet-head::before{content:"";position:absolute;left:50%;top:6px;width:40px;height:4px;border-radius:4px;background:rgba(234,227,218,.25);transform:translateX(-50%)}
+  .sheet-head b{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:20px;margin-top:8px}
+  .sheet-head button{margin-top:8px}
+  .pane{padding:4px 18px 22px}
+  .pane h2{display:none}
+  .scrim{display:block;position:fixed;inset:0;bottom:calc(var(--nav) + var(--safe));z-index:30;background:rgba(20,8,14,.45);opacity:0;pointer-events:none;transition:opacity 300ms ease}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .toast{bottom:calc(var(--nav) + var(--safe) + 14px)}
+  .coach{top:10px}
 }
+@media (min-width:901px){.only-phone{display:none !important}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 </head>
@@ -88,7 +127,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     <img src="assets/logo-licht.png" alt="Nuance">
     <h1 style="font-size:28px">Beheer</h1>
     <p>Hier pas je de teksten en foto's van de website aan. Je wijzigingen gaan pas online nadat Solyn ze heeft nagekeken.</p>
-    <label class="field"><span>Toegangscode</span><input id="code" type="password" inputmode="text" autocomplete="off" required></label>
+    <label class="field"><span>Toegangscode</span><input id="code" type="password" autocomplete="off" autocapitalize="none" required></label>
     <div class="err" id="gateErr" role="alert"></div>
     <button class="btn" type="submit">Openen</button>
   </form>
@@ -101,30 +140,33 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       <button type="button" data-view="desk" aria-pressed="true">Computer</button>
       <button type="button" data-view="phone" aria-pressed="false">Telefoon</button>
     </div>
-    <div class="status" aria-live="polite"><i></i><span id="status">Alles is bewaard</span></div>
-    <a class="btn ghost small" href="index.html" target="_blank" rel="noopener">Bekijk de site</a>
+    <div class="status" id="statusBox" aria-live="polite"><i></i><span id="status">Alles is bewaard</span></div>
+    <a class="btn ghost small site-link" href="index.html" target="_blank" rel="noopener">Bekijk de site</a>
   </header>
   <div class="work">
-    <div class="stage" id="stage"><iframe id="site" title="Voorbeeld van de website" src="index.html?edit=1"></iframe></div>
-    <aside class="side">
-      <nav class="tabs" role="tablist">
-        <button role="tab" aria-selected="true" data-tab="teksten">Teksten</button>
-        <button role="tab" aria-selected="false" data-tab="fotos">Foto's</button>
-        <button role="tab" aria-selected="false" data-tab="diensten">Diensten</button>
-        <button role="tab" aria-selected="false" data-tab="waarden">Waarden</button>
-        <button role="tab" aria-selected="false" data-tab="over">Over mij</button>
-        <button role="tab" aria-selected="false" data-tab="klaar">Klaar <span class="badge" id="count">0</span></button>
-      </nav>
+    <div class="stage" id="stage">
+      <div class="coach" id="coach" hidden><span>Tik op een tekst om te typen</span><button type="button" id="coachOk">Oké</button></div>
+      <iframe id="site" title="Voorbeeld van de website" src="index.html?edit=1"></iframe>
+    </div>
+    <nav class="nav" role="tablist" aria-label="Beheer">
+      <button role="tab" aria-selected="true" data-tab="teksten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Teksten</button>
+      <button role="tab" aria-selected="false" data-tab="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Foto's</button>
+      <button role="tab" aria-selected="false" data-tab="lijsten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Lijsten</button>
+      <button role="tab" aria-selected="false" data-tab="klaar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Versturen<span class="badge" id="count" data-n="0">0</span></button>
+    </nav>
+    <div class="scrim" id="scrim"></div>
+    <aside class="side" id="side">
+      <div class="sheet-head"><b id="sheetTitle">Teksten</b><button class="btn light small" type="button" id="sheetClose">Sluiten</button></div>
 
       <section class="pane on" data-pane="teksten">
         <h2>Teksten aanpassen</h2>
-        <p class="hint">Klik in de website links op een tekst en typ gewoon. Een gestippelde lijn toont wat je kunt aanpassen. Alles wordt meteen bewaard op dit toestel.</p>
+        <p class="hint">Tik of klik in de website op een tekst en typ gewoon. Een gestippelde lijn toont wat je kunt aanpassen. Alles wordt meteen bewaard.</p>
         <div class="card">
           <div class="meta">Tips</div>
           <ul class="steps">
             <li>Enter maakt een nieuwe regel.</li>
             <li>Geplakte tekst verliest automatisch de opmaak.</li>
-            <li>Lijsten zoals de diensten en de waarden pas je aan in hun eigen tabblad.</li>
+            <li>Diensten, waarden en de foto's bij "Over mij" pas je aan onder <b>Lijsten</b>.</li>
           </ul>
         </div>
         <div class="card"><div class="meta">Aangepaste teksten</div><div id="textList"></div></div>
@@ -132,42 +174,39 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 
       <section class="pane" data-pane="fotos">
         <h2>Foto's</h2>
-        <p class="hint">Kies een foto om te vervangen. Grote foto's worden automatisch verkleind, zodat de site snel blijft.</p>
+        <p class="hint">Kies een foto om te vervangen: neem er een met je camera of kies er een uit je galerij. Grote foto's worden automatisch verkleind.</p>
         <div id="photoList" style="display:flex;flex-direction:column;gap:12px"></div>
       </section>
 
-      <section class="pane" data-pane="diensten">
-        <h2>Diensten</h2>
-        <p class="hint">Pas de velden aan; de website links verandert mee terwijl je typt.</p>
-        <div id="svcList" style="display:flex;flex-direction:column;gap:12px"></div>
-      </section>
-
-      <section class="pane" data-pane="waarden">
-        <h2>Waarden</h2>
-        <p class="hint">De zes waarden vormen samen het woord NUANCE. Laat elke naam beginnen met dezelfde letter.</p>
-        <div id="valList" style="display:flex;flex-direction:column;gap:12px"></div>
-      </section>
-
-      <section class="pane" data-pane="over">
-        <h2>Over mij · foto's</h2>
-        <p class="hint">De drie foto's naast je verhaal, met het korte onderschrift dat erbij hoort.</p>
-        <div id="momList" style="display:flex;flex-direction:column;gap:12px"></div>
+      <section class="pane" data-pane="lijsten">
+        <h2>Lijsten</h2>
+        <div class="sub" role="group" aria-label="Lijst">
+          <button type="button" data-list="diensten" aria-pressed="true">Diensten</button>
+          <button type="button" data-list="waarden" aria-pressed="false">Waarden</button>
+          <button type="button" data-list="over" aria-pressed="false">Over mij</button>
+        </div>
+        <p class="hint" id="listHint">De website verandert mee terwijl je typt.</p>
+        <div data-listbox="diensten" id="svcList" style="display:flex;flex-direction:column;gap:12px"></div>
+        <div data-listbox="waarden" id="valList" style="display:flex;flex-direction:column;gap:12px" hidden></div>
+        <div data-listbox="over" id="momList" style="display:flex;flex-direction:column;gap:12px" hidden></div>
       </section>
 
       <section class="pane" data-pane="klaar">
         <h2>Klaar met aanpassen?</h2>
-        <p class="hint">Je wijzigingen staan nu alleen op dit toestel. Zo zet je ze online:</p>
-        <ol class="steps">
-          <li>Download het bestand met je wijzigingen.</li>
-          <li>Stuur het naar Jason (Solyn).</li>
-          <li>Hij kijkt alles na en zet het online.</li>
-        </ol>
-        <button class="btn" type="button" id="dl">Download mijn wijzigingen</button>
+        <p class="hint">Je wijzigingen staan nu alleen op dit toestel. Stuur ze naar Jason (Solyn): hij kijkt alles na en zet het online.</p>
         <div class="card"><div class="meta">Overzicht</div><div id="summary" class="hint"></div></div>
+        <button class="btn wide" type="button" id="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Versturen via WhatsApp of mail</button>
+        <button class="btn ghost wide" type="button" id="dl">Download als bestand</button>
+        <div class="card install" id="installCard">
+          <div class="meta">Als app op je telefoon of computer</div>
+          <p class="hint" id="installText">Zet het beheer als app op je beginscherm, dan open je het met één tik.</p>
+          <button class="btn light small" type="button" id="installBtn" hidden>Installeer als app</button>
+        </div>
         <div class="card">
           <div class="meta">Andere acties</div>
-          <label class="btn ghost small" style="cursor:pointer">Bestand met wijzigingen openen<input type="file" id="imp" accept=".js,.json" hidden></label>
+          <label class="btn ghost small" style="cursor:pointer">Bestand met wijzigingen openen<input type="file" id="imp" accept=".js,.json,.txt,text/plain,application/json,text/javascript" hidden></label>
           <button class="btn ghost small" type="button" id="reset">Alles terugzetten naar het ontwerp</button>
+          <a class="btn ghost small only-phone" href="index.html" target="_blank" rel="noopener">Bekijk de site</a>
         </div>
       </section>
     </aside>
@@ -182,41 +221,69 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var frame = $('#site'), draft, base = {}, origText = {}, origImg = {};
+  var phone = window.matchMedia('(max-width: 900px)');
+  var TITLES = { teksten: 'Teksten', fotos: "Foto's", lijsten: 'Lijsten', klaar: 'Versturen' };
 
   function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
   function norm(d) { d = d || {}; d.text = d.text || {}; d.img = d.img || {}; d.data = d.data || {}; ['services', 'values', 'moments'].forEach(function (k) { d.data[k] = d.data[k] || []; }); return d; }
   function load() { try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) return norm(d); } catch (e) {} return norm(clone(window.NUANCE_CONTENT)); }
-  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2200); }
+  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2600); }
   function save(rerender) {
-    try { localStorage.setItem(KEY, JSON.stringify(draft)); $('#status').textContent = 'Alles is bewaard'; }
-    catch (e) { $('#status').textContent = 'Niet bewaard: te veel of te grote foto\u2019s'; toast('Dit toestel heeft geen plek meer. Download je wijzigingen of gebruik kleinere foto\u2019s.'); }
+    try { localStorage.setItem(KEY, JSON.stringify(draft)); $('#status').textContent = 'Alles is bewaard'; $('#statusBox').classList.remove('warn'); }
+    catch (e) { $('#status').textContent = 'Niet bewaard'; $('#statusBox').classList.add('warn'); toast('Geen plek meer op dit toestel. Verstuur je wijzigingen of gebruik minder foto’s.'); }
     counts();
     var w = frame.contentWindow;
     if (w) { w.NUANCE_CONTENT = draft; if (rerender && w.__nuanceRender) w.__nuanceRender(); }
   }
 
   /* ---------- toegang (geen echte beveiliging: houdt alleen toevallige bezoekers weg) ---------- */
-  function open() { $('#gate').hidden = true; $('#app').hidden = false; draft = load(); }
-  if (sessionStorage.getItem('nuance-admin') === '1') open();
+  function open() {
+    $('#gate').hidden = true; $('#app').hidden = false; draft = load();
+    try { if (!localStorage.getItem('nuance-admin-coach')) $('#coach').hidden = false; } catch (e) {}
+  }
+  try { if (localStorage.getItem('nuance-admin-ok') === '1') open(); } catch (e) {}
   $('#gateForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    if ($('#code').value.trim().toLowerCase() === CODE) { sessionStorage.setItem('nuance-admin', '1'); open(); if (frame.contentDocument && frame.contentDocument.readyState === 'complete') setup(); }
-    else { $('#gateErr').textContent = 'Die code klopt niet.'; $('#code').select(); }
+    if ($('#code').value.trim().toLowerCase() === CODE) {
+      try { localStorage.setItem('nuance-admin-ok', '1'); } catch (x) {}
+      open(); if (frame.contentDocument && frame.contentDocument.readyState === 'complete') setup();
+    } else { $('#gateErr').textContent = 'Die code klopt niet.'; $('#code').select(); }
   });
+  $('#coachOk').addEventListener('click', function () { $('#coach').hidden = true; try { localStorage.setItem('nuance-admin-coach', '1'); } catch (e) {} });
 
-  /* ---------- weergave ---------- */
+  /* ---------- weergave en navigatie ---------- */
   $$('[data-view]').forEach(function (b) {
     b.addEventListener('click', function () {
       $$('[data-view]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
       $('#stage').classList.toggle('phone', b.getAttribute('data-view') === 'phone');
     });
   });
+  function sheet(openIt) { $('#side').classList.toggle('open', openIt); $('#scrim').classList.toggle('on', openIt); }
+  function show(tab) {
+    $$('[data-tab]').forEach(function (x) { x.setAttribute('aria-selected', String(x.getAttribute('data-tab') === tab)); });
+    $$('[data-pane]').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === tab); });
+    $('#sheetTitle').textContent = TITLES[tab];
+    if (tab === 'fotos') photos();
+    if (tab === 'klaar') counts();
+    $('#side').scrollTop = 0;
+  }
   $$('[data-tab]').forEach(function (b) {
     b.addEventListener('click', function () {
-      $$('[data-tab]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
-      $$('[data-pane]').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === b.getAttribute('data-tab')); });
-      if (b.getAttribute('data-tab') === 'fotos') photos();
-      if (b.getAttribute('data-tab') === 'klaar') counts();
+      var tab = b.getAttribute('data-tab'), was = b.getAttribute('aria-selected') === 'true';
+      if (phone.matches) {
+        if (was && $('#side').classList.contains('open')) { sheet(false); return; }
+        show(tab); sheet(true);
+      } else show(tab);
+    });
+  });
+  $('#sheetClose').addEventListener('click', function () { sheet(false); });
+  $('#scrim').addEventListener('click', function () { sheet(false); });
+  $$('[data-list]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = b.getAttribute('data-list');
+      $$('[data-list]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      $$('[data-listbox]').forEach(function (x) { x.hidden = x.getAttribute('data-listbox') !== l; });
+      $('#listHint').textContent = l === 'waarden' ? 'De zes waarden vormen samen het woord NUANCE. Laat elke naam met dezelfde letter beginnen.' : l === 'over' ? 'De drie foto’s naast je verhaal, met hun onderschrift.' : 'De website verandert mee terwijl je typt.';
     });
   });
 
@@ -226,7 +293,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     var doc = frame.contentDocument; if (!doc || !draft) return;
     if (!doc.getElementById('nuance-edit-style')) {
       var st = doc.createElement('style'); st.id = 'nuance-edit-style';
-      st.textContent = '[data-nedit]{outline:1px dashed rgba(214,195,178,.45);outline-offset:3px;border-radius:3px;cursor:text;transition:outline-color .2s}[data-nedit]:hover{outline-color:rgba(214,195,178,.95)}[data-nedit]:focus{outline:2px solid #D6C3B2;outline-offset:3px}.g-track{animation-play-state:paused !important}';
+      st.textContent = '[data-nedit]{outline:1px dashed rgba(214,195,178,.5);outline-offset:3px;border-radius:3px;cursor:text;-webkit-user-select:text;user-select:text}[data-nedit]:hover{outline-color:rgba(214,195,178,.95)}[data-nedit]:focus{outline:2px solid #D6C3B2;outline-offset:3px}.g-track{animation-play-state:paused !important}';
       doc.head.appendChild(st);
     }
     $$('[data-ek]', doc).forEach(function (el) {
@@ -247,6 +314,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       $$('[data-ek="' + el.getAttribute('data-ek') + '"]', doc).forEach(function (o) { if (o !== el) o.innerHTML = html; });
       save(false); texts();
     }, true);
+    doc.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('[data-nedit]')) { $('#coach').hidden = true; if (phone.matches) sheet(false); } }, true);
     doc.addEventListener('paste', function (e) {
       var el = e.target.closest && e.target.closest('[data-nedit]'); if (!el) return;
       e.preventDefault(); var t = (e.clipboardData || w.clipboardData).getData('text/plain');
@@ -271,10 +339,12 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     texts(); lists(); counts();
   }
   frame.addEventListener('load', setup);
+  function reloadFrame() { try { frame.contentWindow.location.reload(); } catch (e) { frame.src = frame.src; } }
 
   /* ---------- foto's ---------- */
   function readImage(file, cb) {
-    if (!file || !/^image\//.test(file.type)) { toast('Kies een foto (jpg, png of webp).'); return; }
+    if (!file) return;
+    if (!/^image\//.test(file.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(file.name)) { toast('Kies een foto (jpg, png of webp).'); return; }
     var url = URL.createObjectURL(file), img = new Image();
     img.onload = function () {
       var png = file.type === 'image/png', max = png ? 1200 : 1800, s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
@@ -282,14 +352,18 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
       cb(c.toDataURL(png ? 'image/png' : 'image/jpeg', 0.82));
     };
-    img.onerror = function () { toast('Deze foto kan niet gelezen worden.'); };
+    img.onerror = function () { URL.revokeObjectURL(url); toast('Deze foto kan niet gelezen worden. Probeer een jpg of png.'); };
     img.src = url;
   }
-  function picker(onPick) { var i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.onchange = function () { readImage(i.files[0], onPick); }; i.click(); }
+  function picker(onPick) {
+    var i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.style.display = 'none';
+    i.onchange = function () { readImage(i.files[0], onPick); i.remove(); };
+    document.body.appendChild(i); i.click();
+  }
   function photoRow(src, label, onPick, onReset, changed) {
     var row = document.createElement('div'); row.className = 'photo';
     row.innerHTML = '<img alt=""><div><small></small><div class="acts"><button class="btn small" type="button">Vervang</button></div></div>';
-    $('img', row).src = src; $('small', row).textContent = label || 'Foto';
+    $('img', row).src = src; if (/\.png($|\?)|image\/png/.test(src)) $('img', row).classList.add('contain'); $('small', row).textContent = label || 'Foto';
     $('button', row).addEventListener('click', function () { picker(onPick); });
     if (changed) { var r = document.createElement('button'); r.className = 'btn ghost small'; r.type = 'button'; r.textContent = 'Herstel'; r.addEventListener('click', onReset); $('.acts', row).appendChild(r); }
     return row;
@@ -304,17 +378,17 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       if (/logo|mark/.test(origImg[k] || '')) label = label || 'Logo';
       var card = document.createElement('div'); card.className = 'card';
       card.appendChild(photoRow(src, label, function (data) { draft.img[k] = data; save(true); photos(); toast('Foto vervangen'); },
-        function () { delete draft.img[k]; save(false); frame.contentWindow.location.reload(); }, !!draft.img[k]));
+        function () { delete draft.img[k]; save(false); reloadFrame(); setTimeout(photos, 900); }, !!draft.img[k]));
       box.appendChild(card);
     });
-    if (!box.children.length) box.innerHTML = '<p class="hint">Geen foto’s gevonden.</p>';
+    if (!box.children.length) box.innerHTML = '<p class="hint">Even geduld, de website laadt nog.</p>';
   }
 
   /* ---------- lijsten ---------- */
-  function fieldEl(label, val, ph, multi, onIn) {
+  function fieldEl(label, val, multi, onIn) {
     var l = document.createElement('label'); l.className = 'field';
-    l.innerHTML = '<span></span>' + (multi ? '<textarea></textarea>' : '<input type="text">');
-    $('span', l).textContent = label; var f = $(multi ? 'textarea' : 'input', l); f.value = val || ''; f.placeholder = ph || '';
+    l.innerHTML = '<span></span>' + (multi ? '<textarea></textarea>' : '<input type="text" enterkeyhint="done">');
+    $('span', l).textContent = label; var f = $(multi ? 'textarea' : 'input', l); f.value = val || '';
     f.addEventListener('input', function () { onIn(f.value.trim()); });
     return l;
   }
@@ -324,7 +398,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     (base[name] || []).forEach(function (orig, i) {
       var cur = draft.data[name][i] || {}, card = document.createElement('div'); card.className = 'card';
       var h = document.createElement('h3'); h.textContent = title(orig, i); card.appendChild(h);
-      fields.forEach(function (f) { card.appendChild(fieldEl(f[1], cur[f[0]] || orig[f[0]], '', f[2], function (v) { setData(name, i, f[0], v === String(orig[f[0]] || '').trim() ? '' : v); })); });
+      fields.forEach(function (f) { card.appendChild(fieldEl(f[1], cur[f[0]] || orig[f[0]], f[2], function (v) { setData(name, i, f[0], v === String(orig[f[0]] || '').trim() ? '' : v); })); });
       if (photo) card.appendChild(photoRow(cur.img || orig.img, 'Foto', function (d) { setData(name, i, 'img', d); list(boxId, name, fields, title, photo); toast('Foto vervangen'); },
         function () { setData(name, i, 'img', ''); list(boxId, name, fields, title, photo); }, !!cur.img));
       box.appendChild(card);
@@ -346,38 +420,66 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       var row = document.createElement('div'); row.className = 'chg';
       row.innerHTML = '<span></span><button class="btn ghost small" type="button">Herstel</button>';
       $('span', row).textContent = strip(draft.text[k]) || '(leeg)';
-      $('button', row).addEventListener('click', function () { delete draft.text[k]; save(false); frame.contentWindow.location.reload(); texts(); });
+      $('button', row).addEventListener('click', function () { delete draft.text[k]; save(false); reloadFrame(); texts(); });
       box.appendChild(row);
     });
   }
+  function total() { var d = 0; ['services', 'values', 'moments'].forEach(function (k) { draft.data[k].forEach(function (o) { d += Object.keys(o || {}).length; }); }); return { t: Object.keys(draft.text).length, p: Object.keys(draft.img).length, d: d }; }
   function counts() {
     if (!draft) return;
-    var t = Object.keys(draft.text).length, p = Object.keys(draft.img).length, d = 0;
-    ['services', 'values', 'moments'].forEach(function (k) { draft.data[k].forEach(function (o) { d += Object.keys(o || {}).length; }); });
-    $('#count').textContent = t + p + d;
-    $('#summary').textContent = t + ' tekst(en), ' + p + ' foto(’s) en ' + d + ' veld(en) in de lijsten aangepast.';
+    var n = total(), sum = n.t + n.p + n.d;
+    $('#count').textContent = sum; $('#count').setAttribute('data-n', String(sum));
+    $('#summary').textContent = sum ? (n.t + ' tekst(en), ' + n.p + ' foto(’s) en ' + n.d + ' veld(en) in de lijsten aangepast.') : 'Nog niets aangepast.';
   }
 
-  /* ---------- downloaden, openen, terugzetten ---------- */
-  $('#dl').addEventListener('click', function () {
-    var stamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
-    var js = '/* Wijzigingen uit de beheerpagina van Nuance, ' + stamp + '. */\nwindow.NUANCE_CONTENT = ' + JSON.stringify(draft, null, 1) + ';\n';
-    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([js], { type: 'text/javascript' }));
-    a.download = 'content.js'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-    toast('Bestand gedownload. Stuur het naar Jason.');
+  /* ---------- versturen, downloaden, openen, terugzetten ---------- */
+  function fileText() {
+    var stamp = new Date().toLocaleString('nl-BE');
+    return '/* Wijzigingen uit de beheerpagina van Nuance, ' + stamp + '. Plaats dit als content.js in de website. */\nwindow.NUANCE_CONTENT = ' + JSON.stringify(draft, null, 1) + ';\n';
+  }
+  function download(name, type) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([fileText()], { type: type }));
+    a.download = name; a.rel = 'noopener'; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+  function empty() { var n = total(); return !(n.t + n.p + n.d); }
+  $('#share').addEventListener('click', function () {
+    if (empty()) { toast('Er is nog niets aangepast.'); return; }
+    var file = new File([fileText()], 'nuance-wijzigingen.txt', { type: 'text/plain' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: 'Wijzigingen website Nuance', text: 'Hier zijn mijn wijzigingen voor de website.' })
+        .then(function () { toast('Verstuurd. Bedankt!'); })
+        .catch(function (e) { if (e && e.name !== 'AbortError') { download('nuance-wijzigingen.txt', 'text/plain'); toast('Bestand gedownload. Stuur het naar Jason.'); } });
+    } else { download('nuance-wijzigingen.txt', 'text/plain'); toast('Bestand gedownload. Stuur het naar Jason via WhatsApp of mail.'); }
   });
+  $('#dl').addEventListener('click', function () { if (empty()) { toast('Er is nog niets aangepast.'); return; } download('content.js', 'text/javascript'); toast('Bestand gedownload. Stuur het naar Jason.'); });
   $('#imp').addEventListener('change', function () {
     var f = this.files[0]; if (!f) return; var r = new FileReader();
     r.onload = function () {
-      try { var txt = String(r.result), j = txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1); draft = norm(JSON.parse(j)); save(false); frame.contentWindow.location.reload(); toast('Wijzigingen geopend'); }
+      try { var txt = String(r.result), j = txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1); draft = norm(JSON.parse(j)); save(false); reloadFrame(); toast('Wijzigingen geopend'); }
       catch (e) { toast('Dit bestand kan niet gelezen worden.'); }
     };
     r.readAsText(f); this.value = '';
   });
   $('#reset').addEventListener('click', function () {
     if (!confirm('Alle wijzigingen op dit toestel wissen en terugkeren naar het ontwerp?')) return;
-    draft = norm({}); localStorage.removeItem(KEY); save(false); frame.contentWindow.location.reload(); toast('Alles teruggezet');
+    draft = norm({}); try { localStorage.removeItem(KEY); } catch (e) {} save(false); reloadFrame(); texts(); toast('Alles teruggezet');
   });
+
+  /* ---------- installeren als app ---------- */
+  var deferred = null;
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (standalone) { $('#installCard').hidden = true; }
+  else if (ios) { $('#installText').innerHTML = 'Op iPhone: open deze pagina in Safari, tik onderaan op <b>Deel</b> (het vierkantje met de pijl) en kies <b>Zet op beginscherm</b>.'; }
+  else { $('#installText').textContent = 'Zet het beheer als app op je telefoon of computer, dan open je het met één tik. In Chrome kan dat ook via het menu (⋮) en dan “App installeren” of “Toevoegen aan startscherm”.'; }
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('#installBtn').hidden = false; });
+  $('#installBtn').addEventListener('click', function () {
+    if (!deferred) return; deferred.prompt();
+    deferred.userChoice.then(function (c) { if (c.outcome === 'accepted') { $('#installCard').hidden = true; toast('Geïnstalleerd'); } deferred = null; $('#installBtn').hidden = true; });
+  });
+  window.addEventListener('appinstalled', function () { $('#installCard').hidden = true; });
+  if ('serviceWorker' in navigator) window.addEventListener('load', function () { navigator.serviceWorker.register('admin-sw.js', { scope: './' }).catch(function () {}); });
 })();
 </script>
 </body>
