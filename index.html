@@ -50,17 +50,18 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .val-next:hover{background-color:rgba(234,227,218,.12) !important}
 .val-next:active{transform:scale(.97)}
 .nav-toggle{display:none}
-.hero-shade{background:linear-gradient(to right,#3E2A35 0%,rgba(62,42,53,.88) 14%,rgba(62,42,53,.3) 48%,rgba(62,42,53,.1) 100%),linear-gradient(to bottom,rgba(62,42,53,.22),rgba(62,42,53,.04) 40%,rgba(62,42,53,.4))}
+.hero-shade{background:linear-gradient(to right,rgba(62,42,53,.94) 0%,rgba(62,42,53,.84) 26%,rgba(62,42,53,.6) 44%,rgba(62,42,53,.12) 58%,rgba(62,42,53,0) 76%),linear-gradient(to bottom,rgba(62,42,53,.3),rgba(62,42,53,0) 30%,rgba(62,42,53,0) 70%,rgba(62,42,53,.45))}
 @media (max-width:900px){
 .nav-links{display:none !important}
 .nav-toggle{display:inline-flex !important}
 }
 @media (min-width:901px){.nav-panel{display:none !important}}
 @media (max-width:760px){
-.hero{margin-top:-78px;min-height:clamp(680px,180vw,820px) !important;align-items:flex-end !important}
-.hero-media{left:0 !important;width:100% !important;bottom:auto !important;height:62%}
-.hero-shade{background:linear-gradient(to bottom,rgba(62,42,53,.55) 0%,rgba(62,42,53,.1) 24%,rgba(62,42,53,.14) 56%,rgba(62,42,53,.78) 84%,#3E2A35 100%) !important}
-.hero-copy{padding:0 24px 44px !important;gap:16px !important;max-width:none !important}
+.hero{margin-top:-78px;min-height:clamp(760px,200vw,860px) !important;align-items:flex-start !important}
+.hero-media{top:auto !important;height:50%}
+.hero-video{object-position:62% 50% !important}
+.hero-shade{background:linear-gradient(to bottom,#3E2A35 0%,rgba(62,42,53,.82) 16%,rgba(62,42,53,.3) 40%,rgba(62,42,53,.02) 64%,rgba(62,42,53,.3) 100%) !important}
+.hero-copy{padding:112px 24px 0 !important;gap:16px !important;max-width:none !important}
 .hero-title{font-size:clamp(2.5rem,11.4vw,3.1rem) !important;line-height:1.08 !important}
 .hero-kicker{font-size:10.5px !important;letter-spacing:.12em !important}
 .hero-kicker span{display:none}
@@ -132,8 +133,8 @@ html{scroll-behavior:auto}
 <main id="top">
 
 <section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; min-height: clamp(560px, 50vw, 740px); background: #3E2A35">
-<div class="hero-media" role="img" aria-label="Een waterdruppel die over een olijfblad rolt in warm avondlicht" style="position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 60%; overflow: hidden">
-<video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; pointer-events: none"></video>
+<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; overflow: hidden">
+<video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; display: block; pointer-events: none"></video>
 <canvas class="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
 <div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px"></div>
 </div>
@@ -514,15 +515,16 @@ html{scroll-behavior:auto}
   }
   startHeroFrames() {
   if (this._framesOn) return; this._framesOn = true;
-  const FW = 360, FH = 484, COLS = 5, PER = 25, N = 74, FPS = 8;
-  const sheets = ['assets/hero-frames-1.jpg', 'assets/hero-frames-2.jpg', 'assets/hero-frames-3.jpg'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
+  const FW = 480, FH = 270, COLS = 5, PER = 25, N = 36, FPS = 8;
+  const sheets = ['assets/hero-frames-1.jpg', 'assets/hero-frames-2.jpg'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
   const t0 = performance.now();
+  const small = window.matchMedia('(max-width: 760px)').matches; const px = small ? 0.62 : 0.5, py = small ? 0.5 : 0.58;
   const frame = (ctx, i, alpha, w, h) => {
   const im = sheets[Math.floor(i / PER)]; const k = i % PER;
   const sx = (k % COLS) * FW, sy = Math.floor(k / COLS) * FH;
   const sc = Math.max(w / FW, h / FH), dw = FW * sc, dh = FH * sc;
   ctx.globalAlpha = alpha;
-  ctx.drawImage(im, sx + 0.5, sy + 0.5, FW - 1, FH - 1, (w - dw) * 0.5, (h - dh) * 0.5, dw, dh);
+  ctx.drawImage(im, sx + 0.5, sy + 0.5, FW - 1, FH - 1, (w - dw) * px, (h - dh) * py, dw, dh);
   };
   const loop = () => {
   this._heroRaf = requestAnimationFrame(loop);
