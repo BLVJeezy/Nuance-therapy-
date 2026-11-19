@@ -8,20 +8,24 @@
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..600&family=Poppins:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
-:root{--accent:#68365D}
+:root{--accent:#664B57}
 html{scroll-behavior:smooth}
-body{margin:0;background:#F6EFE8}
-a{color:#68365D}a:hover{color:#4A2542}
-.btn{transition:transform 120ms ease-out,filter 160ms ease-out}
-.btn:hover{filter:brightness(.88)}
+body{margin:0;background:#3E2A35}
+a{color:#D6C3B2}a:hover{color:#EAE3DA}
+::selection{background:#A58572;color:#3E2A35}
+.btn{transition:transform 120ms ease-out,filter 180ms ease-out}
+.btn:hover{filter:brightness(1.18);color:#EAE3DA}
 .btn:active{transform:scale(.97)}
 .navlink{transition:color 160ms ease-out}
-.navlink:hover{color:var(--accent)}
-.card{transition:transform 220ms ease-out,box-shadow 220ms ease-out}
-.card:hover{transform:translateY(-4px);color:#2E1F2A}
-.card:active{transform:scale(.98)}
+.navlink:hover{color:#D6C3B2}
+:focus-visible{outline:2px solid #D6C3B2;outline-offset:3px;border-radius:8px}
+.fld{transition:border-color 160ms ease-out,box-shadow 160ms ease-out}
+.fld:focus{outline:none;border-color:#3E2A35;box-shadow:0 0 0 3px rgba(234,227,218,.55)}
+.rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.rise.d1{animation-delay:.12s}.rise.d2{animation-delay:.26s}.rise.d3{animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .about-img{transition:opacity 900ms ease,transform 1600ms cubic-bezier(.2,.7,.2,1)}
 .thumb{transition:box-shadow 260ms ease-out,opacity 260ms ease-out,transform 120ms ease-out}
 .thumb:hover{opacity:1 !important}
@@ -31,313 +35,251 @@ a{color:#68365D}a:hover{color:#4A2542}
 .drop.landed .drop-ring{animation:dropring 1400ms cubic-bezier(.2,.7,.2,1) both}
 .drop.landed .drop-ring.r2{animation-delay:180ms}
 @keyframes dropring{0%{opacity:0;transform:scale(.1)}25%{opacity:1}100%{opacity:0;transform:scale(1)}}
-.tab{transition:background-color 220ms ease-out,color 220ms ease-out,transform 120ms ease-out}
-.tab[aria-pressed="false"]:hover{background-color:#F3E7DB !important}
-.tab:active{transform:scale(.98)}
-.tabs::-webkit-scrollbar{display:none}
+.tab{transition:background-color 220ms ease-out,transform 120ms ease-out}
+.tab[aria-pressed="false"]:hover{background-color:rgba(234,227,218,.05) !important}
+.tab:active{transform:scale(.985)}
+.acc-wrap{display:none}
 .val{transition:background-color 320ms ease-out,color 320ms ease-out,box-shadow 320ms ease-out,transform 120ms ease-out}
-.val[aria-pressed="false"]:hover{color:#FBF7F1 !important}
+.val[aria-pressed="false"]:hover{color:#EAE3DA !important}
+.val:active{transform:scale(.94)}
 .val-bar.run{animation:valbar 3600ms linear both}
 @keyframes valbar{from{width:0}to{width:100%}}
 @keyframes valA{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes valB{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.val:active{transform:scale(.94)}
 .val-next{transition:background-color 160ms ease-out,transform 120ms ease-out}
-.val-next:hover{background-color:rgba(251,247,241,0.12) !important}
+.val-next:hover{background-color:rgba(234,227,218,.12) !important}
 .val-next:active{transform:scale(.97)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
-.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 9s ease-in-out infinite alternate}
-.sway.b{animation-duration:11s;animation-delay:-3s}
-.sway.c{animation-duration:13s;animation-delay:-6s}
-@keyframes sway{from{transform:rotate(-1.6deg)}to{transform:rotate(2deg)}}
-.rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-.rise.d1{animation-delay:.12s}.rise.d2{animation-delay:.26s}.rise.d3{animation-delay:.4s}
-@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.kenburns{animation:kb 26s ease-in-out infinite alternate;transform-origin:60% 50%}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
-.cards::-webkit-scrollbar{display:none}
+.nav-toggle{display:none}
+.hero-shade{background:linear-gradient(to right,#3E2A35 0%,rgba(62,42,53,.88) 14%,rgba(62,42,53,.3) 48%,rgba(62,42,53,.1) 100%),linear-gradient(to bottom,rgba(62,42,53,.22),rgba(62,42,53,.04) 40%,rgba(62,42,53,.4))}
+@media (max-width:900px){
+.nav-links{display:none !important}
+.nav-toggle{display:inline-flex !important}
+}
+@media (min-width:901px){.nav-panel{display:none !important}}
 @media (max-width:760px){
-.hero-grid{display:flex !important;flex-direction:column;align-items:stretch !important}
+.hero{margin-top:-78px;min-height:clamp(680px,180vw,820px) !important;align-items:flex-end !important}
+.hero-media{left:0 !important;width:100% !important;bottom:auto !important;height:62%}
+.hero-shade{background:linear-gradient(to bottom,rgba(62,42,53,.55) 0%,rgba(62,42,53,.1) 24%,rgba(62,42,53,.14) 56%,rgba(62,42,53,.78) 84%,#3E2A35 100%) !important}
+.hero-copy{padding:0 24px 44px !important;gap:16px !important;max-width:none !important}
+.hero-title{font-size:clamp(2.5rem,11.4vw,3.1rem) !important;line-height:1.08 !important}
 .hero-kicker{font-size:10.5px !important;letter-spacing:.12em !important}
 .hero-kicker span{display:none}
-.hero{margin-top:-78px}
-.nav{background:transparent !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:background-color 300ms ease}
-.nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(246,239,232,.88) !important;backdrop-filter:blur(18px) saturate(160%) !important;-webkit-backdrop-filter:blur(18px) saturate(160%) !important}
-.hero-media{order:-1;min-height:calc(clamp(460px,128vw,600px) + 78px) !important}
-.hero-fade{height:40% !important}
-.hero-wave-l,.hero-swoosh-top{display:none !important}
-.hero-fade{display:block !important}
-.hero-video{object-position:50% 50% !important;height:calc(100% - 4px) !important}
-.hero-canvas{height:calc(100% - 4px) !important}
-.hero-copy{margin-top:-104px;padding:0 24px 76px !important;gap:18px !important}
-.hero-title{font-size:clamp(2.7rem,12.4vw,3.3rem) !important;line-height:1.04 !important}
 .hero-cta .btn{width:100%;justify-content:center;box-sizing:border-box;min-height:58px !important}
-.cards{display:flex !important;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:24px;margin:0 -24px;padding:6px 24px 30px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.cards .card{flex:0 0 72%;scroll-snap-align:start;min-height:230px !important}
-.swipe-hint{display:flex !important}
-.svc-img{aspect-ratio:4 / 3 !important;border-radius:140px 140px 20px 20px !important}
+.nav{background:transparent !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:background-color 300ms ease}
+.nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(53,35,45,.9) !important;backdrop-filter:blur(18px) saturate(150%) !important;-webkit-backdrop-filter:blur(18px) saturate(150%) !important}
+.nav-cta{min-height:44px !important;padding:0 18px !important;font-size:13.5px !important}
 .svc-panel{display:none !important}
 .tabs{gap:10px !important}
-.acc-item{background:#FBF6F0;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(74,37,66,.05),0 16px 30px -22px rgba(74,37,66,.4)}
-.tab{border-radius:0 !important;min-height:68px !important;padding:14px 20px !important}
-.tab .tab-title{font-size:1.15rem !important}
-.tab{gap:14px !important}
+.acc-item{background:#4A3540;border-radius:20px;overflow:hidden;scroll-margin-top:96px;box-shadow:inset 0 0 0 1px rgba(234,227,218,.07)}
+.tab{border-radius:0 !important;padding:12px 16px 12px 12px !important;border-bottom:0 !important;background:transparent !important}
 .tab .tab-arrow{transform:rotate(90deg);opacity:1 !important}
 .tab[aria-pressed="true"] .tab-arrow{transform:rotate(-90deg)}
 .acc-wrap{display:grid !important;grid-template-rows:0fr;transition:grid-template-rows 420ms cubic-bezier(.2,.8,.2,1)}
 .acc-wrap.open{grid-template-rows:1fr}
 .acc-clip{visibility:hidden;opacity:0;transition:opacity 260ms ease-out,visibility 0s linear 420ms}
 .acc-wrap.open .acc-clip{visibility:visible;opacity:1;transition:opacity 320ms ease-out 120ms,visibility 0s}
-.acc-item{scroll-margin-top:96px}
+.about-stage{padding-right:76px !important}
+.thumb{width:60px !important;height:60px !important}
+.plek-quote{position:relative !important;right:auto !important;bottom:auto !important;width:auto !important;margin-top:-56px !important;margin-left:18px !important}
 .foot-grid{text-align:center}
 .foot-grid>div{align-items:center !important}
 .foot-bottom{justify-content:center !important;text-align:center}
-.plek-media div[role="img"]{aspect-ratio:1 / 1 !important}
-.plek-quote{right:0 !important;width:86% !important}
-.about-stage{padding-right:76px !important}
-.thumb{width:60px !important;height:60px !important}
-.plek-media{padding-bottom:138px !important}
-.contact-art{display:none !important}
-.contact-btn{align-self:stretch}
-.contact-btn .btn{width:100%;justify-content:center;box-sizing:border-box;padding:0 16px !important;font-size:15px !important;white-space:nowrap}
+.contact-btn .btn,.form-send{width:100%;justify-content:center;box-sizing:border-box}
 }
-.nav-toggle{display:none}
-@media (max-width:900px){
-.nav-links{display:none !important}
-.nav-toggle{display:inline-flex !important}
-.nav-cta{min-height:44px !important;padding:0 18px !important;font-size:13.5px !important}
-}
-@media (min-width:901px){.nav-panel{display:none !important}}
 @media (prefers-reduced-motion:reduce){
 .drop{display:none !important}
-.sway,.rise,.kenburns,.val-bar.run{animation:none}
+.rise,.val-bar.run{animation:none}
 html{scroll-behavior:auto}
-.btn,.card,.val,.val-next,.tab,.acc-wrap,.acc-clip,.about-img,.thumb{transition:none !important}
+.btn,.val,.val-next,.tab,.acc-wrap,.acc-clip,.about-img,.thumb{transition:none !important}
 }
 @media (prefers-reduced-transparency:reduce){
-.nav{background:#F6EFE8 !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+.nav{background:#35232D !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
 }
 </style>
 </head>
 <body>
-<div style="--accent: #68365D; font-family: 'Poppins', 'Avenir Next', 'Segoe UI', sans-serif; font-weight: 300; color: #2E1F2A; background: #F6EFE8; line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: clip">
+<div style="--accent: #664B57; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; color: #EAE3DA; background: #3E2A35; line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: clip">
 
-<header class="nav" style="position: sticky; top: 0; z-index: 20; background: rgba(246,239,232,0.82); backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%)">
+<header class="nav" style="position: sticky; top: 0; z-index: 20; background: rgba(53,35,45,0.86); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%)">
 <div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
 <a href="#top" aria-label="Nuance — naar boven" style="display: flex; align-items: center; min-height: 48px">
-<img src="assets/logo.png" alt="Nuance" style="height: 54px; width: auto; display: block">
+<img src="assets/logo-licht.png" alt="Nuance" style="height: 54px; width: auto; display: block">
 </a>
-<nav class="nav-links" aria-label="Hoofdmenu" style="display: flex; align-items: center; gap: 34px; font-size: 14.5px; font-weight: 400">
-<a class="navlink" href="#welkom" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Over mij</a>
-<a class="navlink" href="#diensten" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Onze diensten</a>
-<a class="navlink" href="#visie" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Onze visie</a>
-<a class="navlink" href="#werkwijze" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Tarieven</a>
-<a class="navlink" href="#contact" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Contact</a>
+<nav class="nav-links" aria-label="Hoofdmenu" style="display: flex; align-items: center; gap: 38px; font-size: 15px; font-weight: 500">
+<a class="navlink" href="#welkom" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Over mij</a>
+<a class="navlink" href="#diensten" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Diensten</a>
+<a class="navlink" href="#werkwijze" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Werkwijze</a>
+<a class="navlink" href="#contact" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Contact</a>
 </nav>
 <div style="display: flex; align-items: center; gap: 12px">
-<a class="btn nav-cta" href="#contact" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 24px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 14.5px; font-weight: 400">Intakegesprek</a>
-<button class="nav-toggle" type="button" aria-label="Menu openen of sluiten" data-menu="toggle" aria-expanded="false" aria-controls="mobile-menu" style="align-items: center; justify-content: center; width: 48px; height: 48px; border: 0; border-radius: 999px; background: #E8D6C8; color: var(--accent); cursor: pointer">
+<a class="btn nav-cta" href="#contact" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 24px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 14.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)">Intakegesprek</a>
+<button class="nav-toggle" type="button" aria-label="Menu openen of sluiten" data-menu="toggle" aria-expanded="false" aria-controls="mobile-menu" style="align-items: center; justify-content: center; width: 48px; height: 48px; border: 0; border-radius: 999px; background: rgba(234,227,218,0.12); color: #EAE3DA; cursor: pointer">
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg>
 </button>
 </div>
 </div>
 <div id="mobile-menu" hidden>
-<nav class="nav-panel" aria-label="Mobiel menu" style="display: flex; flex-direction: column; gap: 4px; padding: 8px 24px 24px; font-size: 18px; font-weight: 400">
-<a href="#welkom" data-menu="close" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Over mij</a>
-<a href="#diensten" data-menu="close" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Onze diensten</a>
-<a href="#visie" data-menu="close" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Onze visie</a>
-<a href="#werkwijze" data-menu="close" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Tarieven</a>
-<a href="#contact" data-menu="close" style="color: #2E1F2A; text-decoration: none; padding: 12px 0">Contact</a>
-<a class="btn" href="#contact" data-menu="close" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; margin-top: 12px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 16px">Vraag een intakegesprek aan</a>
+<nav class="nav-panel" aria-label="Mobiel menu" style="display: flex; flex-direction: column; gap: 4px; padding: 8px 24px 24px; font-size: 18px; font-weight: 500">
+<a href="#welkom" data-menu="close" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Over mij</a>
+<a href="#diensten" data-menu="close" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Diensten</a>
+<a href="#werkwijze" data-menu="close" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Werkwijze</a>
+<a href="#contact" data-menu="close" style="color: #EAE3DA; text-decoration: none; padding: 12px 0">Contact</a>
+<a class="btn" href="#contact" data-menu="close" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; margin-top: 12px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 16px; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)">Vraag een intakegesprek aan</a>
 </nav>
 </div>
 </header>
 
 <main id="top">
 
-<section class="hero" style="position: relative; overflow: hidden">
-<svg viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block">
-<path d="M0 540 C 160 470, 340 610, 520 560 C 600 540, 640 620, 660 700 L0 700 Z" fill="#EFE3D8"></path>
-<path class="hero-swoosh-top" d="M0 0 H520 C 420 70, 300 40, 200 110 C 120 166, 60 150, 0 210 Z" fill="#EFE3D8"></path>
-</svg>
-<div class="hero-grid" style="position: relative; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); align-items: center">
-<div class="hero-copy" style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; padding: clamp(40px, 7vw, 96px) 24px clamp(72px, 10vw, 150px) max(24px, calc((100vw - 1192px) / 2)); box-sizing: border-box">
-<p class="rise hero-kicker" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)"><span aria-hidden="true" style="width: 28px; height: 1px; background: var(--accent)"></span>Coaching &amp; begeleiding · Bilzen-Hoeselt</p>
-<h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance">Ruimte voor <em style="font-style: italic; color: var(--accent)">alle kanten</em> van jezelf</h1>
-<p class="rise d2" style="margin: 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--accent)">Omdat het leven niet zwart-wit is</p>
-<p class="rise d2" style="margin: 0; max-width: 31em; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Soms heeft het leven meer vragen dan antwoorden. Bij Nuance vind je ruimte om stil te staan bij jouw verhaal, gevoelens en behoeften.</p>
-<div class="rise d3 hero-cta" style="margin-top: 6px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; align-self: stretch">
-<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 30px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 16px; font-weight: 400">Vraag een intakegesprek aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13.5px; font-weight: 400; color: #4E3B47">
-<li style="display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 999px; background: var(--accent)"></span>Persoonlijk</li>
-<li style="display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 999px; background: var(--accent)"></span>Zonder oordeel</li>
-<li style="display: inline-flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 999px; background: var(--accent)"></span>Op jouw tempo</li>
-</ul>
-</div>
-</div>
-<div class="hero-media" role="img" aria-label="Een waterdruppel die over een olijfblad rolt in warm avondlicht" style="position: relative; overflow: hidden; align-self: stretch; min-height: clamp(340px, 46vw, 640px)">
+<section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; min-height: clamp(560px, 50vw, 740px); background: #3E2A35">
+<div class="hero-media" role="img" aria-label="Een waterdruppel die over een olijfblad rolt in warm avondlicht" style="position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 60%; overflow: hidden">
 <video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; pointer-events: none"></video>
 <canvas class="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
-<svg class="hero-wave-l" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -1px; top: 0; width: 22%; height: 100%; display: block"><path d="M0 0 H55 C 15 20, 85 38, 45 60 C 20 75, 45 90, 25 100 H0 Z" fill="#F6EFE8"></path></svg>
-<div class="hero-fade" aria-hidden="true" style="display: none; position: absolute; left: 0; right: 0; bottom: -2px; height: 56%; background: linear-gradient(to bottom, rgba(246,239,232,0) 0%, rgba(246,239,232,0.82) 56%, #F6EFE8 90%, #F6EFE8 100%)"></div>
+<div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px"></div>
+</div>
+<div style="position: relative; z-index: 2; width: 100%; max-width: 1240px; margin: 0 auto; box-sizing: border-box">
+<div class="hero-copy" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; max-width: 620px; box-sizing: border-box; padding: clamp(56px, 7vw, 96px) 24px">
+<p class="rise hero-kicker" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2"><span aria-hidden="true" style="width: 28px; height: 1px; background: #D6C3B2"></span>Coaching &amp; begeleiding · Bilzen-Hoeselt</p>
+<h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.3rem); line-height: 1.1; letter-spacing: -0.012em; color: #EAE3DA; text-wrap: balance">Ruimte voor alle kanten van jezelf</h1>
+<p class="rise d2" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: clamp(1.2rem, 1.9vw, 1.55rem); color: #EAE3DA">Omdat het leven niet zwart-wit is</p>
+<p class="rise d2" style="margin: 0; max-width: 31em; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Soms heeft het leven meer vragen dan antwoorden. Bij Nuance vind je ruimte om stil te staan bij jouw verhaal, gevoelens en behoeften.</p>
+<div class="rise d3 hero-cta" style="margin-top: 8px; align-self: stretch; display: flex">
+<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 28px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16); min-height: 56px">Vraag een intakegesprek aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+</div>
 </div>
 </div>
 </section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; z-index: 3; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: calc(-1 * clamp(36px, 5vw, 80px)); margin-bottom: -1px; background: transparent"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #E8D6C8"></path></svg>
 
-<section id="diensten" style="background: #E8D6C8; scroll-margin-top: 90px">
+<section aria-label="Waar Nuance voor staat" style="background: #35232D">
+<ul style="max-width: 1000px; margin: 0 auto; padding: clamp(28px, 4vw, 44px) 16px; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(234,227,218,0.14)"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">Persoonlijke begeleiding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center; border-right: 1px solid rgba(234,227,218,0.14)"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8.5c-2 0-3.5 1.6-3.5 3.5S6 15.5 8 15.5c3 0 5-7 8-7 2 0 3.5 1.6 3.5 3.5s-1.5 3.5-3.5 3.5c-3 0-5-7-8-7z"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">In verbinding</span></li><li style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 6px clamp(6px, 2vw, 24px); text-align: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"></path><path d="M5 19c3-5 6-8 10-10"></path></svg><span style="font-size: clamp(12.5px, 1.3vw, 15px); font-weight: 500; line-height: 1.35; color: #EAE3DA">In jouw tempo</span></li>
+</ul>
 </section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #E8D6C8"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #F6EFE8"></path></svg>
-
-<section id="welkom" style="scroll-margin-top: 90px">
-</section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #F6EFE8"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: var(--accent)"></path></svg>
-
-<section id="visie" style="background: var(--accent); color: #FBF7F1; scroll-margin-top: 90px">
-</section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: var(--accent)"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #F6EFE8"></path></svg>
-
-<section aria-label="De praktijk" style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 88px) 24px clamp(56px, 8vw, 112px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(28px, 6vw, 96px); align-items: center">
-<div class="plek-media" style="position: relative; padding-bottom: clamp(56px, 7vw, 88px)">
-<div role="img" aria-label="Tak met bladeren in warm avondlicht" style="position: relative; aspect-ratio: 4 / 5; border-radius: 240px 240px 32px 32px; overflow: hidden">
-<img src="assets/sfeer-olijftak.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; display: block">
-</div>
-<figure class="plek-quote" style="position: absolute; right: clamp(-28px, -2vw, -8px); bottom: 0; width: min(78%, 340px); margin: 0; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; padding: 24px 26px; border-radius: 24px 24px 24px 72px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 24px 48px -24px rgba(74,37,66,0.4)">
-<img src="assets/mark.png" alt="" style="height: 34px; width: auto; align-self: flex-start">
-<blockquote style="margin: 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.12rem; line-height: 1.45">“Je hoeft niet alles alleen te dragen. Soms begint een nieuwe stap bij iemand die echt luistert.”</blockquote>
-<figcaption style="font-size: 13px; color: #6E5A66">Anne-Sophie Houwaer</figcaption>
-</figure>
-</div>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #35232D"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #D6C3B2"></path></svg>
+<section id="praktijk" aria-label="De praktijk" style="background: #D6C3B2; color: #3E2A35; scroll-margin-top: 90px">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
 <div style="display: flex; flex-direction: column; gap: 20px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">De praktijk</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Een rustige plek, dicht bij de natuur.</h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">In een rustige omgeving nemen we tijd om te luisteren en te verkennen wat je nodig hebt. In de praktijk of online, afhankelijk van je vraag.</p>
-<ul style="margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid #E8D6C8">
-<li style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid #E8D6C8"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: #EFE3D8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--accent)"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"></path><circle cx="12" cy="10.5" r="2.3"></circle></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 15px">In de praktijk</span><span style="font-size: 15px; color: #4E3B47">Wagenstraat 6, 3740 Bilzen-Hoeselt</span></div></li>
-<li style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid #E8D6C8"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: #EFE3D8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--accent)"><rect x="3" y="5" width="18" height="12" rx="2"></rect><path d="M9 21h6"></path><path d="M12 17v4"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 15px">Online</span><span style="font-size: 15px; color: #4E3B47">Waar het past bij jouw vraag</span></div></li>
-<li style="display: flex; align-items: center; gap: 16px; padding: 16px 0"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: #EFE3D8"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--accent)"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16"></path><path d="M8 3v4"></path><path d="M16 3v4"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 15px">Op afspraak</span><span style="font-size: 15px; color: #4E3B47">Flexibel in te plannen, uitsluitend op afspraak</span></div></li>
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6B5140">De praktijk</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance; color: #3E2A35">Een rustige plek, dicht bij de natuur.</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #54404B">In een rustige omgeving nemen we tijd om te luisteren en te verkennen wat je nodig hebt. In de praktijk of online, afhankelijk van je vraag.</p>
+<ul style="margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid rgba(62,42,53,0.16)">
+<li style="display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(62,42,53,0.16)"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: rgba(62,42,53,0.1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3E2A35" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"></path><circle cx="12" cy="10.5" r="2.3"></circle></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px; color: #3E2A35">In de praktijk</span><span style="font-size: 15px; color: #54404B">Wagenstraat 6, 3740 Bilzen-Hoeselt</span></div></li><li style="display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(62,42,53,0.16)"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: rgba(62,42,53,0.1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3E2A35" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"></rect><path d="M9 21h6"></path><path d="M12 17v4"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px; color: #3E2A35">Online</span><span style="font-size: 15px; color: #54404B">Waar het past bij jouw vraag</span></div></li><li style="display: flex; align-items: center; gap: 16px; padding: 15px 0"><span aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: rgba(62,42,53,0.1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3E2A35" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16"></path><path d="M8 3v4"></path><path d="M16 3v4"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px; color: #3E2A35">Op afspraak</span><span style="font-size: 15px; color: #54404B">Flexibel in te plannen, uitsluitend op afspraak</span></div></li>
 </ul>
 </div>
-</section>
-
-<section id="werkwijze" style="max-width: 1240px; margin: 0 auto; padding: 0 24px clamp(56px, 8vw, 112px); display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px); scroll-margin-top: 110px">
-<div style="display: flex; flex-direction: column; gap: 16px; max-width: 680px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Hoe het werkt</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Een eerste gesprek, op jouw tempo.</h2>
+<div class="plek-media" style="position: relative; padding-bottom: clamp(48px, 6vw, 80px)">
+<div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px">
+<div role="img" aria-label="Aardewerken vaas met takken in warm licht" style="position: relative; grid-row: span 2; min-height: clamp(300px, 34vw, 440px); border-radius: 22px; overflow: hidden"><img src="assets/praktijk-vaas.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block"></div>
+<div role="img" aria-label="Heuvels bij zonsondergang" style="position: relative; border-radius: 22px; overflow: hidden"><img src="assets/praktijk-heuvels.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div role="img" aria-label="Keramieken kom met een brandende kaars" style="position: relative; border-radius: 22px; overflow: hidden"><img src="assets/praktijk-kom.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; display: block"></div>
 </div>
-<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px">
-<li style="display: flex; flex-direction: column; gap: 12px; padding: 28px 26px 30px; border-radius: 22px; background: #EFE3D8">
-<span style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: var(--accent); color: #FBF7F1; font-family: 'Lora', Georgia, serif; font-size: 1.1rem">1</span>
-<h3 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 500; font-size: 1.3rem; line-height: 1.25">Je vraagt een intake aan</h3>
-<p style="margin: 0; color: #4E3B47">Via het contactformulier of per e-mail. Je hoeft nog niet alles helder te hebben.</p>
-</li>
-<li style="display: flex; flex-direction: column; gap: 12px; padding: 28px 26px 30px; border-radius: 22px; background: #EFE3D8">
-<span style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: var(--accent); color: #FBF7F1; font-family: 'Lora', Georgia, serif; font-size: 1.1rem">2</span>
-<h3 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 500; font-size: 1.3rem; line-height: 1.25">Je krijgt een persoonlijk antwoord</h3>
-<p style="margin: 0; color: #4E3B47">Doorgaans binnen 48 uur op werkdagen. De afspraak is definitief na bevestiging.</p>
-</li>
-<li style="display: flex; flex-direction: column; gap: 12px; padding: 28px 26px 30px; border-radius: 22px; background: #EFE3D8">
-<span style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: var(--accent); color: #FBF7F1; font-family: 'Lora', Georgia, serif; font-size: 1.1rem">3</span>
-<h3 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 500; font-size: 1.3rem; line-height: 1.25">We luisteren naar jouw verhaal</h3>
-<p style="margin: 0; color: #4E3B47">Een intakegesprek duurt 60 minuten en kost € 75. Samen bekijken we welke ondersteuning passend is.</p>
-</li>
+<figure class="plek-quote" style="position: absolute; left: clamp(-28px, -2vw, -8px); bottom: 0; width: min(80%, 360px); margin: 0; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: #3E2A35; color: #EAE3DA; box-shadow: 0 24px 48px -24px rgba(30,18,24,0.7)">
+<img src="assets/mark-licht.png" alt="" style="height: 30px; width: auto; align-self: flex-start">
+<blockquote style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.08rem; line-height: 1.5">“Je hoeft niet alles alleen te dragen. Soms begint een nieuwe stap bij iemand die echt luistert.”</blockquote>
+<figcaption style="font-size: 13px; color: #BFAEA3">Anne-Sophie Houwaer</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #D6C3B2"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #3E2A35"></path></svg>
+<section id="diensten" style="background: #3E2A35; scroll-margin-top: 90px">
+</section>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #3E2A35"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #35232D"></path></svg>
+<section id="welkom" style="background: #35232D; scroll-margin-top: 90px">
+</section>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #35232D"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: var(--accent)"></path></svg>
+<section id="visie" style="background: var(--accent); color: #EAE3DA; scroll-margin-top: 90px">
+</section>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: var(--accent)"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #3E2A35"></path></svg>
+<section id="werkwijze" style="background: #3E2A35; scroll-margin-top: 90px">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
+<div style="display: flex; flex-direction: column; gap: clamp(24px, 3vw, 40px)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Werkwijze</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Een eerste gesprek, op jouw tempo.</h2>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="position: relative; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: clamp(16px, 2.4vw, 28px); padding-bottom: 26px"><span aria-hidden="true" style="position: absolute; left: 25px; top: 60px; bottom: -6px; width: 1px; background: rgba(214,195,178,0.4)"></span><span style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 999px; background: var(--accent); color: #EAE3DA; font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem">1</span><div style="display: flex; flex-direction: column; gap: 6px; padding: 4px 0 26px; border-bottom: 1px solid rgba(234,227,218,0.14)"><h3 style="margin: 0; font-size: 1.15rem; font-weight: 600; color: #EAE3DA">Je vraagt een intake aan</h3><p style="margin: 0; color: #DDD0C6">Via het contactformulier of per e-mail. Je hoeft nog niet alles helder te hebben.</p></div></li><li style="position: relative; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: clamp(16px, 2.4vw, 28px); padding-bottom: 26px"><span aria-hidden="true" style="position: absolute; left: 25px; top: 60px; bottom: -6px; width: 1px; background: rgba(214,195,178,0.4)"></span><span style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 999px; background: #8C6E5E; color: #EAE3DA; font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem">2</span><div style="display: flex; flex-direction: column; gap: 6px; padding: 4px 0 26px; border-bottom: 1px solid rgba(234,227,218,0.14)"><h3 style="margin: 0; font-size: 1.15rem; font-weight: 600; color: #EAE3DA">Je krijgt een persoonlijk antwoord</h3><p style="margin: 0; color: #DDD0C6">Doorgaans binnen 48 uur op werkdagen. De afspraak is definitief na bevestiging.</p></div></li><li style="position: relative; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: clamp(16px, 2.4vw, 28px); padding-bottom: 26px"><span style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 999px; background: #8C6E5E; color: #EAE3DA; font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem">3</span><div style="display: flex; flex-direction: column; gap: 6px; padding: 4px 0 26px"><h3 style="margin: 0; font-size: 1.15rem; font-weight: 600; color: #EAE3DA">We luisteren naar jouw verhaal</h3><p style="margin: 0; color: #DDD0C6">Een intakegesprek duurt 60 minuten en kost € 75. Samen bekijken we welke ondersteuning passend is.</p></div></li>
 </ol>
+</div>
+<div role="img" aria-label="Zonnestralen door de bomen" style="position: relative; width: 100%; max-width: 520px; justify-self: center; aspect-ratio: 5 / 4; border-radius: 24px; overflow: hidden"><img src="assets/werkwijze-bos.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.04)"><div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(62,42,53,0) 55%, rgba(62,42,53,0.55) 100%)"></div></div>
+</div>
 </section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #F6EFE8"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #E8D6C8"></path></svg>
 
-<section id="boek" style="background: #E8D6C8; scroll-margin-top: 90px">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) 24px clamp(56px, 7vw, 96px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 5vw, 72px)">
-<svg viewBox="0 0 170 220" aria-hidden="true" style="width: 150px; height: auto; flex: none; display: block; transform: rotate(-4deg)">
-<rect x="18" y="14" width="140" height="196" rx="6" fill="#B38C7A"></rect>
-<rect x="10" y="8" width="140" height="196" rx="6" fill="#FBF7F1"></rect>
+<section id="boek" style="background: #35232D; scroll-margin-top: 90px">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 64px) 24px; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 5vw, 72px)">
+<svg viewBox="0 0 170 220" aria-hidden="true" style="width: 132px; height: auto; flex: none; display: block; transform: rotate(-4deg)">
+<rect x="18" y="14" width="140" height="196" rx="6" fill="#241820"></rect>
+<rect x="10" y="8" width="140" height="196" rx="6" fill="#D6C3B2"></rect>
 <rect x="4" y="2" width="140" height="196" rx="6" style="fill: var(--accent)"></rect>
-<rect x="4" y="2" width="16" height="196" rx="6" fill="#4A2542"></rect>
-<path d="M82 150 V96" stroke="#FBF7F1" stroke-width="1.5" stroke-linecap="round"></path>
-<path d="M0 0 C 13 -16, 13 -42, 0 -58 C -13 -42, -13 -16, 0 0 Z" transform="translate(82 104) rotate(0)" fill="none" stroke="#FBF7F1" stroke-width="1.5"></path>
-<path d="M0 0 C 9 -11, 9 -29, 0 -41 C -9 -29, -9 -11, 0 0 Z" transform="translate(82 138) rotate(-50)" fill="none" stroke="#FBF7F1" stroke-width="1.5"></path>
-<path d="M0 0 C 9 -11, 9 -29, 0 -41 C -9 -29, -9 -11, 0 0 Z" transform="translate(82 126) rotate(50)" fill="none" stroke="#FBF7F1" stroke-width="1.5"></path>
+<rect x="4" y="2" width="16" height="196" rx="6" fill="#523A46"></rect>
+<path d="M82 150 V96" stroke="#EAE3DA" stroke-width="1.5" stroke-linecap="round"></path>
+<path d="M0 0 C 13 -16, 13 -42, 0 -58 C -13 -42, -13 -16, 0 0 Z" transform="translate(82 104)" fill="none" stroke="#EAE3DA" stroke-width="1.5"></path>
+<path d="M0 0 C 9 -11, 9 -29, 0 -41 C -9 -29, -9 -11, 0 0 Z" transform="translate(82 138) rotate(-50)" fill="none" stroke="#EAE3DA" stroke-width="1.5"></path>
+<path d="M0 0 C 9 -11, 9 -29, 0 -41 C -9 -29, -9 -11, 0 0 Z" transform="translate(82 126) rotate(50)" fill="none" stroke="#EAE3DA" stroke-width="1.5"></path>
 </svg>
-<div style="display: flex; flex-direction: column; gap: 14px; flex: 1 1 300px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">In ontwikkeling</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Een boek over <em style="font-style: italic">ouderschap</em>.</h2>
+<div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 300px">
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">In ontwikkeling</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Een boek over <em style="font-style: italic">ouderschap</em>.</h2>
 </div>
-<p style="margin: 0; flex: 1 1 320px; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Binnenkort deel ik hier meer over het verhaal en de inspiratie achter dit project.</p>
-</div>
-</section>
-<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #E8D6C8"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #F6EFE8"></path></svg>
-
-<section id="contact" style="max-width: 1240px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) 24px clamp(64px, 9vw, 120px); scroll-margin-top: 90px">
-<div style="position: relative; overflow: hidden; border-radius: 36px; background: #EFE3D8; padding: clamp(40px, 7vw, 96px) clamp(24px, 6vw, 96px); display: flex; flex-direction: column; align-items: flex-start; gap: 22px">
-<svg class="contact-art" viewBox="0 0 400 300" preserveAspectRatio="xMaxYMax slice" aria-hidden="true" style="position: absolute; right: 0; bottom: 0; width: min(46%, 420px); height: 100%; display: block">
-<path d="M400 300 H120 C 180 240, 240 250, 280 190 C 320 130, 360 150, 400 90 Z" fill="#E8D6C8"></path>
-<g class="sway"><path d="M330 300 C 326 240, 340 190, 332 130" fill="none" stroke="#7E8468" stroke-width="1.5" stroke-linecap="round"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(330 270) rotate(-46)" fill="#8F9579"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(332 240) rotate(44)" fill="#8F9579"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(334 210) rotate(-44)" fill="#8F9579"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(334 180) rotate(42)" fill="#8F9579"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(332 152) rotate(-40)" fill="#8F9579"></path><path d="M0 0 C 10 -13, 10 -34, 0 -46 C -10 -34, -10 -13, 0 0 Z" transform="translate(332 132) rotate(2)" fill="#8F9579"></path></g>
-<g class="sway b"><path d="M270 300 C 268 262, 256 230, 252 196" fill="none" stroke="#68365D" stroke-width="1.5" stroke-linecap="round"></path><path d="M0 0 C 9 -11, 9 -28, 0 -38 C -9 -28, -9 -11, 0 0 Z" transform="translate(268 276) rotate(-44)" style="fill: var(--accent)"></path><path d="M0 0 C 9 -11, 9 -28, 0 -38 C -9 -28, -9 -11, 0 0 Z" transform="translate(263 250) rotate(40)" style="fill: var(--accent)"></path><path d="M0 0 C 9 -11, 9 -28, 0 -38 C -9 -28, -9 -11, 0 0 Z" transform="translate(257 224) rotate(-42)" style="fill: var(--accent)"></path><path d="M0 0 C 9 -11, 9 -28, 0 -38 C -9 -28, -9 -11, 0 0 Z" transform="translate(252 198) rotate(-4)" style="fill: var(--accent)"></path></g>
-</svg>
-<h2 style="position: relative; margin: 0; max-width: 14em; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(2rem, 4.4vw, 3.6rem); line-height: 1.12; letter-spacing: -0.016em; text-wrap: balance">Wil je ontdekken welke begeleiding bij je past?</h2>
-<p style="position: relative; margin: 0; max-width: 32em; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Vraag gerust een intakegesprek aan. We luisteren naar jouw verhaal en bekijken samen welke ondersteuning passend is.</p>
-<div class="contact-btn" style="position: relative"><a class="btn" href="mailto:verbinding@nuance-therapie.be" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 30px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 16px; font-weight: 400">Vraag een intakegesprek aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></div>
-<p style="position: relative; margin: 0; max-width: 24em; font-size: 14px; color: #4E3B47">Uitsluitend op afspraak · contact verloopt via e-mail of het contactformulier</p>
+<p style="margin: 0; flex: 1 1 320px; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Binnenkort deel ik hier meer over het verhaal en de inspiratie achter dit project.</p>
 </div>
 </section>
 
+<section id="contact" style="background: #3E2A35; scroll-margin-top: 90px">
+</section>
+<svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(32px, 4.6vw, 72px); margin-top: -1px; margin-bottom: -1px; background: #3E2A35"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: #35232D"></path></svg>
 </main>
 
-<footer style="background: #EFE3D8">
-<div class="foot-grid" style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 40px">
+<footer style="background: #35232D">
+<div class="foot-grid" style="max-width: 1240px; margin: 0 auto; padding: 40px 24px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 40px">
 <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
-<img src="assets/logo.png" alt="Nuance" style="height: 84px; width: auto">
-<p style="margin: 0; color: #6E5A66; font-size: 15px">Ruimte voor alle kanten van jezelf.</p>
+<img src="assets/logo-licht.png" alt="Nuance" style="height: 84px; width: auto">
+<p style="margin: 0; color: #BFAEA3; font-size: 15px">Ruimte voor alle kanten van jezelf.</p>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px">
-<h3 style="margin: 0 0 6px; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Praktijk</h3>
-<p style="margin: 0; color: #4E3B47">Wagenstraat 6<br>3740 Bilzen-Hoeselt, België</p>
-<p style="margin: 0; color: #6E5A66">Parkeren rechts naast de woning, ingang via de rechterzijkant.</p>
+<h3 style="margin: 0 0 6px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Praktijk</h3>
+<p style="margin: 0; color: #DDD0C6">Wagenstraat 6<br>3740 Bilzen-Hoeselt, België</p>
+<p style="margin: 0; color: #BFAEA3">Parkeren rechts naast de woning, ingang via de rechterzijkant.</p>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px">
-<h3 style="margin: 0 0 6px; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Contact</h3>
+<h3 style="margin: 0 0 6px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Contact</h3>
 <a href="mailto:verbinding@nuance-therapie.be" style="min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 5px">verbinding@nuance-therapie.be</a>
-<p style="margin: 0; color: #6E5A66">Anne-Sophie Houwaer</p>
+<p style="margin: 0; color: #BFAEA3">Anne-Sophie Houwaer</p>
 </div>
 </div>
-<div class="foot-bottom" style="max-width: 1240px; margin: 0 auto; padding: 20px 24px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #6E5A66">
+<div class="foot-bottom" style="max-width: 1240px; margin: 0 auto; padding: 20px 24px 40px; border-top: 1px solid rgba(234,227,218,0.14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #BFAEA3">
 <span>© 2026 Nuance</span>
 <span>[Privacyverklaring · Voorwaarden — volgen na juridische controle]</span>
 </div>
 </footer>
 
 <div class="drop" aria-hidden="true" style="position: fixed; left: 0; top: 0; z-index: 15; width: 26px; height: 34px; margin: -17px 0 0 -13px; opacity: 0; pointer-events: none; will-change: transform, opacity">
-<span class="drop-body" style="position: absolute; inset: 0"><span style="position: absolute; left: 2px; top: 10px; width: 22px; height: 22px; box-sizing: border-box; border-radius: 6% 50% 50% 50%; transform: rotate(45deg); background: radial-gradient(circle at 34% 58%, rgba(255,255,255,0.98) 0 7%, rgba(255,255,255,0.5) 17%, rgba(255,255,255,0.12) 50%, rgba(104,54,93,0.3) 100%); border: 1px solid rgba(104,54,93,0.3); box-shadow: inset -6px -1px 8px rgba(74,37,66,0.34), inset 2px 2px 3px rgba(255,255,255,0.7), 7px 7px 13px -5px rgba(74,37,66,0.5); backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06); -webkit-backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06)"></span></span>
-<span class="drop-ring" style="position: absolute; left: 50%; top: 100%; width: 90px; height: 26px; margin: -13px 0 0 -45px; border-radius: 50%; border: 1.5px solid rgba(104,54,93,0.45); opacity: 0; transform: scale(0.1)"></span>
-<span class="drop-ring r2" style="position: absolute; left: 50%; top: 100%; width: 150px; height: 42px; margin: -21px 0 0 -75px; border-radius: 50%; border: 1px solid rgba(104,54,93,0.3); opacity: 0; transform: scale(0.1)"></span>
+<span class="drop-body" style="position: absolute; inset: 0"><span style="position: absolute; left: 2px; top: 10px; width: 22px; height: 22px; box-sizing: border-box; border-radius: 6% 50% 50% 50%; transform: rotate(45deg); background: radial-gradient(circle at 34% 58%, rgba(255,255,255,0.98) 0 7%, rgba(255,255,255,0.5) 17%, rgba(255,255,255,0.14) 50%, rgba(214,195,178,0.34) 100%); border: 1px solid rgba(234,227,218,0.5); box-shadow: inset -6px -1px 8px rgba(30,18,24,0.4), inset 2px 2px 3px rgba(255,255,255,0.7), 7px 7px 13px -5px rgba(20,10,16,0.7); backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.15); -webkit-backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.15)"></span></span>
+<span class="drop-ring" style="position: absolute; left: 50%; top: 100%; width: 90px; height: 26px; margin: -13px 0 0 -45px; border-radius: 50%; border: 1.5px solid rgba(234,227,218,0.55); opacity: 0; transform: scale(0.1)"></span>
+<span class="drop-ring r2" style="position: absolute; left: 50%; top: 100%; width: 150px; height: 42px; margin: -21px 0 0 -75px; border-radius: 50%; border: 1px solid rgba(234,227,218,0.35); opacity: 0; transform: scale(0.1)"></span>
 </div>
 
 </div>
 <template id="tpl-diensten">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) 24px clamp(64px, 8vw, 112px); display: flex; flex-direction: column; gap: clamp(24px, 3vw, 40px)">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) 24px clamp(56px, 7vw, 104px); display: flex; flex-direction: column; gap: clamp(24px, 3vw, 40px)">
 <div class="svc-wrap" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: clamp(24px, 4vw, 64px)">
-<div style="flex: 1 1 340px; max-width: 460px; min-width: 0; display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 32px)">
+<div style="flex: 1 1 360px; max-width: 500px; min-width: 0; display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 30px)">
 <div style="display: flex; flex-direction: column; gap: 14px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Begeleidingsvormen</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Onze diensten</h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Een aanbod van coaching en psychosociale begeleiding, met aandacht voor jou, je relaties en je gezin.</p>
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Begeleidingsvormen</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Onze diensten</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Een aanbod van coaching en psychosociale begeleiding, met aandacht voor jou, je relaties en je gezin.</p>
 </div>
-<div class="tabs" role="group" aria-label="Kies een dienst" style="display: flex; flex-direction: column; gap: 6px">
+<div class="tabs" role="group" aria-label="Kies een dienst" style="display: flex; flex-direction: column; gap: 0">
 <sc-for list="{{services}}" as="s" hint-placeholder-count="5">
 <div class="acc-item">
-<button class="tab" type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="appearance: none; display: flex; align-items: center; gap: 16px; width: 100%; min-height: 64px; box-sizing: border-box; padding: 12px 20px; border: 0; border-radius: 20px; cursor: pointer; text-align: left; font-family: inherit; background: {{s.bg}}; color: {{s.fg}}">
-<span class="tab-ic" aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: {{s.icBg}}; transition: background-color 220ms ease-out"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.icon}}"></path></svg></span>
-<span class="tab-title" style="flex: 1; font-family: 'Lora', Georgia, serif; font-size: clamp(1.15rem, 1.7vw, 1.4rem); line-height: 1.25">{{s.short}}</span>
-<span class="tab-arrow" style="display: inline-flex; transition: transform 220ms ease-out; opacity: {{s.arrowOp}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span>
+<button class="tab" type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="appearance: none; display: flex; align-items: center; gap: 18px; width: 100%; min-height: 84px; box-sizing: border-box; padding: 10px 16px 10px 10px; border: 0; border-bottom: 1px solid rgba(234,227,218,0.14); border-radius: 16px; cursor: pointer; text-align: left; font-family: inherit; color: #EAE3DA; background: {{s.bg}}">
+<span aria-hidden="true" style="position: relative; flex: none; width: 92px; height: 64px; border-radius: 12px; overflow: hidden; background: #4A3540"><img src="{{s.thumb}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
+<span class="tab-title" style="flex: 1; font-size: clamp(1rem, 1.3vw, 1.1rem); font-weight: 500; line-height: 1.35">{{s.short}}</span>
+<span class="tab-arrow" style="display: inline-flex; transition: transform 220ms ease-out; color: #D6C3B2; opacity: {{s.arrowOp}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span>
 </button>
-<div class="acc-wrap {{s.openCls}}" style="display: none">
+<div class="acc-wrap {{s.openCls}}">
 <div class="acc-clip" style="min-height: 0; overflow: hidden">
-<div class="acc-panel" style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 18px 20px">
-<div style="position: relative; align-self: stretch; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; background: #EFE3D8">
-<img src="{{s.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
-</div>
-<p style="margin: 0; color: #4E3B47">{{s.text}}</p>
-<span style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; color: var(--accent); font-size: 14px; font-weight: 400">{{s.meta}}</span>
-<a class="btn" href="#contact" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; align-self: stretch; min-height: 54px; padding: 0 20px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 15px; font-weight: 400">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+<div class="acc-panel" style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 6px 16px 20px">
+<div style="position: relative; align-self: stretch; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: #3E2A35"><img src="{{s.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<p style="margin: 0; color: #DDD0C6">{{s.text}}</p>
+<span style="display: inline-flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 16px 0 12px; border-radius: 999px; background: rgba(234,227,218,0.1); color: #EAE3DA; font-size: 14px; font-weight: 500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg>{{s.meta}}</span>
+<a class="btn" href="#contact" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; align-self: stretch; min-height: 54px; padding: 0 20px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
 </div>
 </div>
 </div>
@@ -345,81 +287,97 @@ html{scroll-behavior:auto}
 </sc-for>
 </div>
 </div>
-<div aria-live="polite" class="svc-panel" style="flex: 2 1 480px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(20px, 3vw, 44px); align-items: center; box-sizing: border-box; padding: clamp(16px, 2.2vw, 28px); border-radius: 36px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 24px 48px -28px rgba(74,37,66,0.35)">
-<div class="svc-img" style="position: relative; aspect-ratio: 4 / 5; border-radius: 180px 180px 24px 24px; overflow: hidden; background: #EFE3D8">
+<div aria-live="polite" class="svc-panel" style="flex: 2 1 460px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: clamp(20px, 3vw, 40px); align-items: center; box-sizing: border-box; padding: clamp(16px, 2vw, 24px); border-radius: 28px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07), 0 30px 60px -34px rgba(20,10,16,0.8)">
+<div class="svc-img" style="position: relative; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; background: #3E2A35">
 <img src="{{cur_s.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
 </div>
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 4px clamp(4px, 1.4vw, 16px) clamp(8px, 1.4vw, 16px)">
-<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.16em; color: var(--accent)">{{cur_s.n}} / 05</span>
-<h3 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; letter-spacing: -0.012em">{{cur_s.title}}</h3>
-<p style="margin: 0; color: #4E3B47">{{cur_s.text}}</p>
-<span style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; color: var(--accent); font-size: 14px; font-weight: 400">{{cur_s.meta}}</span>
-<a class="btn svc-cta" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 26px; margin-top: 4px; border-radius: 999px; background: var(--accent); color: #FBF7F1; text-decoration: none; font-size: 15px; font-weight: 400; white-space: nowrap">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 4px clamp(4px, 1.2vw, 14px) clamp(8px, 1.2vw, 14px)">
+<span style="display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.16em; color: #D6C3B2"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: rgba(234,227,218,0.1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EAE3DA" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{cur_s.icon}}"></path></svg></span>{{cur_s.n}} / 05</span>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.55rem, 2.4vw, 2.05rem); line-height: 1.18; color: #EAE3DA">{{cur_s.title}}</h3>
+<p style="margin: 0; color: #DDD0C6">{{cur_s.text}}</p>
+<span style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px; border-radius: 999px; background: rgba(234,227,218,0.1); color: #EAE3DA; font-size: 14px; font-weight: 500">{{cur_s.meta}}</span>
+<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 26px; margin-top: 4px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15px; font-weight: 500; white-space: nowrap; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
 </div>
 </div>
 </div>
-<p style="margin: 0; max-width: 46em; font-size: 14px; color: #6E5A66">Coaching en begeleiding bij Nuance vervangen geen medische of psychologische diagnostiek of gespecialiseerde behandeling.</p>
+<p style="margin: 0; max-width: 46em; font-size: 14px; color: #BFAEA3">Coaching en begeleiding bij Nuance vervangen geen medische of psychologische diagnostiek of gespecialiseerde behandeling.</p>
 </div>
 </template>
 <template id="tpl-visie">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) 24px clamp(48px, 7vw, 96px); display: flex; flex-direction: column; gap: clamp(32px, 5vw, 56px)">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(44px, 6vw, 88px); display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px)">
 <div style="display: flex; flex-direction: column; gap: 18px; max-width: 700px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F1DCE5">Onze visie</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Zes waarden, <em style="font-style: italic">in één naam.</em></h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #F1DCE5">De naam verwijst naar de vele schakeringen van het leven. We kijken verder dan wat aan de oppervlakte zichtbaar is, met aandacht, respect en mildheid.</p>
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Onze visie</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Zes waarden, <em style="font-style: italic">in één naam.</em></h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #EAE3DA">De naam verwijst naar de vele schakeringen van het leven. We kijken verder dan wat aan de oppervlakte zichtbaar is, met aandacht, respect en mildheid.</p>
 </div>
 <div style="display: flex; flex-direction: column; gap: clamp(20px, 3vw, 36px)">
 <div role="group" aria-label="De zes waarden van Nuance" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(4px, 1.4vw, 20px)">
 <sc-for list="{{values}}" as="v" hint-placeholder-count="6">
-<button class="val" type="button" onClick="{{v.pick}}" aria-pressed="{{v.pressed}}" aria-label="{{v.name}}" style="position: relative; appearance: none; border: 0; cursor: pointer; min-height: 72px; padding: clamp(8px, 1.4vw, 18px) 0 clamp(16px, 2.2vw, 28px); border-radius: clamp(14px, 2vw, 26px); background: {{v.bg}}; color: {{v.fg}}; box-shadow: {{v.shadow}}; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(2.5rem, 9vw, 7rem); line-height: 1; letter-spacing: -0.02em; text-align: center">{{v.letter}}<span aria-hidden="true" style="position: absolute; left: 16%; right: 16%; bottom: clamp(7px, 1vw, 12px); height: 3px; border-radius: 3px; overflow: hidden; background: {{v.track}}"><span class="val-bar {{v.barCls}}" style="display: block; height: 100%; width: {{v.barW}}; background: var(--accent)"></span></span></button>
+<button class="val" type="button" onClick="{{v.pick}}" aria-pressed="{{v.pressed}}" aria-label="{{v.name}}" style="position: relative; appearance: none; border: 0; cursor: pointer; min-height: 72px; padding: clamp(8px, 1.4vw, 18px) 0 clamp(16px, 2.2vw, 28px); border-radius: clamp(14px, 2vw, 24px); background: {{v.bg}}; color: {{v.fg}}; box-shadow: {{v.shadow}}; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.5rem, 9vw, 6.6rem); line-height: 1; text-align: center">{{v.letter}}<span aria-hidden="true" style="position: absolute; left: 16%; right: 16%; bottom: clamp(7px, 1vw, 12px); height: 3px; border-radius: 3px; overflow: hidden; background: {{v.track}}"><span class="val-bar {{v.barCls}}" style="display: block; height: 100%; width: {{v.barW}}; background: #A58572"></span></span></button>
 </sc-for>
 </div>
-<div aria-live="polite" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(12px, 3vw, 56px); align-items: center; min-height: 150px; box-sizing: border-box; padding: clamp(26px, 4vw, 48px); border-radius: 28px; background: rgba(251,247,241,0.1)">
+<div aria-live="polite" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(12px, 3vw, 56px); align-items: center; min-height: 150px; box-sizing: border-box; padding: clamp(26px, 4vw, 44px); border-radius: 24px; background: rgba(62,42,53,0.42)">
 <div style="display: flex; flex-direction: column; gap: 10px; animation: {{cur.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">
-<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.16em; color: #F1DCE5">{{cur.num}} / 6</span>
-<h3 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.8rem); line-height: 1.12; letter-spacing: -0.012em">{{cur.name}}</h3>
+<span style="font-size: 13px; font-weight: 600; letter-spacing: 0.16em; color: #D6C3B2">{{cur.num}} / 6</span>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.14">{{cur.name}}</h3>
 </div>
-<p style="margin: 0; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.6; color: #F6E8EE; animation: {{cur.anim}} 520ms cubic-bezier(.2,.7,.2,1) 80ms both">{{cur.text}}</p>
+<p style="margin: 0; font-size: clamp(1.05rem, 1.45vw, 1.2rem); line-height: 1.6; color: #EAE3DA; animation: {{cur.anim}} 520ms cubic-bezier(.2,.7,.2,1) 80ms both">{{cur.text}}</p>
 </div>
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
-<p style="margin: 0; font-size: 14px; color: #F1DCE5">De waarden wisselen vanzelf. Tik op een letter om er zelf één te kiezen.</p>
-<button class="val-next" type="button" onClick="{{nextVal}}" style="appearance: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid rgba(251,247,241,0.5); background: transparent; color: #FBF7F1; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 400">Volgende waarde<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
+<p style="margin: 0; font-size: 14px; color: #EAE3DA">De waarden wisselen vanzelf. Tik op een letter om er zelf één te kiezen.</p>
+<button class="val-next" type="button" onClick="{{nextVal}}" style="appearance: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid rgba(234,227,218,0.5); background: transparent; color: #EAE3DA; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 500">Volgende waarde<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
 </div>
 </div>
 </div>
 </template>
 <template id="tpl-welkom">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 7vw, 104px) 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
 <div class="about-stage" style="position: relative; width: 100%; max-width: 520px; justify-self: center; box-sizing: border-box; padding-right: 88px">
-<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 58% 42% 46% 54% / 46% 52% 48% 54%; overflow: hidden; background: #EFE3D8">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden; background: #4A3540">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
 <img class="about-img" src="{{m.img}}" alt="{{m.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; opacity: {{m.op}}; transform: {{m.tf}}">
 </sc-for>
 </div>
-<p aria-live="polite" style="position: absolute; left: 0; bottom: 26px; max-width: calc(100% - 100px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 16px 32px -18px rgba(74,37,66,0.45); font-size: 14px; font-weight: 400; color: #2E1F2A"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: var(--accent)"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
+<p aria-live="polite" style="position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 120px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #EAE3DA; box-shadow: 0 16px 32px -18px rgba(20,10,16,0.8); font-size: 14px; font-weight: 500; color: #3E2A35"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: #A58572"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
 <div role="group" aria-label="Kies een foto" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
-<button class="thumb" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.caption}}" style="appearance: none; position: relative; width: 68px; height: 68px; padding: 0; border: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: #EFE3D8; box-shadow: {{m.ring}}; opacity: {{m.thumbOp}}">
+<button class="thumb" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.caption}}" style="appearance: none; position: relative; width: 68px; height: 68px; padding: 0; border: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: #4A3540; box-shadow: {{m.ring}}; opacity: {{m.thumbOp}}">
 <img src="{{m.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; display: block">
 </button>
 </sc-for>
 </div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 20px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Over mij</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Er is plaats voor jouw eigen verhaal.</h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">We dragen allemaal verschillende kanten met ons mee: kracht en kwetsbaarheid, vertrouwen en twijfel, hoop en onzekerheid.</p>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Mijn liefde voor natuur, dieren, kunst en keramiek leert me om met aandacht naar details te kijken en ruimte te laten voor wat ontstaat. Samen bekijken we wat jou bezighoudt en welke begeleiding bij je past.</p>
-<ul aria-label="Wat mij inspireert" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px"><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Natuur</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Dieren</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Kunst</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Keramiek</li></ul>
-<div style="display: flex; gap: 16px; align-items: flex-start; padding: 22px 24px; border-radius: 24px 24px 24px 64px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 20px 40px -26px rgba(74,37,66,0.4)">
-<img src="assets/mark.png" alt="" style="flex: none; height: 34px; width: auto; margin-top: 2px">
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Over mij</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Er is plaats voor jouw eigen verhaal.</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">We dragen allemaal verschillende kanten met ons mee: kracht en kwetsbaarheid, vertrouwen en twijfel, hoop en onzekerheid.</p>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Mijn liefde voor natuur, dieren, kunst en keramiek leert me om met aandacht naar details te kijken en ruimte te laten voor wat ontstaat. Samen bekijken we wat jou bezighoudt en welke begeleiding bij je past.</p>
+<ul aria-label="Wat mij inspireert" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px">
+<li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: rgba(234,227,218,0.1); font-size: 14px; font-weight: 500; color: #EAE3DA">Natuur</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: rgba(234,227,218,0.1); font-size: 14px; font-weight: 500; color: #EAE3DA">Dieren</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: rgba(234,227,218,0.1); font-size: 14px; font-weight: 500; color: #EAE3DA">Kunst</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: rgba(234,227,218,0.1); font-size: 14px; font-weight: 500; color: #EAE3DA">Keramiek</li>
+</ul>
+<div style="display: flex; gap: 16px; align-items: flex-start; padding: 22px 24px; border-radius: 20px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07)">
+<img src="assets/mark-licht.png" alt="" style="flex: none; height: 32px; width: auto; margin-top: 2px">
 <div style="display: flex; flex-direction: column; gap: 6px">
-<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent)">Wat ik hoop dat je meeneemt</span>
-<p style="margin: 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.1rem; line-height: 1.5">Dat je je gehoord voelt, dat je merkt dat je er niet alleen voor staat en dat er opnieuw ruimte komt voor vertrouwen en eigen kracht.</p>
+<span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #D6C3B2">Wat ik hoop dat je meeneemt</span>
+<p style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.08rem; line-height: 1.5; color: #EAE3DA">Dat je je gehoord voelt, dat je merkt dat je er niet alleen voor staat en dat er opnieuw ruimte komt voor vertrouwen en eigen kracht.</p>
 </div>
 </div>
-<p style="margin: 4px 0 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--accent)">Anne-Sophie Houwaer — coach &amp; psychosociaal begeleider</p>
+<p style="margin: 4px 0 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1rem; color: #D6C3B2">Anne-Sophie Houwaer — coach &amp; psychosociaal begeleider</p>
 </div>
+</div>
+</template>
+<template id="tpl-contact">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 7vw, 104px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: start">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2">Contact</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance">Zin in een eerste gesprek? Je bent welkom.</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6">Vraag gerust een intakegesprek aan. We luisteren naar jouw verhaal en bekijken samen welke ondersteuning passend is.</p>
+<a href="mailto:verbinding@nuance-therapie.be" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; align-self: flex-start; font-weight: 500; text-underline-offset: 5px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3.5 7l8.5 6 8.5-6"></path></svg>verbinding@nuance-therapie.be</a>
+<p style="margin: 0; font-size: 14px; color: #BFAEA3">Uitsluitend op afspraak · je ontvangt doorgaans binnen 48 uur op werkdagen een persoonlijk antwoord.</p>
+<div role="img" aria-label="Schaduw van een olijftak op een warme muur" style="position: relative; margin-top: 8px; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden"><img src="assets/contact-schaduw.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+<form onSubmit="{{sendForm}}" style="display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; padding: clamp(22px, 3vw, 36px); border-radius: 24px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07)">
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="f-naam" style="font-size: 14px; font-weight: 500; color: #EAE3DA">Naam</label><input class="fld" id="f-naam" name="naam" type="text" autocomplete="name" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-email" style="font-size: 14px; font-weight: 500; color: #EAE3DA">E-mailadres</label><input class="fld" id="f-email" name="email" type="email" autocomplete="email" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-bericht" style="font-size: 14px; font-weight: 500; color: #EAE3DA">Bericht</label><textarea class="fld" id="f-bericht" name="bericht" rows="5" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; resize: vertical; min-height: 140px"></textarea></div>
+<button class="btn form-send" type="submit" style="appearance: none; display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; background: var(--accent); color: #EAE3DA; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.2)">Versturen<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
+<p role="status" style="margin: 0; font-size: 14px; color: #BFAEA3">{{formNote}}</p>
+</form>
 </div>
 </template>
 <script>
@@ -437,6 +395,7 @@ html{scroll-behavior:auto}
       }).join('');
     });
     html = html.replace(/onClick="\{\{\s*([\w.]+)\s*\}\}"/gi, function (_, p) { return 'data-h="' + p + '"'; });
+    html = html.replace(/onSubmit="\{\{\s*([\w.]+)\s*\}\}"/gi, function (_, p) { return 'data-hs="' + p + '"'; });
     return html.replace(/\{\{\s*([\w.]+)\s*\}\}/g, function (_, p) { return esc(get(vals, p)); });
   }
   /* Werkt bestaande elementen bij in plaats van ze te vervangen, zodat CSS-overgangen blijven werken. */
@@ -456,7 +415,7 @@ html{scroll-behavior:auto}
   }
   function render() {
     view = app.renderVals();
-    ['diensten', 'visie', 'welkom'].forEach(function (id) {
+    ['diensten', 'visie', 'welkom', 'contact'].forEach(function (id) {
       var sec = document.getElementById(id), html = fill(document.getElementById('tpl-' + id).innerHTML, view);
       if (last[id] === html) return;
       var act = document.activeElement, key = act && sec.contains(act) ? act.getAttribute('data-h') : null;
@@ -604,11 +563,11 @@ html{scroll-behavior:auto}
   ];
   const sel = st.val || 0;
   const SERVICES = [
-  { n: '01', icon: 'M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z', short: 'Individuele begeleiding', title: 'Individuele begeleiding & life coaching', img: 'assets/dienst-individueel.jpg', meta: '60 min · € 85', text: 'Wanneer je twijfelt aan jezelf, moeite hebt met grenzen stellen of een belangrijke verandering doormaakt. Met aandachtige gesprekken verkennen we patronen, kwaliteiten en nieuwe mogelijkheden.' },
-  { n: '02', icon: 'M3 9c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0M3 15c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0', short: 'Angstcoaching', title: 'Angstcoaching', img: 'assets/dienst-angstcoaching.jpg', meta: 'Start met een intakegesprek', text: 'Piekeren, onzekerheid, faalangst of dagelijkse spanning kunnen veel ruimte innemen. Samen zoeken we naar manieren om meer inzicht, rust en vertrouwen te ontwikkelen.' },
-  { n: '03', icon: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z', short: 'Relatiecoaching', title: 'Relatiecoaching', img: 'assets/dienst-relatiecoaching.jpg', meta: 'Intake koppels · 60 min · € 95', text: 'Soms loopt communicatie vast of keren dezelfde discussies terug. Beide partners krijgen ruimte om hun verhaal te vertellen en te onderzoeken wat ze nodig hebben.' },
-  { n: '04', icon: 'M5 8a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M14.5 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M2.5 19c.5-3.2 2.7-5 5.5-5s5 1.8 5.5 5M15 15.2c.5-.1 1-.2 1.5-.2 2.2 0 3.9 1.4 4.4 4', short: 'Kindercoaching', title: 'Kindercoaching & jongeren', img: 'assets/dienst-kindercoaching.jpg', meta: 'Start met een intakegesprek', text: 'Kinderen en jongeren hebben soms behoefte aan een plek waar ze zich gehoord voelen. Met aandacht voor zelfvertrouwen, emoties en veranderingen thuis.' },
-  { n: '05', icon: 'M7 4h10l4 5-9 11L3 9zM3 9h18M9.5 9 12 20l2.5-11M7 4l2.5 5L12 4l2.5 5L17 4', short: 'Edelstenen Zielenkompas', title: 'Persoonlijk Edelstenen Zielenkompas', img: 'assets/dienst-zielenkompas.jpg', meta: 'Persoonlijk verslag (PDF) · € 125', text: 'Een persoonlijk uitgewerkt verslag rond edelstenen, numerologie en astrologie, als uitnodiging tot verwondering en zelfreflectie. Geen medisch of psychologisch advies.' }
+  { n: '01', icon: 'M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z', short: 'Individuele begeleiding', title: 'Individuele begeleiding & life coaching', img: 'assets/dienst-individueel.jpg', thumb: 'assets/dienst-individueel.jpg', meta: '60 min · € 85', text: 'Wanneer je twijfelt aan jezelf, moeite hebt met grenzen stellen of een belangrijke verandering doormaakt. Met aandachtige gesprekken verkennen we patronen, kwaliteiten en nieuwe mogelijkheden.' },
+  { n: '02', icon: 'M3 9c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0M3 15c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0', short: 'Angstcoaching', title: 'Angstcoaching', img: 'assets/dienst-angstcoaching.jpg', thumb: 'assets/dienst-angstcoaching.jpg', meta: 'Start met een intakegesprek', text: 'Piekeren, onzekerheid, faalangst of dagelijkse spanning kunnen veel ruimte innemen. Samen zoeken we naar manieren om meer inzicht, rust en vertrouwen te ontwikkelen.' },
+  { n: '03', icon: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z', short: 'Relatiecoaching', title: 'Relatiecoaching', img: 'assets/dienst-relatiecoaching.jpg', thumb: 'assets/dienst-relatiecoaching.jpg', meta: 'Intake koppels · 60 min · € 95', text: 'Soms loopt communicatie vast of keren dezelfde discussies terug. Beide partners krijgen ruimte om hun verhaal te vertellen en te onderzoeken wat ze nodig hebben.' },
+  { n: '04', icon: 'M5 8a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M14.5 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M2.5 19c.5-3.2 2.7-5 5.5-5s5 1.8 5.5 5M15 15.2c.5-.1 1-.2 1.5-.2 2.2 0 3.9 1.4 4.4 4', short: 'Kindercoaching', title: 'Kindercoaching & jongeren', img: 'assets/dienst-kindercoaching.jpg', thumb: 'assets/dienst-kindercoaching.jpg', meta: 'Start met een intakegesprek', text: 'Kinderen en jongeren hebben soms behoefte aan een plek waar ze zich gehoord voelen. Met aandacht voor zelfvertrouwen, emoties en veranderingen thuis.' },
+  { n: '05', icon: 'M7 4h10l4 5-9 11L3 9zM3 9h18M9.5 9 12 20l2.5-11M7 4l2.5 5L12 4l2.5 5L17 4', short: 'Edelstenen Zielenkompas', title: 'Persoonlijk Edelstenen Zielenkompas', img: 'assets/dienst-zielenkompas.jpg', thumb: 'assets/dienst-zielenkompas.jpg', meta: 'Persoonlijk verslag (PDF) · € 125', text: 'Een persoonlijk uitgewerkt verslag rond edelstenen, numerologie en astrologie, als uitnodiging tot verwondering en zelfreflectie. Geen medisch of psychologisch advies.' }
   ];
   const svc = st.svc || 0;
   const MOMENTS = [
@@ -619,23 +578,36 @@ html{scroll-behavior:auto}
   const ab = st.ab || 0;
   const calm = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const auto = !st.picked && !calm;
-  const acc = this.props.accent ?? '#68365D';
+  const acc = this.props.accent ?? '#664B57';
   return {
-  accent: this.props.accent ?? '#68365D',
+  accent: this.props.accent ?? '#664B57',
   menuOpen: !!st.menuOpen,
   toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
   closeMenu: () => this.setState({ menuOpen: false }),
-  services: SERVICES.map((x, i) => ({ ...x, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? acc : 'transparent', fg: i === svc ? '#FBF7F1' : '#2E1F2A', arrowOp: i === svc ? 1 : 0.35, icBg: i === svc ? 'rgba(251,247,241,0.16)' : '#EFE3D8', pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
+  services: SERVICES.map((x, i) => ({ ...x, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? 'rgba(234,227,218,0.09)' : 'transparent', arrowOp: i === svc ? 1 : 0.5, pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
   cur_s: SERVICES[svc],
-  moments: MOMENTS.map((m, i) => ({ ...m, op: i === ab ? 1 : 0, tf: i === ab ? 'scale(1)' : 'scale(1.06)', pressed: i === ab ? 'true' : 'false', ring: i === ab ? '0 0 0 3px #F6EFE8, 0 0 0 5px ' + acc : '0 0 0 3px #F6EFE8', thumbOp: i === ab ? 1 : 0.72, pick: () => this.setState({ ab: i, abPicked: true }) })),
+  moments: MOMENTS.map((m, i) => ({ ...m, op: i === ab ? 1 : 0, tf: i === ab ? 'scale(1)' : 'scale(1.06)', pressed: i === ab ? 'true' : 'false', ring: i === ab ? '0 0 0 3px #35232D, 0 0 0 5px #D6C3B2' : '0 0 0 3px #35232D', thumbOp: i === ab ? 1 : 0.72, pick: () => this.setState({ ab: i, abPicked: true }) })),
   curM: { ...MOMENTS[ab], anim: ab % 2 ? 'valA' : 'valB' },
-  values: VALUES.map((v, i) => ({ ...v, pressed: i === sel ? 'true' : 'false', bg: i === sel ? '#FBF7F1' : 'transparent', fg: i === sel ? acc : 'rgba(251,247,241,0.5)', shadow: i === sel ? '0 18px 36px -18px rgba(0,0,0,0.45)' : 'none', track: i === sel ? 'rgba(104,54,93,0.18)' : 'transparent', barCls: i === sel && auto ? 'run' : '', barW: i === sel ? '100%' : '0%', pick: () => this.setState({ val: i, picked: true }) })),
+  values: VALUES.map((v, i) => ({ ...v, pressed: i === sel ? 'true' : 'false', bg: i === sel ? '#EAE3DA' : 'transparent', fg: i === sel ? '#3E2A35' : 'rgba(234,227,218,0.55)', shadow: i === sel ? '0 18px 36px -18px rgba(0,0,0,0.45)' : 'none', track: i === sel ? 'rgba(62,42,53,0.18)' : 'transparent', barCls: i === sel && auto ? 'run' : '', barW: i === sel ? '100%' : '0%', pick: () => this.setState({ val: i, picked: true }) })),
   cur: { ...VALUES[sel], num: sel + 1, anim: sel % 2 ? 'valA' : 'valB' },
-  nextVal: () => this.setState({ val: (sel + 1) % VALUES.length, picked: true })
+  nextVal: () => this.setState({ val: (sel + 1) % VALUES.length, picked: true }),
+  formNote: st.sent ? 'Je e-mailprogramma is geopend met je bericht. Verstuur het daar om je aanvraag af te ronden.' : 'Je bericht wordt klaargezet in je eigen e-mailprogramma.',
+  sendForm: (e) => {
+  if (e && e.preventDefault) e.preventDefault();
+  const f = e && e.target; if (!f || !f.elements) return;
+  const val = (n) => (f.elements[n] && f.elements[n].value ? String(f.elements[n].value).trim() : '');
+  const body = val('bericht') + '\n\n' + val('naam') + '\n' + val('email');
+  window.location.href = 'mailto:verbinding@nuance-therapie.be?subject=' + encodeURIComponent('Aanvraag intakegesprek — ' + val('naam')) + '&body=' + encodeURIComponent(body);
+  this.setState({ sent: true });
+  }
   };
   }
   }
   var app = new Component();
+  document.addEventListener('submit', function (e) {
+    var f = e.target.closest ? e.target.closest('[data-hs]') : null;
+    if (f) { e.preventDefault(); var fn = get(view, f.getAttribute('data-hs')); if (typeof fn === 'function') fn(e); }
+  });
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('[data-h]') : null;
     if (t) { var fn = get(view, t.getAttribute('data-h')); if (typeof fn === 'function') fn(); }
