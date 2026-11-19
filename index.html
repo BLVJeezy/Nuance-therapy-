@@ -22,6 +22,10 @@ a{color:#68365D}a:hover{color:#4A2542}
 .card{transition:transform 220ms ease-out,box-shadow 220ms ease-out}
 .card:hover{transform:translateY(-4px);color:#2E1F2A}
 .card:active{transform:scale(.98)}
+.about-img{transition:opacity 900ms ease,transform 1600ms cubic-bezier(.2,.7,.2,1)}
+.thumb{transition:box-shadow 260ms ease-out,opacity 260ms ease-out,transform 120ms ease-out}
+.thumb:hover{opacity:1 !important}
+.thumb:active{transform:scale(.94)}
 .tab{transition:background-color 220ms ease-out,color 220ms ease-out,transform 120ms ease-out}
 .tab[aria-pressed="false"]:hover{background-color:#F3E7DB !important}
 .tab:active{transform:scale(.98)}
@@ -55,6 +59,7 @@ a{color:#68365D}a:hover{color:#4A2542}
 .hero-wave-l,.hero-swoosh-top{display:none !important}
 .hero-fade{display:block !important}
 .hero-video{object-position:74% 50% !important;height:calc(100% - 4px) !important}
+.hero-canvas{height:calc(100% - 4px) !important}
 .hero-copy{margin-top:-104px;padding:0 24px 76px !important;gap:18px !important}
 .hero-title{font-size:clamp(2.7rem,12.4vw,3.3rem) !important;line-height:1.04 !important}
 .hero-cta .btn{width:100%;justify-content:center;box-sizing:border-box;min-height:58px !important}
@@ -66,7 +71,8 @@ a{color:#68365D}a:hover{color:#4A2542}
 .tabs{gap:10px !important}
 .acc-item{background:#FBF6F0;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(74,37,66,.05),0 16px 30px -22px rgba(74,37,66,.4)}
 .tab{border-radius:0 !important;min-height:68px !important;padding:14px 20px !important}
-.tab .tab-title{font-size:1.2rem !important}
+.tab .tab-title{font-size:1.15rem !important}
+.tab{gap:14px !important}
 .tab .tab-arrow{transform:rotate(90deg);opacity:1 !important}
 .tab[aria-pressed="true"] .tab-arrow{transform:rotate(-90deg)}
 .acc-wrap{display:grid !important;grid-template-rows:0fr;transition:grid-template-rows 420ms cubic-bezier(.2,.8,.2,1)}
@@ -79,6 +85,8 @@ a{color:#68365D}a:hover{color:#4A2542}
 .foot-bottom{justify-content:center !important;text-align:center}
 .plek-media div[role="img"]{aspect-ratio:1 / 1 !important}
 .plek-quote{right:0 !important;width:86% !important}
+.about-stage{padding-right:76px !important}
+.thumb{width:60px !important;height:60px !important}
 .plek-media{padding-bottom:138px !important}
 .contact-art{display:none !important}
 .contact-btn{align-self:stretch}
@@ -94,7 +102,7 @@ a{color:#68365D}a:hover{color:#4A2542}
 @media (prefers-reduced-motion:reduce){
 .sway,.rise,.kenburns,.val-bar.run{animation:none}
 html{scroll-behavior:auto}
-.btn,.card,.val,.val-next,.tab,.acc-wrap,.acc-clip{transition:none !important}
+.btn,.card,.val,.val-next,.tab,.acc-wrap,.acc-clip,.about-img,.thumb{transition:none !important}
 }
 @media (prefers-reduced-transparency:reduce){
 .nav{background:#F6EFE8 !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
@@ -159,6 +167,7 @@ html{scroll-behavior:auto}
 </div>
 <div class="hero-media" role="img" aria-label="Olijftak die zacht beweegt in warm avondlicht" style="position: relative; overflow: hidden; align-self: stretch; min-height: clamp(340px, 46vw, 640px)">
 <video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 80% 50%; display: block; pointer-events: none"></video>
+<canvas class="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
 <svg class="hero-wave-l" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -1px; top: 0; width: 22%; height: 100%; display: block"><path d="M0 0 H55 C 15 20, 85 38, 45 60 C 20 75, 45 90, 25 100 H0 Z" fill="#F6EFE8"></path></svg>
 <div class="hero-fade" aria-hidden="true" style="display: none; position: absolute; left: 0; right: 0; bottom: -2px; height: 56%; background: linear-gradient(to bottom, rgba(246,239,232,0) 0%, rgba(246,239,232,0.82) 56%, #F6EFE8 90%, #F6EFE8 100%)"></div>
 </div>
@@ -171,20 +180,6 @@ html{scroll-behavior:auto}
 <svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #E8D6C8"><path d="M-20 36 L0 36 C 220 0, 460 78, 720 44 C 980 10, 1220 70, 1440 30 L1460 30 L1460 84 L-20 84 Z" style="fill: #F6EFE8"></path></svg>
 
 <section id="welkom" style="scroll-margin-top: 90px">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 7vw, 104px) 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
-<div style="position: relative; width: 100%; max-width: 480px; aspect-ratio: 1 / 1.08; justify-self: center">
-<div role="img" aria-label="Anne-Sophie omarmt een eeuwenoude olijfboom" style="position: absolute; overflow: hidden; box-sizing: border-box; left: 0; top: 6%; width: 74%; aspect-ratio: 4 / 5; border-radius: 58% 42% 46% 54% / 50% 56% 44% 50%"><img src="assets/over-mij-olijfboom.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45% 62%; display: block"></div>
-<div role="img" aria-label="Anne-Sophie op een schommel boven het regenwoud, op de rug gezien" style="position: absolute; overflow: hidden; box-sizing: border-box; right: 0; bottom: 0; width: 42%; aspect-ratio: 3 / 5; border-radius: 999px 999px 24px 24px; border: 6px solid #F6EFE8"><img src="assets/over-mij-schommel.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block"></div>
-<div role="img" aria-label="Anne-Sophie met open armen op de boeg van een boot" style="position: absolute; overflow: hidden; box-sizing: border-box; right: 6%; top: 0; width: 27%; aspect-ratio: 1 / 1; border-radius: 50%; border: 6px solid #F6EFE8"><img src="assets/over-mij-zee.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; display: block"></div>
-</div>
-<div style="display: flex; flex-direction: column; gap: 20px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Over mij</p>
-<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Er is plaats voor jouw eigen verhaal.</h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">We dragen allemaal verschillende kanten met ons mee: kracht en kwetsbaarheid, vertrouwen en twijfel, hoop en onzekerheid.</p>
-<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Mijn liefde voor natuur, dieren, kunst en keramiek leert me om met aandacht naar details te kijken en ruimte te laten voor wat ontstaat. Samen bekijken we wat jou bezighoudt en welke begeleiding bij je past.</p>
-<p style="margin: 8px 0 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--accent)">Anne-Sophie Houwaer — coach &amp; psychosociaal begeleider</p>
-</div>
-</div>
 </section>
 <svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; overflow: visible; width: 100%; height: clamp(36px, 5vw, 80px); margin-top: -1px; margin-bottom: -1px; background: #F6EFE8"><path d="M-20 40 L0 40 C 240 90, 480 0, 760 34 C 1040 68, 1240 10, 1440 44 L1460 44 L1460 84 L-20 84 Z" style="fill: var(--accent)"></path></svg>
 
@@ -314,7 +309,7 @@ html{scroll-behavior:auto}
 <sc-for list="{{services}}" as="s" hint-placeholder-count="5">
 <div class="acc-item">
 <button class="tab" type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="appearance: none; display: flex; align-items: center; gap: 16px; width: 100%; min-height: 64px; box-sizing: border-box; padding: 12px 20px; border: 0; border-radius: 20px; cursor: pointer; text-align: left; font-family: inherit; background: {{s.bg}}; color: {{s.fg}}">
-<span class="tab-num" style="font-size: 12.5px; font-weight: 500; letter-spacing: 0.1em; opacity: 0.7">{{s.n}}</span>
+<span class="tab-ic" aria-hidden="true" style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: {{s.icBg}}; transition: background-color 220ms ease-out"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.icon}}"></path></svg></span>
 <span class="tab-title" style="flex: 1; font-family: 'Lora', Georgia, serif; font-size: clamp(1.15rem, 1.7vw, 1.4rem); line-height: 1.25">{{s.short}}</span>
 <span class="tab-arrow" style="display: inline-flex; transition: transform 220ms ease-out; opacity: {{s.arrowOp}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span>
 </button>
@@ -377,6 +372,40 @@ html{scroll-behavior:auto}
 </div>
 </div>
 </template>
+<template id="tpl-welkom">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 7vw, 104px) 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
+<div class="about-stage" style="position: relative; width: 100%; max-width: 520px; justify-self: center; box-sizing: border-box; padding-right: 88px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 58% 42% 46% 54% / 46% 52% 48% 54%; overflow: hidden; background: #EFE3D8">
+<sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
+<img class="about-img" src="{{m.img}}" alt="{{m.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; opacity: {{m.op}}; transform: {{m.tf}}">
+</sc-for>
+</div>
+<p aria-live="polite" style="position: absolute; left: 0; bottom: 26px; max-width: calc(100% - 100px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 16px 32px -18px rgba(74,37,66,0.45); font-size: 14px; font-weight: 400; color: #2E1F2A"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: var(--accent)"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
+<div role="group" aria-label="Kies een foto" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
+<button class="thumb" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.caption}}" style="appearance: none; position: relative; width: 68px; height: 68px; padding: 0; border: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: #EFE3D8; box-shadow: {{m.ring}}; opacity: {{m.thumbOp}}">
+<img src="{{m.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; display: block">
+</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent)">Over mij</p>
+<h2 style="margin: 0; font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.8vw, 3rem); line-height: 1.15; letter-spacing: -0.012em; text-wrap: balance">Er is plaats voor jouw eigen verhaal.</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">We dragen allemaal verschillende kanten met ons mee: kracht en kwetsbaarheid, vertrouwen en twijfel, hoop en onzekerheid.</p>
+<p style="margin: 0; font-size: clamp(1rem, 1.3vw, 1.125rem); color: #4E3B47">Mijn liefde voor natuur, dieren, kunst en keramiek leert me om met aandacht naar details te kijken en ruimte te laten voor wat ontstaat. Samen bekijken we wat jou bezighoudt en welke begeleiding bij je past.</p>
+<ul aria-label="Wat mij inspireert" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px"><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Natuur</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Dieren</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Kunst</li><li style="display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; background: #EFE3D8; font-size: 14px; font-weight: 400; color: var(--accent)">Keramiek</li></ul>
+<div style="display: flex; gap: 16px; align-items: flex-start; padding: 22px 24px; border-radius: 24px 24px 24px 64px; background: #FBF6F0; box-shadow: 0 1px 2px rgba(74,37,66,0.05), 0 20px 40px -26px rgba(74,37,66,0.4)">
+<img src="assets/mark.png" alt="" style="flex: none; height: 34px; width: auto; margin-top: 2px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent)">Wat ik hoop dat je meeneemt</span>
+<p style="margin: 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.1rem; line-height: 1.5">Dat je je gehoord voelt, dat je merkt dat je er niet alleen voor staat en dat er opnieuw ruimte komt voor vertrouwen en eigen kracht.</p>
+</div>
+</div>
+<p style="margin: 4px 0 0; font-family: 'Lora', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--accent)">Anne-Sophie Houwaer — coach &amp; psychosociaal begeleider</p>
+</div>
+</div>
+</template>
 <script>
 /* Kleine runtime: tekent de secties "diensten" en "visie" opnieuw wanneer de keuze verandert. */
 (function () {
@@ -411,7 +440,7 @@ html{scroll-behavior:auto}
   }
   function render() {
     view = app.renderVals();
-    ['diensten', 'visie'].forEach(function (id) {
+    ['diensten', 'visie', 'welkom'].forEach(function (id) {
       var sec = document.getElementById(id), html = fill(document.getElementById('tpl-' + id).innerHTML, view);
       if (last[id] === html) return;
       var act = document.activeElement, key = act && sec.contains(act) ? act.getAttribute('data-h') : null;
@@ -426,16 +455,7 @@ html{scroll-behavior:auto}
   window.DCLogic = DCLogic;
   class Component extends DCLogic {
   componentDidMount() {
-  const start = () => {
-  const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('video.hero-video').forEach((v) => {
-  v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true;
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-  if (calm) { v.pause(); return; }
-  const p = v.play(); if (p && p.catch) p.catch(() => {});
-  });
-  };
-  start(); this._heroTimer = setTimeout(start, 600);
+  this.startHero();
   const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!calm) {
   this._valTimer = setInterval(() => {
@@ -446,7 +466,67 @@ html{scroll-behavior:auto}
   if (r.top > (window.innerHeight || 0) * 0.85 || r.bottom < 0) return;
   this.setState({ val: ((st.val || 0) + 1) % 6 });
   }, 3600);
+  this._abTimer = setInterval(() => {
+  const st = this.state || {};
+  if (st.abPicked) { clearInterval(this._abTimer); return; }
+  const el = document.querySelector('#welkom'); if (!el) return;
+  const r = el.getBoundingClientRect();
+  if (r.top > (window.innerHeight || 0) * 0.85 || r.bottom < 0) return;
+  this.setState({ ab: ((st.ab || 0) + 1) % 3 });
+  }, 5200);
   }
+  }
+  startHero() {
+  const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (calm) return;
+  const video = () => document.querySelector('video.hero-video');
+  const tryPlay = () => {
+  const v = video(); if (!v || this._videoOK) return;
+  v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true;
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', '');
+  if (!v._nuanceBound) {
+  v._nuanceBound = true;
+  v.addEventListener('timeupdate', () => { if (v.currentTime > 0.15 && !v.paused) this._videoOK = true; });
+  v.addEventListener('ended', () => { v.currentTime = 0; tryPlay(); });
+  }
+  try { const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+  };
+  tryPlay();
+  this._heroTimers = [300, 900, 1600].map((ms) => setTimeout(tryPlay, ms));
+  this._heroGesture = () => tryPlay();
+  ['touchend', 'click', 'keydown'].forEach((ev) => document.addEventListener(ev, this._heroGesture, { passive: true }));
+  document.addEventListener('visibilitychange', this._heroGesture);
+  /* Als de browser de video weigert te starten (bv. energiebesparing of een in-app webview), speelt dezelfde opname af als beeldreeks op een canvas. */
+  this._heroTimers.push(setTimeout(() => { if (!this._videoOK) this.startHeroFrames(); }, 2200));
+  }
+  startHeroFrames() {
+  if (this._framesOn) return; this._framesOn = true;
+  const FW = 480, FH = 436, COLS = 4, PER = 24, N = 48, FPS = 6;
+  const sheets = ['assets/hero-frames-1.jpg', 'assets/hero-frames-2.jpg'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
+  const t0 = performance.now();
+  const frame = (ctx, i, alpha, w, h) => {
+  const im = sheets[Math.floor(i / PER)]; const k = i % PER;
+  const sx = (k % COLS) * FW, sy = Math.floor(k / COLS) * FH;
+  const sc = Math.max(w / FW, h / FH), dw = FW * sc, dh = FH * sc;
+  ctx.globalAlpha = alpha;
+  ctx.drawImage(im, sx + 0.5, sy + 0.5, FW - 1, FH - 1, (w - dw) * 0.55, (h - dh) * 0.5, dw, dh);
+  };
+  const loop = () => {
+  this._heroRaf = requestAnimationFrame(loop);
+  const c = document.querySelector('canvas.hero-canvas'); if (!c) return;
+  if (this._videoOK) { c.style.display = 'none'; cancelAnimationFrame(this._heroRaf); this._framesOn = false; return; }
+  if (!sheets.every((im) => im.complete && im.naturalWidth)) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = Math.round(c.clientWidth * dpr), h = Math.round(c.clientHeight * dpr);
+  if (c.style.display !== 'block') c.style.display = 'block';
+  if (!w || !h) return;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const span = 2 * N - 2; let pos = (((performance.now() - t0) / 1000) * FPS) % span; if (pos > N - 1) pos = span - pos;
+  const a = Math.min(Math.floor(pos), N - 2), f = pos - a;
+  const ctx = c.getContext('2d');
+  frame(ctx, a, 1, w, h); frame(ctx, a + 1, f, w, h); ctx.globalAlpha = 1;
+  };
+  loop();
   }
   revealService(i) {
   clearTimeout(this._svcTimer);
@@ -457,7 +537,7 @@ html{scroll-behavior:auto}
   if (top < 90 || top > window.innerHeight * 0.55) window.scrollBy({ top: top - 100, behavior: 'smooth' });
   }, 440);
   }
-  componentWillUnmount() { clearTimeout(this._svcTimer); clearTimeout(this._heroTimer); clearInterval(this._valTimer); }
+  componentWillUnmount() { clearTimeout(this._svcTimer); (this._heroTimers || []).forEach(clearTimeout); cancelAnimationFrame(this._heroRaf); clearInterval(this._valTimer); clearInterval(this._abTimer); if (this._heroGesture) { ['touchend', 'click', 'keydown', 'visibilitychange'].forEach((ev) => document.removeEventListener(ev, this._heroGesture)); } }
   renderVals() {
   const st = this.state || {};
   const VALUES = [
@@ -470,13 +550,19 @@ html{scroll-behavior:auto}
   ];
   const sel = st.val || 0;
   const SERVICES = [
-  { n: '01', short: 'Individuele begeleiding', title: 'Individuele begeleiding & life coaching', img: 'assets/dienst-individueel.jpg', meta: '60 min · € 85', text: 'Wanneer je twijfelt aan jezelf, moeite hebt met grenzen stellen of een belangrijke verandering doormaakt. Met aandachtige gesprekken verkennen we patronen, kwaliteiten en nieuwe mogelijkheden.' },
-  { n: '02', short: 'Angstcoaching', title: 'Angstcoaching', img: 'assets/dienst-angstcoaching.jpg', meta: 'Start met een intakegesprek', text: 'Piekeren, onzekerheid, faalangst of dagelijkse spanning kunnen veel ruimte innemen. Samen zoeken we naar manieren om meer inzicht, rust en vertrouwen te ontwikkelen.' },
-  { n: '03', short: 'Relatiecoaching', title: 'Relatiecoaching', img: 'assets/dienst-relatiecoaching.jpg', meta: 'Intake koppels · 60 min · € 95', text: 'Soms loopt communicatie vast of keren dezelfde discussies terug. Beide partners krijgen ruimte om hun verhaal te vertellen en te onderzoeken wat ze nodig hebben.' },
-  { n: '04', short: 'Kindercoaching', title: 'Kindercoaching & jongeren', img: 'assets/dienst-kindercoaching.jpg', meta: 'Start met een intakegesprek', text: 'Kinderen en jongeren hebben soms behoefte aan een plek waar ze zich gehoord voelen. Met aandacht voor zelfvertrouwen, emoties en veranderingen thuis.' },
-  { n: '05', short: 'Edelstenen Zielenkompas', title: 'Persoonlijk Edelstenen Zielenkompas', img: 'assets/dienst-zielenkompas.jpg', meta: 'Persoonlijk verslag (PDF) · € 125', text: 'Een persoonlijk uitgewerkt verslag rond edelstenen, numerologie en astrologie, als uitnodiging tot verwondering en zelfreflectie. Geen medisch of psychologisch advies.' }
+  { n: '01', icon: 'M12 20c-4 0-7-2.5-8-6 2.2-.3 4 .3 5.2 1.6C8.6 12 9.6 7.6 12 5c2.4 2.6 3.4 7 2.8 10.6 1.2-1.3 3-1.9 5.2-1.6-1 3.5-4 6-8 6z', short: 'Individuele begeleiding', title: 'Individuele begeleiding & life coaching', img: 'assets/dienst-individueel.jpg', meta: '60 min · € 85', text: 'Wanneer je twijfelt aan jezelf, moeite hebt met grenzen stellen of een belangrijke verandering doormaakt. Met aandachtige gesprekken verkennen we patronen, kwaliteiten en nieuwe mogelijkheden.' },
+  { n: '02', icon: 'M3 9c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0M3 15c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0', short: 'Angstcoaching', title: 'Angstcoaching', img: 'assets/dienst-angstcoaching.jpg', meta: 'Start met een intakegesprek', text: 'Piekeren, onzekerheid, faalangst of dagelijkse spanning kunnen veel ruimte innemen. Samen zoeken we naar manieren om meer inzicht, rust en vertrouwen te ontwikkelen.' },
+  { n: '03', icon: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z', short: 'Relatiecoaching', title: 'Relatiecoaching', img: 'assets/dienst-relatiecoaching.jpg', meta: 'Intake koppels · 60 min · € 95', text: 'Soms loopt communicatie vast of keren dezelfde discussies terug. Beide partners krijgen ruimte om hun verhaal te vertellen en te onderzoeken wat ze nodig hebben.' },
+  { n: '04', icon: 'M5 8a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M14.5 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M2.5 19c.5-3.2 2.7-5 5.5-5s5 1.8 5.5 5M15 15.2c.5-.1 1-.2 1.5-.2 2.2 0 3.9 1.4 4.4 4', short: 'Kindercoaching', title: 'Kindercoaching & jongeren', img: 'assets/dienst-kindercoaching.jpg', meta: 'Start met een intakegesprek', text: 'Kinderen en jongeren hebben soms behoefte aan een plek waar ze zich gehoord voelen. Met aandacht voor zelfvertrouwen, emoties en veranderingen thuis.' },
+  { n: '05', icon: 'M7 4h10l4 5-9 11L3 9zM3 9h18M9.5 9 12 20l2.5-11M7 4l2.5 5L12 4l2.5 5L17 4', short: 'Edelstenen Zielenkompas', title: 'Persoonlijk Edelstenen Zielenkompas', img: 'assets/dienst-zielenkompas.jpg', meta: 'Persoonlijk verslag (PDF) · € 125', text: 'Een persoonlijk uitgewerkt verslag rond edelstenen, numerologie en astrologie, als uitnodiging tot verwondering en zelfreflectie. Geen medisch of psychologisch advies.' }
   ];
   const svc = st.svc || 0;
+  const MOMENTS = [
+  { img: 'assets/over-mij-olijfboom.jpg', pos: '45% 62%', caption: 'Liefde voor de natuur', alt: 'Anne-Sophie omarmt een eeuwenoude olijfboom' },
+  { img: 'assets/over-mij-schommel.jpg', pos: '50% 42%', caption: 'Ruimte laten voor wat ontstaat', alt: 'Anne-Sophie op een schommel boven het regenwoud, op de rug gezien' },
+  { img: 'assets/over-mij-zee.jpg', pos: '50% 30%', caption: 'Nieuwe perspectieven', alt: 'Anne-Sophie met open armen op de boeg van een boot' }
+  ];
+  const ab = st.ab || 0;
   const calm = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const auto = !st.picked && !calm;
   const acc = this.props.accent ?? '#68365D';
@@ -485,8 +571,10 @@ html{scroll-behavior:auto}
   menuOpen: !!st.menuOpen,
   toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
   closeMenu: () => this.setState({ menuOpen: false }),
-  services: SERVICES.map((x, i) => ({ ...x, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? acc : 'transparent', fg: i === svc ? '#FBF7F1' : '#2E1F2A', arrowOp: i === svc ? 1 : 0.35, pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
+  services: SERVICES.map((x, i) => ({ ...x, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? acc : 'transparent', fg: i === svc ? '#FBF7F1' : '#2E1F2A', arrowOp: i === svc ? 1 : 0.35, icBg: i === svc ? 'rgba(251,247,241,0.16)' : '#EFE3D8', pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
   cur_s: SERVICES[svc],
+  moments: MOMENTS.map((m, i) => ({ ...m, op: i === ab ? 1 : 0, tf: i === ab ? 'scale(1)' : 'scale(1.06)', pressed: i === ab ? 'true' : 'false', ring: i === ab ? '0 0 0 3px #F6EFE8, 0 0 0 5px ' + acc : '0 0 0 3px #F6EFE8', thumbOp: i === ab ? 1 : 0.72, pick: () => this.setState({ ab: i, abPicked: true }) })),
+  curM: { ...MOMENTS[ab], anim: ab % 2 ? 'valA' : 'valB' },
   values: VALUES.map((v, i) => ({ ...v, pressed: i === sel ? 'true' : 'false', bg: i === sel ? '#FBF7F1' : 'transparent', fg: i === sel ? acc : 'rgba(251,247,241,0.5)', shadow: i === sel ? '0 18px 36px -18px rgba(0,0,0,0.45)' : 'none', track: i === sel ? 'rgba(104,54,93,0.18)' : 'transparent', barCls: i === sel && auto ? 'run' : '', barW: i === sel ? '100%' : '0%', pick: () => this.setState({ val: i, picked: true }) })),
   cur: { ...VALUES[sel], num: sel + 1, anim: sel % 2 ? 'valA' : 'valB' },
   nextVal: () => this.setState({ val: (sel + 1) % VALUES.length, picked: true })
