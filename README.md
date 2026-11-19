@@ -16,6 +16,8 @@ Opgebouwd volgens het door de opdrachtgever gekozen moodboard:
 | --- | --- |
 | `index.html` | De volledige homepage: HTML, CSS en JavaScript in één bestand. Geen build-stap nodig. |
 | `assets/` | Logo (licht, voor de donkere achtergrond), foto's, de hero-video (`hero.mp4`, H.264, zonder geluid) en de beeldreeks die afspeelt als een browser de video weigert (`hero-frames-*.jpg`). |
+| `admin.html` | Beheerpagina om teksten en foto's aan te passen (zie hieronder). |
+| `content.js` | Wijzigingen uit de beheerpagina. Leeg = de site zoals ontworpen. |
 | `design/` | Bronbestanden van het Claude Design-ontwerp (`Main.dc.html`, `canvas.json`). Alleen ter referentie; de site gebruikt ze niet. |
 
 ## Lokaal bekijken
@@ -29,6 +31,17 @@ python3 -m http.server 8000
 ## Publiceren
 
 De site is volledig statisch. Op Vercel: importeer de repo, framework "Other", geen build-commando, output-map de root.
+
+## Beheerpagina (`admin.html`)
+
+Een eenvoudige "achterkant" waarin de klant alle teksten en foto's kan aanpassen, zonder server of database.
+
+- Openen: `/admin.html`, toegangscode `nuance`. Dit is geen echte beveiliging: de code houdt alleen toevallige bezoekers weg. De pagina staat niet in Google (`noindex` en `robots.txt`).
+- Teksten: rechtstreeks in de website klikken en typen. Diensten, waarden en de foto's bij "Over mij" hebben elk een eigen tabblad met velden.
+- Foto's: tabblad Foto's, per foto "Vervang". Foto's worden in de browser verkleind (max. 1800 px, JPEG).
+- Wijzigingen blijven op het toestel van de klant (localStorage) en gaan **niet** vanzelf online. De klant downloadt `content.js` en stuurt dat naar Solyn.
+- Online zetten: het ontvangen `content.js` nakijken en in de root van deze repo vervangen. `index.html` laadt dat bestand en past de wijzigingen toe. Een leeg `content.js` (`window.NUANCE_CONTENT = {};`) is de site zoals ontworpen.
+- Let op: teksten zijn gekoppeld aan hun oorspronkelijke tekst. Wordt een tekst later in het ontwerp zelf veranderd, dan geldt een oude aanpassing voor die tekst niet meer.
 
 ## Nog te bevestigen vóór livegang
 
