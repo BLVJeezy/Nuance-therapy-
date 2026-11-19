@@ -58,10 +58,11 @@ a{color:#68365D}a:hover{color:#4A2542}
 .hero{margin-top:-78px}
 .nav{background:transparent !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:background-color 300ms ease}
 .nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(246,239,232,.88) !important;backdrop-filter:blur(18px) saturate(160%) !important;-webkit-backdrop-filter:blur(18px) saturate(160%) !important}
-.hero-media{order:-1;min-height:calc(clamp(400px,112vw,540px) + 78px) !important}
+.hero-media{order:-1;min-height:calc(clamp(460px,128vw,600px) + 78px) !important}
+.hero-fade{height:40% !important}
 .hero-wave-l,.hero-swoosh-top{display:none !important}
 .hero-fade{display:block !important}
-.hero-video{object-position:74% 50% !important;height:calc(100% - 4px) !important}
+.hero-video{object-position:50% 50% !important;height:calc(100% - 4px) !important}
 .hero-canvas{height:calc(100% - 4px) !important}
 .hero-copy{margin-top:-104px;padding:0 24px 76px !important;gap:18px !important}
 .hero-title{font-size:clamp(2.7rem,12.4vw,3.3rem) !important;line-height:1.04 !important}
@@ -168,8 +169,8 @@ html{scroll-behavior:auto}
 </ul>
 </div>
 </div>
-<div class="hero-media" role="img" aria-label="Olijftak die zacht beweegt in warm avondlicht" style="position: relative; overflow: hidden; align-self: stretch; min-height: clamp(340px, 46vw, 640px)">
-<video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 80% 50%; display: block; pointer-events: none"></video>
+<div class="hero-media" role="img" aria-label="Een waterdruppel die over een olijfblad rolt in warm avondlicht" style="position: relative; overflow: hidden; align-self: stretch; min-height: clamp(340px, 46vw, 640px)">
+<video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; pointer-events: none"></video>
 <canvas class="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
 <svg class="hero-wave-l" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -1px; top: 0; width: 22%; height: 100%; display: block"><path d="M0 0 H55 C 15 20, 85 38, 45 60 C 20 75, 45 90, 25 100 H0 Z" fill="#F6EFE8"></path></svg>
 <div class="hero-fade" aria-hidden="true" style="display: none; position: absolute; left: 0; right: 0; bottom: -2px; height: 56%; background: linear-gradient(to bottom, rgba(246,239,232,0) 0%, rgba(246,239,232,0.82) 56%, #F6EFE8 90%, #F6EFE8 100%)"></div>
@@ -511,15 +512,15 @@ html{scroll-behavior:auto}
   }
   startHeroFrames() {
   if (this._framesOn) return; this._framesOn = true;
-  const FW = 480, FH = 436, COLS = 4, PER = 24, N = 48, FPS = 6;
-  const sheets = ['assets/hero-frames-1.jpg', 'assets/hero-frames-2.jpg'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
+  const FW = 360, FH = 484, COLS = 5, PER = 25, N = 74, FPS = 8;
+  const sheets = ['assets/hero-frames-1.jpg', 'assets/hero-frames-2.jpg', 'assets/hero-frames-3.jpg'].map((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; return im; });
   const t0 = performance.now();
   const frame = (ctx, i, alpha, w, h) => {
   const im = sheets[Math.floor(i / PER)]; const k = i % PER;
   const sx = (k % COLS) * FW, sy = Math.floor(k / COLS) * FH;
   const sc = Math.max(w / FW, h / FH), dw = FW * sc, dh = FH * sc;
   ctx.globalAlpha = alpha;
-  ctx.drawImage(im, sx + 0.5, sy + 0.5, FW - 1, FH - 1, (w - dw) * 0.55, (h - dh) * 0.5, dw, dh);
+  ctx.drawImage(im, sx + 0.5, sy + 0.5, FW - 1, FH - 1, (w - dw) * 0.5, (h - dh) * 0.5, dw, dh);
   };
   const loop = () => {
   this._heroRaf = requestAnimationFrame(loop);
@@ -531,10 +532,10 @@ html{scroll-behavior:auto}
   if (c.style.display !== 'block') c.style.display = 'block';
   if (!w || !h) return;
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
-  const span = 2 * N - 2; let pos = (((performance.now() - t0) / 1000) * FPS) % span; if (pos > N - 1) pos = span - pos;
-  const a = Math.min(Math.floor(pos), N - 2), f = pos - a;
+  const pos = (((performance.now() - t0) / 1000) * FPS) % N;
+  const a = Math.floor(pos), f = pos - a;
   const ctx = c.getContext('2d');
-  frame(ctx, a, 1, w, h); frame(ctx, a + 1, f, w, h); ctx.globalAlpha = 1;
+  frame(ctx, a, 1, w, h); frame(ctx, (a + 1) % N, f, w, h); ctx.globalAlpha = 1;
   };
   loop();
   }
