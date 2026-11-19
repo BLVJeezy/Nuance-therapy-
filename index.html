@@ -55,7 +55,10 @@ a{color:#68365D}a:hover{color:#4A2542}
 .hero-grid{display:flex !important;flex-direction:column;align-items:stretch !important}
 .hero-kicker{font-size:10.5px !important;letter-spacing:.12em !important}
 .hero-kicker span{display:none}
-.hero-media{order:-1;min-height:clamp(400px,112vw,540px) !important}
+.hero{margin-top:-78px}
+.nav{background:transparent !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:background-color 300ms ease}
+.nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(246,239,232,.88) !important;backdrop-filter:blur(18px) saturate(160%) !important;-webkit-backdrop-filter:blur(18px) saturate(160%) !important}
+.hero-media{order:-1;min-height:calc(clamp(400px,112vw,540px) + 78px) !important}
 .hero-wave-l,.hero-swoosh-top{display:none !important}
 .hero-fade{display:block !important}
 .hero-video{object-position:74% 50% !important;height:calc(100% - 4px) !important}
@@ -456,6 +459,13 @@ html{scroll-behavior:auto}
   class Component extends DCLogic {
   componentDidMount() {
   this.startHero();
+  this._onScroll = (e) => {
+  const t = e && e.target && e.target.scrollTop ? e.target.scrollTop : 0;
+  const y = Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0, t);
+  const nav = document.querySelector('header.nav'); if (nav) nav.classList.toggle('scrolled', y > 24);
+  };
+  window.addEventListener('scroll', this._onScroll, { passive: true, capture: true });
+  this._onScroll();
   const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!calm) {
   this._valTimer = setInterval(() => {
@@ -537,7 +547,7 @@ html{scroll-behavior:auto}
   if (top < 90 || top > window.innerHeight * 0.55) window.scrollBy({ top: top - 100, behavior: 'smooth' });
   }, 440);
   }
-  componentWillUnmount() { clearTimeout(this._svcTimer); (this._heroTimers || []).forEach(clearTimeout); cancelAnimationFrame(this._heroRaf); clearInterval(this._valTimer); clearInterval(this._abTimer); if (this._heroGesture) { ['touchend', 'click', 'keydown', 'visibilitychange'].forEach((ev) => document.removeEventListener(ev, this._heroGesture)); } }
+  componentWillUnmount() { window.removeEventListener('scroll', this._onScroll, { capture: true }); clearTimeout(this._svcTimer); (this._heroTimers || []).forEach(clearTimeout); cancelAnimationFrame(this._heroRaf); clearInterval(this._valTimer); clearInterval(this._abTimer); if (this._heroGesture) { ['touchend', 'click', 'keydown', 'visibilitychange'].forEach((ev) => document.removeEventListener(ev, this._heroGesture)); } }
   renderVals() {
   const st = this.state || {};
   const VALUES = [
