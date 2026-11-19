@@ -65,7 +65,9 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 @media (max-width:760px){
 .hero{min-height:100svh !important;min-height:max(100svh,700px) !important;align-items:flex-end !important}
 .hero-media{left:0 !important;top:0 !important;bottom:30% !important;height:auto !important}
-.hero-video{object-position:46% 50% !important}
+.hero-video{object-position:46% 50% !important;display:none !important}
+.hero-canvas{display:none !important}
+.hero-anim{display:block !important}
 .hero-shade{background:linear-gradient(to bottom,rgba(28,10,20,.7) 0%,rgba(28,10,20,0) 20%,rgba(58,28,43,0) 42%,rgba(46,20,36,.7) 58%,#2E1426 70%,#2A1220 100%) !important}
 .hero-silk{height:150px !important}
 .hero-sub,.hero-body{display:none !important}
@@ -96,6 +98,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .foot-bottom{justify-content:center !important;text-align:center}
 .contact-btn .btn,.form-send{width:100%;justify-content:center;box-sizing:border-box}
 }
+@media (prefers-reduced-motion:reduce) and (max-width:760px){.hero-anim{display:none !important}.hero-video{display:block !important}}
 @media (prefers-reduced-motion:reduce){
 .rise,.val-bar.run{animation:none}
 html{scroll-behavior:auto}
@@ -141,9 +144,10 @@ html{scroll-behavior:auto}
 <main id="top">
 
 <section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; margin-top: -79px; min-height: clamp(680px, 58vw, 880px); background: #3A1C2B">
-<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; top: 0; bottom: 0; right: 0; left: 30%; overflow: hidden">
+<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; left: 30%; overflow: hidden">
 <video class="hero-video" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; display: block; pointer-events: none"></video>
 <canvas class="hero-canvas" aria-hidden="true" style="position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
+<img class="hero-anim" src="assets/hero-mobile.webp" alt="" aria-hidden="true" decoding="async" fetchpriority="high" style="position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: none; pointer-events: none">
 </div>
 <div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px; z-index: 1"></div>
 <svg class="hero-silk" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; display: block; width: 100%; height: clamp(170px, 26vw, 380px); overflow: visible">
@@ -512,7 +516,7 @@ html{scroll-behavior:auto}
   }
   startHero() {
   const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (calm) return;
+  if (calm || window.matchMedia('(max-width: 760px)').matches) return;
   const video = () => document.querySelector('video.hero-video');
   const tryPlay = () => {
   const v = video(); if (!v || this._videoOK) return;
