@@ -26,6 +26,11 @@ a{color:#68365D}a:hover{color:#4A2542}
 .thumb{transition:box-shadow 260ms ease-out,opacity 260ms ease-out,transform 120ms ease-out}
 .thumb:hover{opacity:1 !important}
 .thumb:active{transform:scale(.94)}
+.drop-body{transition:transform 260ms ease-out,opacity 260ms ease-out;transform-origin:50% 100%}
+.drop.landed .drop-body{transform:scale(1.5,0.1);opacity:0}
+.drop.landed .drop-ring{animation:dropring 1400ms cubic-bezier(.2,.7,.2,1) both}
+.drop.landed .drop-ring.r2{animation-delay:180ms}
+@keyframes dropring{0%{opacity:0;transform:scale(.1)}25%{opacity:1}100%{opacity:0;transform:scale(1)}}
 .tab{transition:background-color 220ms ease-out,color 220ms ease-out,transform 120ms ease-out}
 .tab[aria-pressed="false"]:hover{background-color:#F3E7DB !important}
 .tab:active{transform:scale(.98)}
@@ -104,6 +109,7 @@ a{color:#68365D}a:hover{color:#4A2542}
 }
 @media (min-width:901px){.nav-panel{display:none !important}}
 @media (prefers-reduced-motion:reduce){
+.drop{display:none !important}
 .sway,.rise,.kenburns,.val-bar.run{animation:none}
 html{scroll-behavior:auto}
 .btn,.card,.val,.val-next,.tab,.acc-wrap,.acc-clip,.about-img,.thumb{transition:none !important}
@@ -402,12 +408,19 @@ html{scroll-behavior:auto}
 </div>
 </footer>
 
+<div class="drop" aria-hidden="true" style="position: fixed; left: 0; top: 0; z-index: 15; width: 26px; height: 34px; margin: -17px 0 0 -13px; opacity: 0; pointer-events: none; will-change: transform, opacity">
+<span class="drop-body" style="position: absolute; inset: 0"><span style="position: absolute; left: 2px; top: 10px; width: 22px; height: 22px; box-sizing: border-box; border-radius: 6% 50% 50% 50%; transform: rotate(45deg); background: radial-gradient(circle at 34% 58%, rgba(255,255,255,0.98) 0 7%, rgba(255,255,255,0.5) 17%, rgba(255,255,255,0.12) 50%, rgba(104,54,93,0.3) 100%); border: 1px solid rgba(104,54,93,0.3); box-shadow: inset -6px -1px 8px rgba(74,37,66,0.34), inset 2px 2px 3px rgba(255,255,255,0.7), 7px 7px 13px -5px rgba(74,37,66,0.5); backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06); -webkit-backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06)"></span></span>
+<span class="drop-ring" style="position: absolute; left: 50%; top: 100%; width: 90px; height: 26px; margin: -13px 0 0 -45px; border-radius: 50%; border: 1.5px solid rgba(104,54,93,0.45); opacity: 0; transform: scale(0.1)"></span>
+<span class="drop-ring r2" style="position: absolute; left: 50%; top: 100%; width: 150px; height: 42px; margin: -21px 0 0 -75px; border-radius: 50%; border: 1px solid rgba(104,54,93,0.3); opacity: 0; transform: scale(0.1)"></span>
+</div>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#68365D","options":["#68365D","#83184F","#4A2542"]},"$preview":{"width":1440,"height":6800}}'>
 class Component extends DCLogic {
 componentDidMount() {
 this.startHero();
+this.startDrop();
 this._onScroll = (e) => {
 const t = e && e.target && e.target.scrollTop ? e.target.scrollTop : 0;
 const y = Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0, t);
@@ -458,6 +471,36 @@ document.addEventListener('visibilitychange', this._heroGesture);
 /* Als de browser de video weigert te starten (bv. energiebesparing of een in-app webview), speelt dezelfde opname af als beeldreeks op een canvas. */
 this._heroTimers.push(setTimeout(() => { if (!this._videoOK) this.startHeroFrames(); }, 2200));
 }
+startDrop() {
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+let cur = 0, vel = 0, running = false;
+const read = () => {
+const el = this._scroller;
+if (el && el.scrollHeight > el.clientHeight) return { y: el.scrollTop, max: el.scrollHeight - el.clientHeight };
+const d = document.documentElement;
+return { y: window.scrollY || d.scrollTop || 0, max: Math.max(1, d.scrollHeight - window.innerHeight) };
+};
+const tick = () => {
+const drop = document.querySelector('.drop'); if (!drop) { running = false; return; }
+const s = read(); const target = Math.min(1, Math.max(0, s.y / s.max));
+const diff = target - cur; cur += diff * 0.12; vel = diff;
+const vw = window.innerWidth, vh = window.innerHeight;
+const x = vw * (0.5 + 0.27 * Math.sin(cur * Math.PI * 2.5 + 0.6));
+const y = vh * (0.3 + 0.56 * cur);
+const stretch = 1 + Math.min(Math.abs(vel) * 9, 0.55);
+drop.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + (1 / Math.sqrt(stretch)).toFixed(3) + ',' + stretch.toFixed(3) + ')';
+drop.style.opacity = Math.min(1, Math.max(0, (cur - 0.012) / 0.03)).toFixed(2);
+drop.classList.toggle('landed', cur > 0.992);
+if (Math.abs(diff) > 0.0004) this._dropRaf = requestAnimationFrame(tick); else running = false;
+};
+this._onDropScroll = (e) => {
+const t = e && e.target; if (t && t.nodeType === 1 && t.scrollHeight > t.clientHeight + 200 && t.scrollTop > 0) this._scroller = t;
+if (!running) { running = true; this._dropRaf = requestAnimationFrame(tick); }
+};
+window.addEventListener('scroll', this._onDropScroll, { passive: true, capture: true });
+window.addEventListener('resize', this._onDropScroll, { passive: true });
+this._onDropScroll();
+}
 startHeroFrames() {
 if (this._framesOn) return; this._framesOn = true;
 const FW = 360, FH = 484, COLS = 5, PER = 25, N = 74, FPS = 8;
@@ -496,7 +539,7 @@ const top = el.getBoundingClientRect().top;
 if (top < 90 || top > window.innerHeight * 0.55) window.scrollBy({ top: top - 100, behavior: 'smooth' });
 }, 440);
 }
-componentWillUnmount() { window.removeEventListener('scroll', this._onScroll, { capture: true }); clearTimeout(this._svcTimer); (this._heroTimers || []).forEach(clearTimeout); cancelAnimationFrame(this._heroRaf); clearInterval(this._valTimer); clearInterval(this._abTimer); if (this._heroGesture) { ['touchend', 'click', 'keydown', 'visibilitychange'].forEach((ev) => document.removeEventListener(ev, this._heroGesture)); } }
+componentWillUnmount() { window.removeEventListener('scroll', this._onScroll, { capture: true }); window.removeEventListener('scroll', this._onDropScroll, { capture: true }); window.removeEventListener('resize', this._onDropScroll); cancelAnimationFrame(this._dropRaf); clearTimeout(this._svcTimer); (this._heroTimers || []).forEach(clearTimeout); cancelAnimationFrame(this._heroRaf); clearInterval(this._valTimer); clearInterval(this._abTimer); if (this._heroGesture) { ['touchend', 'click', 'keydown', 'visibilitychange'].forEach((ev) => document.removeEventListener(ev, this._heroGesture)); } }
 renderVals() {
 const st = this.state || {};
 const VALUES = [
