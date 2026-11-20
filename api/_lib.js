@@ -2,7 +2,7 @@
 const crypto = require('crypto');
 
 // sha256 van de toegangscode; de code zelf staat nergens in de broncode.
-const CODE_HASH = 'fdbb3505c75008f60b5f0a07381fa73fc01394ac77e3107719f2c743b02119b8';
+const CODE_HASH = '945b269dc51426f57ccbbc373e1fcdd4153df2527599a36ec1aa38c3c611377f';
 const PREFIX = 'nuance/';
 
 function okCode(code) {

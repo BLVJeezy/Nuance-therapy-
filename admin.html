@@ -257,7 +257,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 (function () {
   'use strict';
   function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
-  var CODE_HASH = 'fdbb3505c75008f60b5f0a07381fa73fc01394ac77e3107719f2c743b02119b8', KEY = 'nuance-admin-draft', CODE = '';
+  var CODE_HASH = '945b269dc51426f57ccbbc373e1fcdd4153df2527599a36ec1aa38c3c611377f', KEY = 'nuance-admin-draft', CODE = '';
   var LIVE = clone(window.NUANCE_CONTENT || {});
   function sha(t) { return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); }); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
