@@ -44,6 +44,12 @@ Een eenvoudige "achterkant" waarin de klant alle teksten en foto's kan aanpassen
 - Online zetten: het ontvangen `content.js` nakijken en in de root van deze repo vervangen. `index.html` laadt dat bestand en past de wijzigingen toe. Een leeg `content.js` (`window.NUANCE_CONTENT = {};`) is de site zoals ontworpen.
 - Let op: teksten zijn gekoppeld aan hun oorspronkelijke tekst. Wordt een tekst later in het ontwerp zelf veranderd, dan geldt een oude aanpassing voor die tekst niet meer.
 
+## FAQ-pagina, opmaak en fotobescherming
+
+- `faq.html`: veelgestelde vragen (14 vragen in 4 groepen) met FAQPage-schema voor Google. Gebouwd door `build_faq.py` met dezelfde kop en voet als de homepage; ook aanpasbaar in het beheer (knop Home / FAQ bovenaan).
+- Beheer: bij een tekst verschijnt een opmaakbalk (lettertype sierlijk/strak, kleiner/groter, links/midden/rechts, standaard). Bij foto's kies je de uitsnede (midden, boven, onder, links, rechts). Bewaard als `style` en `imgpos` in `content.js`.
+- Foto's kunnen niet met rechtsklik of lang indrukken bewaard of versleept worden, en knijpen/dubbeltikken om in te zoomen is uitgeschakeld (`assets/site-extra.js`). Een schermafbeelding blijft altijd mogelijk.
+
 ## Nog te bevestigen vóór livegang
 
 - Beroepsbenaming: de site gebruikt "coach & psychosociaal begeleider", niet "psychotherapeut".
