@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Nuance — Ruimte voor alle kanten van jezelf</title>
-<meta name="description" content="Nuance: coaching en psychosociale begeleiding in Bilzen-Hoeselt. Warm, persoonlijk en zonder oordeel.">
+<title>Nuance — Coaching &amp; psychosociale begeleiding in Bilzen-Hoeselt</title>
+<meta name="description" content="Nuance: individuele begeleiding, angstcoaching, relatietherapie en kinder- &amp; jongerencoaching in Bilzen-Hoeselt. Ruimte voor alles wat jou uniek maakt.">
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -568,7 +568,7 @@ html{scroll-behavior:auto}
   const el = document.querySelector('#welkom'); if (!el) return;
   const r = el.getBoundingClientRect();
   if (r.top > (window.innerHeight || 0) * 0.85 || r.bottom < 0) return;
-  this.setState({ ab: ((st.ab || 0) + 1) % MOMENTS.length });
+  this.setState({ ab: 0 });
   }, 5200);
   }
   }
