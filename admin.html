@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap">
 <script src="content.js"></script>
+<script src="api/content"></script>
 <style>
 :root{--dk:#3E2A35;--dk2:#35232D;--panel:#4A3540;--mauve:#74425C;--sand:#D6C3B2;--ivory:#EAE3DA;--body:#DDD0C6;--mut:#BFAEA3;--line:rgba(234,227,218,.14);--ok:#9CC59A;--nav:64px;--safe:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -65,6 +66,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 .nav button[aria-selected="true"]{background:var(--panel);color:var(--ivory)}
 .badge{position:absolute;top:2px;right:calc(50% - 22px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--sand);color:var(--dk);font-size:11px;font-weight:600;display:grid;place-items:center}
 .badge[data-n="0"]{display:none}
+.badge{background:#E8B4C0}
 .side{grid-column:2;min-height:0;overflow:auto;border-left:1px solid var(--line);background:var(--dk);-webkit-overflow-scrolling:touch}
 .sheet-head{display:none}
 .pane{padding:18px;display:none;flex-direction:column;gap:16px}
@@ -139,7 +141,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
   <form id="gateForm" autocomplete="off">
     <img src="assets/logo-licht.png" alt="Nuance">
     <h1 style="font-size:28px">Beheer</h1>
-    <p>Hier pas je de teksten en foto's van de website aan. Je wijzigingen gaan pas online nadat Solyn ze heeft nagekeken.</p>
+    <p>Hier pas je de teksten en foto's van de website aan. Met de knop Publiceren zet je je wijzigingen meteen op de website.</p>
     <label class="field"><span>Toegangscode</span><input id="code" type="password" autocomplete="off" autocapitalize="none" required></label>
     <div class="err" id="gateErr" role="alert"></div>
     <button class="btn" type="submit">Openen</button>
@@ -180,7 +182,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       <button role="tab" aria-selected="true" data-tab="teksten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Teksten</button>
       <button role="tab" aria-selected="false" data-tab="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Foto's</button>
       <button role="tab" aria-selected="false" data-tab="lijsten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Lijsten</button>
-      <button role="tab" aria-selected="false" data-tab="klaar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Versturen<span class="badge" id="count" data-n="0">0</span></button>
+      <button role="tab" aria-selected="false" data-tab="klaar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Publiceren<span class="badge" id="count" data-n="0">0</span></button>
     </nav>
     <div class="scrim" id="scrim"></div>
     <aside class="side" id="side">
@@ -222,11 +224,16 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       </section>
 
       <section class="pane" data-pane="klaar">
-        <h2>Klaar met aanpassen?</h2>
-        <p class="hint">Je wijzigingen staan nu alleen op dit toestel. Stuur ze naar Jason (Solyn): hij kijkt alles na en zet het online.</p>
-        <div class="card"><div class="meta">Overzicht</div><div id="summary" class="hint"></div></div>
-        <button class="btn wide" type="button" id="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Versturen via WhatsApp of mail</button>
-        <button class="btn ghost wide" type="button" id="dl">Download als bestand</button>
+        <h2>Publiceren</h2>
+        <p class="hint" id="pubHint">Je wijzigingen zijn bewaard op dit toestel. Met Publiceren zet je ze op de website, voor iedereen zichtbaar.</p>
+        <div class="card"><div class="meta">Overzicht</div><div id="summary" class="hint"></div><div id="liveInfo" class="hint" style="font-size:13px;color:var(--mut)"></div></div>
+        <button class="btn wide" type="button" id="publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span id="pubLabel">Publiceer op de website</span></button>
+        <p class="hint" id="pubMsg" role="status" style="min-height:1.2em;font-size:14px"></p>
+        <div class="card">
+          <div class="meta">Eerdere versies</div>
+          <p class="hint" style="font-size:13.5px">Ging er iets mis? Zet een eerder gepubliceerde versie terug.</p>
+          <div id="history"></div>
+        </div>
         <div class="card install" id="installCard">
           <div class="meta">Als app op je telefoon of computer</div>
           <p class="hint" id="installText">Zet het beheer als app op je beginscherm, dan open je het met één tik.</p>
@@ -235,7 +242,9 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
         <div class="card">
           <div class="meta">Andere acties</div>
           <label class="btn ghost small" style="cursor:pointer">Bestand met wijzigingen openen<input type="file" id="imp" accept=".js,.json,.txt,text/plain,application/json,text/javascript" hidden></label>
-          <button class="btn ghost small" type="button" id="reset">Alles terugzetten naar het ontwerp</button>
+          <button class="btn ghost small" type="button" id="share">Wijzigingen als bestand delen</button>
+          <button class="btn ghost small" type="button" id="dl">Download als bestand</button>
+          <button class="btn ghost small" type="button" id="reset">Wijzigingen op dit toestel wissen</button>
           <a class="btn ghost small only-phone" href="index.html" target="_blank" rel="noopener">Bekijk de site</a>
         </div>
       </section>
@@ -247,14 +256,16 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 <script>
 (function () {
   'use strict';
-  var CODE = 'nuance', KEY = 'nuance-admin-draft';
+  function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
+  var CODE_HASH = 'fdbb3505c75008f60b5f0a07381fa73fc01394ac77e3107719f2c743b02119b8', KEY = 'nuance-admin-draft', CODE = '';
+  var LIVE = clone(window.NUANCE_CONTENT || {});
+  function sha(t) { return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); }); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var frame = $('#site'), draft, base = {}, origText = {}, origImg = {};
   var phone = window.matchMedia('(max-width: 900px)');
-  var TITLES = { teksten: 'Teksten', fotos: "Foto's", lijsten: 'Lijsten', klaar: 'Versturen' };
+  var TITLES = { teksten: 'Teksten', fotos: "Foto's", lijsten: 'Lijsten', klaar: 'Publiceren' };
 
-  function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
   function norm(d) { d = d || {}; d.text = d.text || {}; d.img = d.img || {}; d.style = d.style || {}; d.imgpos = d.imgpos || {}; d.data = d.data || {}; ['services', 'values', 'moments'].forEach(function (k) { d.data[k] = d.data[k] || []; }); return d; }
   /* Opslag: IndexedDB (ruim genoeg voor foto's), met localStorage als reserve. */
   var DB = null;
@@ -296,13 +307,14 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     loadAsync().then(function (d) { draft = d; setup(); });
     try { if (!localStorage.getItem('nuance-admin-coach')) $('#coach').hidden = false; } catch (e) {}
   }
-  try { if (localStorage.getItem('nuance-admin-ok') === '1') open(); } catch (e) {}
+  try { localStorage.removeItem('nuance-admin-ok'); var saved = localStorage.getItem('nuance-admin-code'); if (saved) sha(saved).then(function (h) { if (h === CODE_HASH) { CODE = saved; open(); } }); } catch (e) {}
   $('#gateForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    if ($('#code').value.trim().toLowerCase() === CODE) {
-      try { localStorage.setItem('nuance-admin-ok', '1'); } catch (x) {}
-      open();
-    } else { $('#gateErr').textContent = 'Die code klopt niet.'; $('#code').select(); }
+    var v = $('#code').value.trim().toLowerCase();
+    sha(v).then(function (h) {
+      if (h === CODE_HASH) { CODE = v; try { localStorage.setItem('nuance-admin-code', v); } catch (x) {} open(); }
+      else { $('#gateErr').textContent = 'Die code klopt niet.'; $('#code').select(); }
+    });
   });
   $('#coachOk').addEventListener('click', function () { $('#coach').hidden = true; try { localStorage.setItem('nuance-admin-coach', '1'); } catch (e) {} });
 
@@ -492,11 +504,16 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       box.appendChild(row);
     });
   }
+  function canon(o) { o = norm(clone(o)); ['services', 'values', 'moments'].forEach(function (k) { o.data[k] = o.data[k].map(function (x) { return x && Object.keys(x).length ? x : null; }); while (o.data[k].length && !o.data[k][o.data[k].length - 1]) o.data[k].pop(); }); return JSON.stringify(sortKeys(o)); }
+  function sortKeys(o) { if (Array.isArray(o)) return o.map(sortKeys); if (o && typeof o === 'object') { var r = {}; Object.keys(o).sort().forEach(function (k) { r[k] = sortKeys(o[k]); }); return r; } return o; }
+  function same(a, b) { return canon(a) === canon(b); }
   function total() { var d = Object.keys(draft.style).length + Object.keys(draft.imgpos).length; ['services', 'values', 'moments'].forEach(function (k) { draft.data[k].forEach(function (o) { d += Object.keys(o || {}).length; }); }); return { t: Object.keys(draft.text).length, p: Object.keys(draft.img).length, d: d }; }
   function counts() {
     if (!draft) return;
     var n = total(), sum = n.t + n.p + n.d;
-    $('#count').textContent = sum; $('#count').setAttribute('data-n', String(sum));
+    var dirty = !same(draft, LIVE);
+    $('#count').textContent = dirty ? '!' : ''; $('#count').setAttribute('data-n', dirty ? '1' : '0');
+    if ($('#pubHint')) $('#pubHint').textContent = dirty ? 'Je hebt wijzigingen die nog niet op de website staan. Met Publiceren zet je ze online, voor iedereen zichtbaar.' : 'Alles wat je ziet, staat ook zo op de website.';
     $('#summary').textContent = sum ? (n.t + ' tekst(en), ' + n.p + ' foto(’s) en ' + n.d + ' veld(en) in de lijsten aangepast.') : 'Nog niets aangepast.';
   }
 
@@ -530,8 +547,8 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     r.readAsText(f); this.value = '';
   });
   $('#reset').addEventListener('click', function () {
-    if (!confirm('Alle wijzigingen op dit toestel wissen en terugkeren naar het ontwerp?')) return;
-    draft = norm({}); try { localStorage.removeItem(KEY); } catch (e) {} save(false); saving.then(reloadFrame); texts(); toast('Alles teruggezet');
+    if (!confirm('Alle wijzigingen op dit toestel wissen die nog niet gepubliceerd zijn?')) return;
+    draft = norm(clone(LIVE)); try { localStorage.removeItem(KEY); } catch (e) {} save(false); saving.then(reloadFrame); texts(); toast('Alles teruggezet');
   });
 
   /* ---------- pagina wisselen ---------- */
@@ -574,6 +591,67 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     if (b.hasAttribute('data-s')) { var v = Math.round(((st.s || 1) + 0.1 * Number(b.getAttribute('data-s'))) * 10) / 10; st.s = Math.min(2, Math.max(0.6, v)); if (st.s === 1) delete st.s; }
     styleEls(cur); fmtFor(cur); save(false);
   });
+
+  /* ---------- publiceren ---------- */
+  function api(path, body) {
+    return fetch(path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : { cache: 'no-store' })
+      .then(function (r) { return r.json().catch(function () { return { error: 'Geen antwoord van de website (' + r.status + ').' }; }).then(function (j) { if (!r.ok) { var e = new Error(j.error || 'Mislukt'); e.setup = j.setup; throw e; } return j; }); });
+  }
+  function pubBusy(on, label) { $('#publish').disabled = on; $('#pubLabel').textContent = label || 'Publiceer op de website'; }
+  function msg(t, bad) { $('#pubMsg').textContent = t; $('#pubMsg').style.color = bad ? '#F0B4B4' : 'var(--body)'; }
+  function uploadAll() {
+    var jobs = [];
+    Object.keys(draft.img).forEach(function (k) { if (/^data:/.test(draft.img[k])) jobs.push({ get: function () { return draft.img[k]; }, set: function (u) { draft.img[k] = u; } }); });
+    ['services', 'values', 'moments'].forEach(function (n) { draft.data[n].forEach(function (o) { if (o && /^data:/.test(o.img || '')) jobs.push({ get: function () { return o.img; }, set: function (u) { o.img = u; } }); }); });
+    var i = 0;
+    function next() {
+      if (i >= jobs.length) return Promise.resolve();
+      var j = jobs[i++]; pubBusy(true, 'Foto ' + i + ' van ' + jobs.length + ' uploaden\u2026');
+      return api('api/upload', { code: CODE, dataUrl: j.get() }).then(function (r) { j.set(r.url); save(false); return next(); });
+    }
+    return next();
+  }
+  $('#publish').addEventListener('click', function () {
+    if (same(draft, LIVE)) { msg('Er is niets nieuws om te publiceren.'); return; }
+    msg(''); pubBusy(true, 'Bezig\u2026');
+    uploadAll().then(function () {
+      pubBusy(true, 'Publiceren\u2026');
+      var content = clone(draft);
+      ['services', 'values', 'moments'].forEach(function (k) { content.data[k] = content.data[k].map(function (x) { return x || {}; }); });
+      return api('api/publish', { code: CODE, content: content });
+    }).then(function (r) {
+      LIVE = clone(draft); counts(); pubBusy(false); history();
+      msg('Gepubliceerd. Binnen een halve minuut is het overal zichtbaar.'); toast('Staat online');
+      $('#liveInfo').textContent = 'Laatst gepubliceerd: ' + new Date(r.at).toLocaleString('nl-BE');
+    }).catch(function (e) {
+      pubBusy(false);
+      msg(e.setup ? 'Publiceren is nog niet ingeschakeld: de opslag moet nog gekoppeld worden. Je wijzigingen blijven bewaard op dit toestel.' : (e.message || 'Publiceren mislukt.') + ' Je wijzigingen blijven bewaard.', true);
+    });
+  });
+  function history() {
+    var box = $('#history'); if (!box || !CODE) return;
+    api('api/history?code=' + encodeURIComponent(CODE)).then(function (r) {
+      box.innerHTML = '';
+      if (r.setup) { box.innerHTML = '<p class="hint" style="font-size:13.5px">Nog niet beschikbaar.</p>'; return; }
+      if (!r.versions.length) { box.innerHTML = '<p class="hint" style="font-size:13.5px">Nog geen eerdere versies.</p>'; return; }
+      if (r.versions[0]) $('#liveInfo').textContent = 'Laatst gepubliceerd: ' + new Date(r.versions[0].at).toLocaleString('nl-BE');
+      r.versions.forEach(function (v, i) {
+        var row = document.createElement('div'); row.className = 'chg';
+        row.innerHTML = '<span></span>' + (i === 0 ? '<span style="font-size:12.5px;color:var(--mut)">Nu online</span>' : '<button class="btn ghost small" type="button">Terugzetten</button>');
+        $('span', row).textContent = new Date(v.at).toLocaleString('nl-BE', { dateStyle: 'medium', timeStyle: 'short' });
+        var b = $('button', row);
+        if (b) b.addEventListener('click', function () {
+          if (!confirm('Deze versie terugzetten op de website? Wijzigingen die je daarna maakte, worden vervangen.')) return;
+          b.disabled = true;
+          api('api/history', { code: CODE, pathname: v.pathname }).then(function (res) {
+            draft = norm(res.content); LIVE = clone(draft); save(false); saving.then(reloadFrame); history(); toast('Versie teruggezet'); msg('Die versie staat weer online.');
+          }).catch(function (e) { b.disabled = false; msg(e.message, true); });
+        });
+        box.appendChild(row);
+      });
+    }).catch(function () { box.innerHTML = '<p class="hint" style="font-size:13.5px">Nog niet beschikbaar.</p>'; });
+  }
+  $$('[data-tab="klaar"]').forEach(function (b) { b.addEventListener('click', history); });
 
   /* ---------- installeren als app ---------- */
   var deferred = null;

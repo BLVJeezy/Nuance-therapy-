@@ -1,0 +1,7 @@
+{
+  "name": "nuance-therapy",
+  "private": true,
+  "description": "Website Nuance met beheer-API (Vercel Blob)",
+  "engines": { "node": ">=20" },
+  "dependencies": { "@vercel/blob": "^2.9.0" }
+}

@@ -32,17 +32,17 @@ python3 -m http.server 8000
 
 De site is volledig statisch. Op Vercel: importeer de repo, framework "Other", geen build-commando, output-map de root.
 
-## Beheerpagina (`admin.html`)
+## Beheerpagina (`admin.html`) en live publiceren
 
-Een eenvoudige "achterkant" waarin de klant alle teksten en foto's kan aanpassen, zonder server of database.
-
-- Openen: `/admin.html`, toegangscode `nuance`. Dit is geen echte beveiliging: de code houdt alleen toevallige bezoekers weg. De pagina staat niet in Google (`noindex` en `robots.txt`).
-- Teksten: rechtstreeks in de website klikken en typen. Diensten, waarden en de foto's bij "Over mij" hebben elk een eigen tabblad met velden.
-- Foto's: tabblad Foto's, per foto "Vervang". Foto's worden in de browser verkleind (max. 1800 px, JPEG).
-- Werkt op telefoon als app: onderaan een tabbalk (Teksten, Foto's, Lijsten, Versturen), panelen schuiven omhoog. Installeerbaar via Chrome ("App installeren" / "Toevoegen aan startscherm") en op iPhone via Safari ("Zet op beginscherm"), dankzij `admin.webmanifest`, `admin-sw.js` en de iconen `assets/app-*.png`.
-- Wijzigingen blijven op het toestel van de klant (localStorage) en gaan **niet** vanzelf online. Met "Versturen" deelt de klant een bestand `nuance-wijzigingen.txt` (via WhatsApp, mail, ...) of downloadt ze `content.js`. De inhoud van beide is dezelfde: hernoem het `.txt`-bestand naar `content.js`.
-- Online zetten: het ontvangen `content.js` nakijken en in de root van deze repo vervangen. `index.html` laadt dat bestand en past de wijzigingen toe. Een leeg `content.js` (`window.NUANCE_CONTENT = {};`) is de site zoals ontworpen.
-- Let op: teksten zijn gekoppeld aan hun oorspronkelijke tekst. Wordt een tekst later in het ontwerp zelf veranderd, dan geldt een oude aanpassing voor die tekst niet meer.
+- Openen: `/admin.html`. De toegangscode staat niet in deze repo; alleen de sha256-hash staat in `api/_lib.js` en `admin.html`. Vraag de code aan Solyn.
+- Teksten rechtstreeks in de site typen, opmaakbalk (lettertype, grootte, uitlijning), foto's vervangen en uitsnede kiezen, lijsten (diensten, waarden, Over mij), homepage en FAQ.
+- Concepten worden bewaard op het toestel (IndexedDB). **Publiceren** zet ze live:
+  - foto's gaan eerst naar `api/upload` (Vercel Blob, `nuance/img/…`),
+  - daarna gaat alles naar `api/publish` → `nuance/content.json` + een kopie in `nuance/history/`,
+  - `index.html` en `faq.html` laden `api/content` (CDN-cache 20 s), dus binnen ongeveer een halve minuut is het overal zichtbaar, zonder nieuwe deploy.
+- **Eerdere versies**: in het tabblad Publiceren kan elke vorige versie teruggezet worden (`api/history`).
+- Vereist: een **Vercel Blob store gekoppeld aan dit project** (zet `BLOB_READ_WRITE_TOKEN`), daarna één keer opnieuw deployen. Zonder store meldt het beheer dat publiceren nog niet ingeschakeld is.
+- `content.js` blijft het statische vertrekpunt (leeg = het ontwerp); gepubliceerde wijzigingen uit Blob gaan daarboven.
 
 ## FAQ-pagina, opmaak en fotobescherming
 
