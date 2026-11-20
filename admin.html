@@ -226,11 +226,35 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 
   function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
   function norm(d) { d = d || {}; d.text = d.text || {}; d.img = d.img || {}; d.data = d.data || {}; ['services', 'values', 'moments'].forEach(function (k) { d.data[k] = d.data[k] || []; }); return d; }
-  function load() { try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) return norm(d); } catch (e) {} return norm(clone(window.NUANCE_CONTENT)); }
+  /* Opslag: IndexedDB (ruim genoeg voor foto's), met localStorage als reserve. */
+  var DB = null;
+  function idb() {
+    return new Promise(function (res) {
+      if (!('indexedDB' in window)) return res(null);
+      try { var r = indexedDB.open('nuance-beheer', 1); r.onupgradeneeded = function () { r.result.createObjectStore('kv'); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { res(null); }; } catch (e) { res(null); }
+    });
+  }
+  function idbGet() { return new Promise(function (res) { if (!DB) return res(null); try { var q = DB.transaction('kv').objectStore('kv').get(KEY); q.onsuccess = function () { res(q.result || null); }; q.onerror = function () { res(null); }; } catch (e) { res(null); } }); }
+  function idbPut(v) { return new Promise(function (res, rej) { if (!DB) return rej(new Error('geen db')); try { var t = DB.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, KEY); t.oncomplete = function () { res(); }; t.onerror = t.onabort = function () { rej(t.error); }; } catch (e) { rej(e); } }); }
+  function loadAsync() {
+    return idb().then(function (db) { DB = db; return idbGet(); }).then(function (v) {
+      if (v) return norm(v);
+      try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) return norm(d); } catch (e) {}
+      return norm(clone(window.NUANCE_CONTENT));
+    });
+  }
   function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2600); }
+  var saving = Promise.resolve();
+  function ok() { $('#status').textContent = 'Alles is bewaard'; $('#statusBox').classList.remove('warn'); }
+  function fail() { $('#status').textContent = 'Niet bewaard'; $('#statusBox').classList.add('warn'); toast('Bewaren lukte niet. Verstuur je wijzigingen zodat er niets verloren gaat.'); }
   function save(rerender) {
-    try { localStorage.setItem(KEY, JSON.stringify(draft)); $('#status').textContent = 'Alles is bewaard'; $('#statusBox').classList.remove('warn'); }
-    catch (e) { $('#status').textContent = 'Niet bewaard'; $('#statusBox').classList.add('warn'); toast('Geen plek meer op dit toestel. Verstuur je wijzigingen of gebruik minder foto’s.'); }
+    $('#status').textContent = 'Bewaren\u2026';
+    var snap = clone(draft);
+    saving = saving.then(function () { return idbPut(snap); }).then(function () {
+      ok(); try { localStorage.removeItem(KEY); } catch (e) {}
+    }).catch(function () {
+      try { localStorage.setItem(KEY, JSON.stringify(snap)); ok(); } catch (e) { fail(); }
+    });
     counts();
     var w = frame.contentWindow;
     if (w) { w.NUANCE_CONTENT = draft; if (rerender && w.__nuanceRender) w.__nuanceRender(); }
@@ -238,7 +262,8 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
 
   /* ---------- toegang (geen echte beveiliging: houdt alleen toevallige bezoekers weg) ---------- */
   function open() {
-    $('#gate').hidden = true; $('#app').hidden = false; draft = load();
+    $('#gate').hidden = true; $('#app').hidden = false;
+    loadAsync().then(function (d) { draft = d; setup(); });
     try { if (!localStorage.getItem('nuance-admin-coach')) $('#coach').hidden = false; } catch (e) {}
   }
   try { if (localStorage.getItem('nuance-admin-ok') === '1') open(); } catch (e) {}
@@ -246,7 +271,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     e.preventDefault();
     if ($('#code').value.trim().toLowerCase() === CODE) {
       try { localStorage.setItem('nuance-admin-ok', '1'); } catch (x) {}
-      open(); if (frame.contentDocument && frame.contentDocument.readyState === 'complete') setup();
+      open();
     } else { $('#gateErr').textContent = 'Die code klopt niet.'; $('#code').select(); }
   });
   $('#coachOk').addEventListener('click', function () { $('#coach').hidden = true; try { localStorage.setItem('nuance-admin-coach', '1'); } catch (e) {} });
@@ -332,7 +357,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     doc.addEventListener('submit', function (e) { e.preventDefault(); e.stopPropagation(); toast('In het beheer wordt het formulier niet verstuurd.'); }, true);
   }
   function setup() {
-    if (!draft) return;
+    if (!draft || !frame.contentDocument || frame.contentDocument.readyState !== 'complete') return;
     var w = frame.contentWindow; if (!w || !w.__nuanceRender) return;
     base = clone(w.__nuanceBase || {});
     w.NUANCE_CONTENT = draft; bindFrame(); w.__nuanceRender(); enable();
@@ -347,10 +372,13 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
     if (!/^image\//.test(file.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(file.name)) { toast('Kies een foto (jpg, png of webp).'); return; }
     var url = URL.createObjectURL(file), img = new Image();
     img.onload = function () {
-      var png = file.type === 'image/png', max = png ? 1200 : 1800, s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
-      var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
-      cb(c.toDataURL(png ? 'image/png' : 'image/jpeg', 0.82));
+      var max = 1600, sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+      var g = c.getContext('2d'); g.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      var alpha = false;
+      if (file.type === 'image/png') { try { var px = g.getImageData(0, 0, c.width, c.height).data; for (var i = 3; i < px.length; i += 4 * 97) if (px[i] < 250) { alpha = true; break; } } catch (e) {} }
+      if (!alpha) { var c2 = document.createElement('canvas'); c2.width = c.width; c2.height = c.height; var g2 = c2.getContext('2d'); g2.fillStyle = '#ffffff'; g2.fillRect(0, 0, c2.width, c2.height); g2.drawImage(c, 0, 0); c = c2; }
+      cb(c.toDataURL(alpha ? 'image/png' : 'image/jpeg', 0.8));
     };
     img.onerror = function () { URL.revokeObjectURL(url); toast('Deze foto kan niet gelezen worden. Probeer een jpg of png.'); };
     img.src = url;
@@ -378,7 +406,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       if (/logo|mark/.test(origImg[k] || '')) label = label || 'Logo';
       var card = document.createElement('div'); card.className = 'card';
       card.appendChild(photoRow(src, label, function (data) { draft.img[k] = data; save(true); photos(); toast('Foto vervangen'); },
-        function () { delete draft.img[k]; save(false); reloadFrame(); setTimeout(photos, 900); }, !!draft.img[k]));
+        function () { delete draft.img[k]; save(false); saving.then(reloadFrame); setTimeout(photos, 900); }, !!draft.img[k]));
       box.appendChild(card);
     });
     if (!box.children.length) box.innerHTML = '<p class="hint">Even geduld, de website laadt nog.</p>';
@@ -420,7 +448,7 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
       var row = document.createElement('div'); row.className = 'chg';
       row.innerHTML = '<span></span><button class="btn ghost small" type="button">Herstel</button>';
       $('span', row).textContent = strip(draft.text[k]) || '(leeg)';
-      $('button', row).addEventListener('click', function () { delete draft.text[k]; save(false); reloadFrame(); texts(); });
+      $('button', row).addEventListener('click', function () { delete draft.text[k]; save(false); saving.then(reloadFrame); texts(); });
       box.appendChild(row);
     });
   }
@@ -456,14 +484,14 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:400;margin:0}
   $('#imp').addEventListener('change', function () {
     var f = this.files[0]; if (!f) return; var r = new FileReader();
     r.onload = function () {
-      try { var txt = String(r.result), j = txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1); draft = norm(JSON.parse(j)); save(false); reloadFrame(); toast('Wijzigingen geopend'); }
+      try { var txt = String(r.result), j = txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1); draft = norm(JSON.parse(j)); save(false); saving.then(reloadFrame); toast('Wijzigingen geopend'); }
       catch (e) { toast('Dit bestand kan niet gelezen worden.'); }
     };
     r.readAsText(f); this.value = '';
   });
   $('#reset').addEventListener('click', function () {
     if (!confirm('Alle wijzigingen op dit toestel wissen en terugkeren naar het ontwerp?')) return;
-    draft = norm({}); try { localStorage.removeItem(KEY); } catch (e) {} save(false); reloadFrame(); texts(); toast('Alles teruggezet');
+    draft = norm({}); try { localStorage.removeItem(KEY); } catch (e) {} save(false); saving.then(reloadFrame); texts(); toast('Alles teruggezet');
   });
 
   /* ---------- installeren als app ---------- */
