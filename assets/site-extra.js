@@ -22,28 +22,7 @@
 
   if (window.__nuanceRender) return; /* de homepage heeft dit al in zijn eigen code */
 
-  function NC() { return window.NUANCE_CONTENT || {}; }
-  function clean(h) { return String(h).replace(/<\/?(script|style|iframe|object|embed)[^>]*>/gi, '').replace(/\son\w+="[^"]*"/gi, '').replace(/javascript:/gi, ''); }
-  var FONTS = { serif: "'Playfair Display', Georgia, serif", sans: "Inter, 'Helvetica Neue', Arial, sans-serif" };
-  function applyContent() {
-    var c = NC(), t = c.text || {}, im = c.img || {}, st = c.style || {}, ip = c.imgpos || {};
-    Array.prototype.forEach.call(document.querySelectorAll('[data-ek]'), function (el) {
-      var k = el.getAttribute('data-ek'), v = t[k], s = st[k];
-      if (v != null && el.innerHTML !== clean(v)) el.innerHTML = clean(v);
-      if (s) {
-        if (!el.hasAttribute('data-fs0')) el.setAttribute('data-fs0', parseFloat(getComputedStyle(el).fontSize));
-        if (s.s) el.style.setProperty('font-size', (parseFloat(el.getAttribute('data-fs0')) * s.s).toFixed(1) + 'px', 'important');
-        if (s.f && FONTS[s.f]) el.style.setProperty('font-family', FONTS[s.f], 'important');
-        if (s.a) el.style.setProperty('text-align', s.a, 'important');
-      }
-    });
-    Array.prototype.forEach.call(document.querySelectorAll('img[data-ei]'), function (el) {
-      var k = el.getAttribute('data-ei'), v = im[k];
-      if (v && el.getAttribute('src') !== v) { el.setAttribute('src', v); el.removeAttribute('srcset'); }
-      if (ip[k]) el.style.objectPosition = ip[k];
-    });
-    if (window.__afterRender) try { window.__afterRender(); } catch (e) {}
-  }
+  function applyContent() { if (window.__nuanceApply) window.__nuanceApply(document); }
   window.__nuanceBase = window.__nuanceBase || {};
   window.__nuanceRender = applyContent;
   applyContent();

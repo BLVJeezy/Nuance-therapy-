@@ -32,7 +32,7 @@ async function readBody(req) {
 const IMG_OK = /^(https:\/\/[a-z0-9.-]+\.public\.blob\.vercel-storage\.com\/|assets\/|\/_blob\/)/i;
 function validContent(c) {
   if (!c || typeof c !== 'object' || Array.isArray(c)) return 'Geen geldige inhoud.';
-  const allowed = ['text', 'img', 'style', 'imgpos', 'data'];
+  const allowed = ['text', 'img', 'style', 'imgpos', 'data', 'lists', 'hidden'];
   for (const k of Object.keys(c)) if (!allowed.includes(k)) return 'Onbekend onderdeel: ' + k;
   const json = JSON.stringify(c);
   if (json.length > 900000) return 'De wijzigingen zijn te groot.';
@@ -41,6 +41,14 @@ function validContent(c) {
   for (const list of Object.values(c.data || {})) {
     if (!Array.isArray(list)) return 'Ongeldige lijst.';
     for (const o of list) if (o && o.img && !IMG_OK.test(o.img)) return 'Ongeldige foto in een lijst.';
+  }
+  if (c.hidden != null && (!Array.isArray(c.hidden) || c.hidden.some((h) => typeof h !== 'string' || h.length > 80))) return 'Ongeldige secties.';
+  for (const [name, arr] of Object.entries(c.lists || {})) {
+    if (!/^[a-z]{2,12}$/.test(name) || !Array.isArray(arr) || arr.length > 200) return 'Ongeldige lijst.';
+    for (const o of arr) {
+      if (!o || typeof o !== 'object') return 'Ongeldig item in een lijst.';
+      for (const [k, v] of Object.entries(o)) if (!['t', 'd', 'g'].includes(k) || typeof v !== 'string' || v.length > 6000) return 'Ongeldig item in een lijst.';
+    }
   }
   for (const s of Object.values(c.style || {})) {
     if (!s || typeof s !== 'object') return 'Ongeldige opmaak.';
