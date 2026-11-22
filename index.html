@@ -48,12 +48,12 @@
 .svc-cards{justify-content:flex-start}
 }
 .cf .cf-s{display:none;flex-direction:column;gap:16px}
-.cf[data-step="1"] .cf-s1,.cf[data-step="2"] .cf-s2,.cf[data-step="3"] .cf-s3,.cf[data-step="4"] .cf-s4{display:flex}
-.cf[data-step="1"] .cf-prev,.cf[data-step="3"] .cf-next,.cf[data-step="4"] .cf-nav,.cf[data-step="4"] .cf-head{display:none !important}
-.cf:not([data-step="3"]) .cf-send{display:none !important}
-.cf-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cf[data-step="1"] .cf-s1,.cf[data-step="2"] .cf-s2,.cf[data-step="4"] .cf-s4{display:flex}
+.cf[data-step="1"] .cf-prev,.cf[data-step="2"] .cf-next,.cf[data-step="4"] .cf-nav,.cf[data-step="4"] .cf-head{display:none !important}
+.cf:not([data-step="2"]) .cf-send{display:none !important}
+.cf-bars{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .cf-bar{display:block;height:4px;border-radius:4px;background:rgba(234,227,218,.14);transition:background 300ms ease}
-.cf[data-step="1"] .cf-bar:nth-child(-n+1),.cf[data-step="2"] .cf-bar:nth-child(-n+2),.cf[data-step="3"] .cf-bar:nth-child(-n+3){background:#D6C3B2}
+.cf[data-step="1"] .cf-bar:nth-child(-n+1),.cf[data-step="2"] .cf-bar:nth-child(-n+2){background:#D6C3B2}
 .cf-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:560px){.cf-two{grid-template-columns:1fr}}
 .cf-photos{display:flex;flex-wrap:wrap;gap:10px}
@@ -521,7 +521,7 @@ html{scroll-behavior:auto}
 <form class="cf" data-step="{{formStep}}" data-rec="{{recState}}" data-sending="{{formSending}}" onSubmit="{{sendForm}}" novalidate style="display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; padding: clamp(22px, 3vw, 36px); border-radius: 24px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07)">
 <input class="cf-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="cf-head" style="display: flex; flex-direction: column; gap: 10px">
-<div class="cf-bars" aria-hidden="true"><i class="cf-bar"></i><i class="cf-bar"></i><i class="cf-bar"></i></div>
+<div class="cf-bars" aria-hidden="true"><i class="cf-bar"></i><i class="cf-bar"></i></div>
 <p style="margin: 0; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #D6C3B2">{{stepLabel}}</p>
 </div>
 <div class="cf-s cf-s1">
@@ -530,25 +530,6 @@ html{scroll-behavior:auto}
 </div>
 <div class="cf-s cf-s2">
 <div style="display: flex; flex-direction: column; gap: 8px"><label for="f-dienst" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="ta62d037780">Dienst</label><select class="fld" id="f-dienst" name="dienst" required style="width: 100%; box-sizing: border-box; padding: 14px 44px 14px 16px; border: 1px solid transparent; border-radius: 12px; background-color: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #3E2A35 50%), linear-gradient(135deg, #3E2A35 50%, transparent 50%); background-position: calc(100% - 24px) 52%, calc(100% - 18px) 52%; background-size: 6px 6px; background-repeat: no-repeat"><option value="">Kies een dienst</option><option>Individuele begeleiding &amp; life coaching</option><option>Angstcoaching</option><option>Relatietherapie</option><option>Kinder- &amp; jongerencoaching</option><option>Edelstenen Zielenkompas</option><option>Luistergesprek</option><option>Ik weet het nog niet</option></select></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-bericht" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t6c119ce623">Bericht</label><textarea class="fld" id="f-bericht" name="bericht" rows="5" required placeholder="Vertel kort waarvoor je komt of wat je bezighoudt." style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; resize: vertical; min-height: 140px"></textarea></div>
-</div>
-<div class="cf-s cf-s3">
-<p style="margin: 0; font-size: 14.5px; color: #DDD0C6" data-ek="t5c355e42b5">Allebei vrijblijvend: je kan ook meteen versturen.</p>
-<div style="display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="tf5ce4ec629">Foto's <span style="color: #BFAEA3; font-weight: 400" data-ek="tcf4b8fb4d6">(max. 3)</span></span>
-<div class="cf-photos">
-<sc-for list="{{photos}}" as="ph" hint-placeholder-count="0"><div class="cf-ph"><img src="{{ph.url}}" alt="{{ph.name}}"><button type="button" class="cf-x" onClick="{{ph.remove}}" aria-label="Foto verwijderen" data-ek="tce5c2e4017">×</button></div></sc-for>
-<label class="cf-add" data-full="{{photosFull}}"><input type="file" accept="image/*" multiple onChange="{{pickPhotos}}"><span aria-hidden="true" style="font-size: 26px; line-height: 1">+</span><span style="font-size: 12px" data-ek="t03d321d92c">Foto</span></label>
-</div>
-</div>
-<div style="display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t142db38aa7">Spraakbericht <span style="color: #BFAEA3; font-weight: 400" data-ek="t47a1e68878">(max. 2 min)</span></span>
-<div class="cf-rec">
-<button type="button" class="cf-recbtn" onClick="{{recToggle}}"><i class="cf-dot" aria-hidden="true"></i><span>{{recLabel}}</span></button>
-<audio class="cf-audio" controls preload="metadata" src="{{recUrl}}"></audio>
-<button type="button" class="cf-recdel" onClick="{{recDelete}}" data-ek="t6f7382f6fa">Verwijderen</button>
-</div>
-<p style="margin: 0; font-size: 13px; color: #BFAEA3">{{recNote}}</p>
-</div>
 </div>
 <div class="cf-s cf-s4" role="status">
 <span aria-hidden="true" style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(214,195,178,0.16); color: #D6C3B2; font-size: 26px">✓</span>
@@ -747,7 +728,7 @@ html{scroll-behavior:auto}
   cur: { ...VALUES[sel], num: sel + 1, anim: sel % 2 ? 'valA' : 'valB' },
   nextVal: () => this.setState({ val: (sel + 1) % VALUES.length, picked: true }),
   formStep: String(st.fstep || 1),
-  stepLabel: ['', 'Stap 1 van 3 · Over jou', 'Stap 2 van 3 · Je vraag', 'Stap 3 van 3 · Foto of spraakbericht (optioneel)', 'Verstuurd'][st.fstep || 1],
+  stepLabel: ['', 'Stap 1 van 2 · Over jou', 'Stap 2 van 2 · Je vraag', '', 'Verstuurd'][st.fstep || 1],
   formSending: st.fsending ? 'true' : 'false',
   sendLabel: st.fsending ? 'Bezig met versturen…' : 'Versturen',
   formErr: st.ferr || '',
@@ -765,8 +746,8 @@ html{scroll-behavior:auto}
   const box = f.querySelector('.cf-s' + step);
   const bad = box ? Array.from(box.querySelectorAll('input, select, textarea')).find((el) => !el.checkValidity()) : null;
   if (bad) { bad.reportValidity(); bad.focus(); return; }
-  this.setState({ fstep: Math.min(step + 1, 3), ferr: '' });
-  setTimeout(() => { const t = f.querySelector('.cf-s' + Math.min(step + 1, 3) + ' input, .cf-s' + Math.min(step + 1, 3) + ' select'); const r = f.getBoundingClientRect(); if (r.top < 70) f.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (t && step + 1 < 3) t.focus({ preventScroll: true }); }, 30);
+  this.setState({ fstep: Math.min(step + 1, 2), ferr: '' });
+  setTimeout(() => { const t = f.querySelector('.cf-s2 select'); const r = f.getBoundingClientRect(); if (r.top < 70) f.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (t) t.focus({ preventScroll: true }); }, 30);
   },
   formPrev: () => this.setState({ fstep: Math.max((st.fstep || 1) - 1, 1), ferr: '' }),
   formReset: () => { const f = document.querySelector('form.cf'); if (f) f.reset(); this._photos = []; if (this._voice) { URL.revokeObjectURL(this._voice.url); this._voice = null; } this.setState({ fstep: 1, frec: 'idle', fdoneName: '', fdoneMail: false, ferr: '' }); },
@@ -815,13 +796,13 @@ html{scroll-behavior:auto}
   sendForm: (e) => {
   if (e && e.preventDefault) e.preventDefault();
   const f = (e && e.target && e.target.elements) ? e.target : document.querySelector('form.cf'); if (!f || st.fsending) return;
-  if ((st.fstep || 1) < 3) { this.state.fstep = st.fstep || 1; return; }
+  if ((st.fstep || 1) < 2) { this.state.fstep = st.fstep || 1; return; }
   if (st.frec === 'rec' && this._rec) { this._rec.stop(); }
   const val = (n) => (f.elements[n] && f.elements[n].value ? String(f.elements[n].value).trim() : '');
   const bad = Array.from(f.querySelectorAll('.cf-s1 input, .cf-s2 select, .cf-s2 textarea')).find((el) => !el.checkValidity());
   if (bad) { const s = bad.closest('.cf-s2') ? 2 : 1; this.setState({ fstep: s }); setTimeout(() => bad.reportValidity(), 30); return; }
   const data = { voornaam: val('voornaam'), naam: val('naam'), email: val('email'), telefoon: val('telefoon'), dienst: val('dienst'), bericht: val('bericht'),
-  photos: (this._photos || []).map((p) => p.data), voice: this._voice ? { data: this._voice.data, type: this._voice.type } : null, website: val('website') };
+  website: val('website') };
   this.setState({ fsending: true, ferr: '' });
   const mailto = () => {
   const body = 'Voornaam: ' + data.voornaam + '\nNaam: ' + data.naam + '\nE-mail: ' + data.email + '\nTelefoon: ' + data.telefoon + '\nDienst: ' + data.dienst + '\n\n' + data.bericht;
