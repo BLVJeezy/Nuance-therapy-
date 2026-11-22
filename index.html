@@ -53,10 +53,10 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .nav{background:transparent;transition:background-color 300ms ease,border-color 300ms ease}
 .nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(43,22,34,.9);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border-bottom-color:transparent !important}
 .hero-shade{background:radial-gradient(60% 70% at 78% 52%,rgba(122,70,96,.45) 0%,rgba(58,28,43,0) 70%),linear-gradient(to bottom,rgba(28,10,20,.45) 0%,rgba(28,10,20,0) 22%)}
-.hero-pop{position:absolute;z-index:1;right:clamp(24px,8vw,150px);top:50%;transform:translateY(-46%);width:clamp(300px,29vw,430px);aspect-ratio:4/5}
-.hero-pop-card{position:absolute;left:0;right:0;bottom:0;top:22%;border-radius:999px 999px 28px 28px;background:linear-gradient(160deg,#E6C3C9 0%,#B98597 48%,#7A4660 100%);box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
-.hero-pop-ring{position:absolute;left:-14px;right:-14px;bottom:-14px;top:calc(22% - 14px);border-radius:999px 999px 40px 40px;border:1px solid rgba(230,195,201,.35)}
-.hero-pop-img{position:absolute;left:50%;bottom:0;width:104%;height:auto;transform:translateX(-50%);display:block;pointer-events:none;clip-path:inset(-60% 0 0 0 round 0 0 28px 28px);filter:drop-shadow(0 18px 30px rgba(30,10,20,.35))}
+.hero-pop{position:absolute;z-index:1;right:clamp(24px,8vw,150px);top:50%;transform:translateY(-46%);width:clamp(300px,29vw,430px);aspect-ratio:4/5.2}
+.hero-pop-card{position:absolute;inset:0;border-radius:999px 999px 28px 28px;overflow:hidden;background:#B98597;box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.hero-pop-ring{position:absolute;inset:-14px;border-radius:999px 999px 40px 40px;border:1px solid rgba(230,195,201,.35)}
+.hero-pop-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;pointer-events:none}
 .g-viewport{-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
 .g-track{list-style:none;margin:0;padding:0;display:flex;gap:16px;width:max-content;animation:gscroll 60s linear infinite}
 .g-viewport:hover .g-track{animation-play-state:paused}
@@ -74,7 +74,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .hero{min-height:100svh !important;min-height:max(100svh,700px) !important;align-items:flex-end !important}
 .hero-media{left:0 !important;top:0 !important;bottom:30% !important;height:auto !important}
 .hero-video{object-position:46% 50% !important}
-.hero-pop{top:96px !important;right:auto !important;left:50% !important;transform:translateX(-50%) !important;width:min(60vw,250px) !important}
+.hero-pop{top:104px !important;right:auto !important;left:50% !important;transform:translateX(-50%) !important;width:min(52vw,215px) !important}
 .hero-canvas{display:none !important}
 .hero-shade{background:linear-gradient(to bottom,rgba(28,10,20,.7) 0%,rgba(28,10,20,0) 20%,rgba(58,28,43,0) 42%,rgba(46,20,36,.7) 58%,#2E1426 70%,#2A1220 100%) !important}
 .hero-silk{height:150px !important}
@@ -156,8 +156,7 @@ html{scroll-behavior:auto}
 <section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; margin-top: -79px; min-height: clamp(680px, 58vw, 880px); background: #3A1C2B">
 <div class="hero-pop" role="img" aria-label="Anne-Sophie Houwaer, coach en psychosociaal begeleider bij Nuance">
 <div class="hero-pop-ring" aria-hidden="true"></div>
-<div class="hero-pop-card" aria-hidden="true"></div>
-<img class="hero-pop-img" src="assets/hero-anne-sophie.webp" alt="" aria-hidden="true" decoding="async" fetchpriority="high" data-ei="i056ce5c065">
+<div class="hero-pop-card" aria-hidden="true"><img class="hero-pop-img" src="assets/hero-anne-sophie.jpg" alt="" aria-hidden="true" decoding="async" fetchpriority="high" data-ei="id0a403a202"></div>
 </div>
 <div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px; z-index: 1"></div>
 <svg class="hero-silk" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; display: block; width: 100%; height: clamp(170px, 26vw, 380px); overflow: visible">
