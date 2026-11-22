@@ -39,7 +39,7 @@
 
   /* ---------- lijsten (technieken, praktische info, FAQ) ---------- */
   function readItem(it) {
-    var o = {};
+    var o = {}, im = it.querySelector('img'); if (im) o.__img = im.getAttribute('src');
     each(it.querySelectorAll('[data-f]'), function (f) { o[f.getAttribute('data-f')] = f.innerHTML.trim(); });
     if (it.hasAttribute('data-g')) o.g = it.getAttribute('data-g');
     return o;
@@ -59,6 +59,12 @@
     var el = t.content.firstElementChild;
     each(el.querySelectorAll('[data-f]'), function (f) { var k = f.getAttribute('data-f'); f.innerHTML = clean(o[k] != null ? o[k] : ''); });
     if (o.g != null) el.setAttribute('data-g', o.g);
+    var im = el.querySelector('img');
+    if (im) {
+      var src = o.__img || (fill.imgs && fill.imgs[String(o.t || '').replace(/<[^>]+>/g, '').trim()]);
+      if (src) { im.setAttribute('src', src); } else { var pic = im.closest('.tech-img') || im; pic.remove(); }
+      im.setAttribute('alt', String(o.t || '').replace(/<[^>]+>/g, '').trim());
+    }
     el.removeAttribute('open');
     return el.outerHTML;
   }
@@ -68,6 +74,8 @@
     var found = listsFrom(doc);
     BASE.lists = BASE.lists || {};
     Object.keys(found).forEach(function (n) { if (!BASE.lists[n]) BASE.lists[n] = found[n]; });
+    fill.imgs = fill.imgs || {};
+    Object.keys(BASE.lists).forEach(function (n) { BASE.lists[n].items.forEach(function (o) { if (o.__img) fill.imgs[String(o.t || '').replace(/<[^>]+>/g, '').trim()] = o.__img; }); });
     each(doc.querySelectorAll('[data-list]'), function (box) {
       var name = box.getAttribute('data-list'), want = data[name], base = BASE.lists[name];
       if (!base) return;
