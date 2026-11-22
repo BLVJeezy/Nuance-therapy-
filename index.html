@@ -52,7 +52,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button,.hero-video::-webkit-media-controls-overlay-play-button{display:none !important;-webkit-appearance:none;opacity:0 !important}
 .nav{background:transparent;transition:background-color 300ms ease,border-color 300ms ease}
 .nav.scrolled,.nav:has(.nav-panel):not(:has(#mobile-menu[hidden])){background:rgba(43,22,34,.9);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border-bottom-color:transparent !important}
-.hero-shade{background:linear-gradient(to right,#3A1C2B 0%,#3A1C2B 30%,rgba(58,28,43,.86) 39%,rgba(58,28,43,.42) 52%,rgba(58,28,43,.06) 68%,rgba(58,28,43,0) 80%),linear-gradient(to bottom,rgba(28,10,20,.62) 0%,rgba(28,10,20,0) 24%)}
+.hero-shade{background:linear-gradient(to right,#3A1C2B 0%,#3A1C2B 37%,rgba(58,28,43,.82) 42%,rgba(58,28,43,.35) 50%,rgba(58,28,43,0) 60%),linear-gradient(to bottom,rgba(28,10,20,.55) 0%,rgba(28,10,20,0) 22%)}
 .g-viewport{-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
 .g-track{list-style:none;margin:0;padding:0;display:flex;gap:16px;width:max-content;animation:gscroll 60s linear infinite}
 .g-viewport:hover .g-track{animation-play-state:paused}
@@ -70,6 +70,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .hero{min-height:100svh !important;min-height:max(100svh,700px) !important;align-items:flex-end !important}
 .hero-media{left:0 !important;top:0 !important;bottom:30% !important;height:auto !important}
 .hero-video{object-position:46% 50% !important}
+.hero-photo{object-position:50% 14% !important}
 .hero-canvas{display:none !important}
 .hero-shade{background:linear-gradient(to bottom,rgba(28,10,20,.7) 0%,rgba(28,10,20,0) 20%,rgba(58,28,43,0) 42%,rgba(46,20,36,.7) 58%,#2E1426 70%,#2A1220 100%) !important}
 .hero-silk{height:150px !important}
@@ -149,10 +150,8 @@ html{scroll-behavior:auto}
 <main id="top">
 
 <section class="hero" style="position: relative; overflow: hidden; display: flex; align-items: center; margin-top: -79px; min-height: clamp(680px, 58vw, 880px); background: #3A1C2B">
-<div class="hero-media" role="img" aria-label="Een keramieken kom met opstijgende damp naast een brandende kaars, in de schaduw van bladeren" style="position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; left: 30%; overflow: hidden">
-<video class="hero-video" webkit-playsinline="true" x-webkit-airplay="deny" src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; display: block; pointer-events: none"></video>
-<canvas class="hero-canvas" aria-hidden="true" style="position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; display: none; pointer-events: none"></canvas>
-<img class="hero-anim" src="assets/hero-mobile.webp" alt="" aria-hidden="true" decoding="async" fetchpriority="high" style="position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: none; pointer-events: none">
+<div class="hero-media" role="img" aria-label="Anne-Sophie Houwaer, coach en psychosociaal begeleider bij Nuance" style="position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; left: 38%; overflow: hidden">
+<img class="hero-photo" src="assets/hero-anne-sophie.jpg" alt="" aria-hidden="true" decoding="async" fetchpriority="high" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 6%; display: block; pointer-events: none" data-ei="id0a403a202">
 </div>
 <div class="hero-shade" aria-hidden="true" style="position: absolute; inset: -1px; z-index: 1"></div>
 <svg class="hero-silk" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; display: block; width: 100%; height: clamp(170px, 26vw, 380px); overflow: visible">
@@ -561,36 +560,6 @@ html{scroll-behavior:auto}
   }
   }
   startHero() {
-  const small = window.matchMedia('(max-width: 760px)').matches;
-  const video = () => document.querySelector('video.hero-video');
-  const anim = () => document.querySelector('img.hero-anim');
-  const showAnim = () => { const a = anim(); if (a && !this._videoOK) a.style.display = 'block'; };
-  const hideAnim = () => { const a = anim(); if (a) a.style.display = 'none'; const c = document.querySelector('canvas.hero-canvas'); if (c) c.style.display = 'none'; const v = video(); if (v) v.style.visibility = ''; };
-  const tryPlay = () => {
-  const v = video(); if (!v) return;
-  if (this._videoOK && !v.paused) return;
-  v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); v.setAttribute('autoplay', '');
-  if (!v._nuanceBound) {
-  v._nuanceBound = true;
-  const ok = () => { if (!v.paused && v.currentTime > 0.05) { this._videoOK = true; hideAnim(); } };
-  v.addEventListener('timeupdate', ok);
-  v.addEventListener('playing', () => setTimeout(ok, 120));
-  ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'suspend', 'stalled'].forEach((ev) => v.addEventListener(ev, () => { if (v.paused) tryPlay(); }));
-  v.addEventListener('pause', () => { this._videoOK = false; if (!document.hidden) { tryPlay(); setTimeout(() => { if (v.paused) (small ? showAnim() : this.startHeroFrames()); }, 400); } });
-  v.addEventListener('ended', () => { v.currentTime = 0; tryPlay(); });
-  }
-  if (v.readyState === 0 && v.networkState !== 2) { try { v.load(); } catch (e) {} }
-  try { const p = v.play(); if (p && p.catch) p.catch(() => { if (small) showAnim(); else this.startHeroFrames(); }); } catch (e) {}
-  };
-  tryPlay();
-  this._heroTimers = [150, 400, 800, 1400, 2200, 3500].map((ms) => setTimeout(tryPlay, ms));
-  this._heroTimers.push(setTimeout(() => { const v = video(); if (!this._videoOK && (!v || v.paused)) (small ? showAnim() : this.startHeroFrames()); }, 600));
-  this._heroGesture = () => tryPlay();
-  ['touchstart', 'touchend', 'pointerdown', 'click', 'keydown', 'scroll'].forEach((ev) => document.addEventListener(ev, this._heroGesture, { passive: true, capture: true }));
-  document.addEventListener('visibilitychange', this._heroGesture);
-  window.addEventListener('pageshow', this._heroGesture);
-  window.addEventListener('focus', this._heroGesture);
   }
   startHeroFrames() {
   if (this._framesOn) return; this._framesOn = true;
