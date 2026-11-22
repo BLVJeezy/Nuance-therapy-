@@ -15,7 +15,7 @@
   var lastTouch = 0;
   document.addEventListener('touchend', function (e) {
     var now = Date.now();
-    if (now - lastTouch < 300 && !(e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]'))) e.preventDefault();
+    if (now - lastTouch < 300 && !(e.target.closest && e.target.closest('a, button, label, summary, input, textarea, select, [contenteditable="true"], [data-h], [data-menu]'))) e.preventDefault();
     lastTouch = now;
   }, { passive: false });
   document.addEventListener('wheel', function (e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
