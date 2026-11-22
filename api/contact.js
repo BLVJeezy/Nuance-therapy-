@@ -5,6 +5,7 @@
      CONTACT_TO      standaard verbinding@nuance-therapie.be
      CONTACT_FROM    standaard "Website Nuance <website@solynglobal.be>" (afzenderdomein moet geverifieerd zijn in Resend) */
 const { send, readBody } = require('./_lib');
+const M = require('./_mail');
 
 const MAX_PHOTOS = 3;
 const MAX_PHOTO_BYTES = 2.5 * 1024 * 1024;
@@ -50,17 +51,35 @@ module.exports = async (req, res) => {
   const key = process.env.RESEND_API_KEY;
   if (!key) return send(res, 503, { error: 'Het formulier is nog niet gekoppeld aan e-mail.', setup: true });
 
-  const rows = [['Voornaam', f.voornaam], ['Naam', f.naam], ['E-mail', f.email], ['Telefoon', f.telefoon], ['Dienst', f.dienst]];
   const extra = [];
   if (photos.length) extra.push(photos.length + ' foto' + (photos.length > 1 ? '’s' : ''));
   if (b.voice && b.voice.data) extra.push('een spraakbericht');
-  const html = '<div style="font-family:Arial,sans-serif;font-size:15px;color:#2b1d24;line-height:1.6">'
-    + '<h2 style="font-weight:normal;margin:0 0 12px">Nieuwe aanvraag via de website</h2>'
-    + '<table style="border-collapse:collapse">' + rows.map(([k, v]) => '<tr><td style="padding:4px 16px 4px 0;color:#7a6470">' + k + '</td><td style="padding:4px 0">' + esc(v) + '</td></tr>').join('') + '</table>'
-    + '<p style="margin:18px 0 6px;color:#7a6470">Bericht</p><p style="margin:0;white-space:pre-wrap">' + esc(f.bericht) + '</p>'
-    + (extra.length ? '<p style="margin:18px 0 0;color:#7a6470">In bijlage: ' + extra.join(' en ') + '.</p>' : '')
-    + '<p style="margin:24px 0 0;font-size:13px;color:#9a8790">Beantwoorden gaat rechtstreeks naar ' + esc(f.email) + '.</p></div>';
-  const text = rows.map(([k, v]) => k + ': ' + v).join('\n') + '\n\nBericht:\n' + f.bericht + (extra.length ? '\n\nIn bijlage: ' + extra.join(' en ') + '.' : '');
+  const rows = [['Naam', M.esc(f.voornaam + ' ' + f.naam)], ['E-mail', '<a href="mailto:' + M.esc(f.email) + '" style="color:#74425C">' + M.esc(f.email) + '</a>'], ['Telefoon', '<a href="tel:' + M.esc(f.telefoon.replace(/[^+0-9]/g, '')) + '" style="color:#74425C">' + M.esc(f.telefoon) + '</a>'], ['Dienst', M.esc(f.dienst)]];
+  if (extra.length) rows.push(['Bijlagen', M.esc(extra.join(' en '))]);
+
+  /* 2. Melding aan Anne-Sophie */
+  const html = M.layout({
+    preheader: f.voornaam + ' ' + f.naam + ' vraagt een intakegesprek aan voor ' + f.dienst + '.',
+    title: 'Nieuwe aanvraag via de website',
+    blocks: [{ rows }, { p: '<b style="color:#3E2A35">Bericht</b>' }, { quote: M.esc(f.bericht) },
+      { button: ['Antwoord ' + f.voornaam, 'mailto:' + encodeURIComponent(f.email) + '?subject=' + encodeURIComponent('Je aanvraag bij Nuance')] },
+      { small: 'Op “beantwoorden” klikken stuurt je antwoord rechtstreeks naar ' + M.esc(f.email) + '. De bijlagen staan onder deze mail.' }],
+  }).replace(/<p style="margin:24px 0 0;[^]*?Nuance<\/p>\n/, '');
+  const text = 'Nieuwe aanvraag via de website\n\nNaam: ' + f.voornaam + ' ' + f.naam + '\nE-mail: ' + f.email + '\nTelefoon: ' + f.telefoon + '\nDienst: ' + f.dienst + '\n\nBericht:\n' + f.bericht + (extra.length ? '\n\nIn bijlage: ' + extra.join(' en ') + '.' : '');
+
+  /* 1. Ontvangstbevestiging aan de klant */
+  const ack = M.layout({
+    preheader: 'Je aanvraag is goed aangekomen. Ik neem binnen 48 uur contact met je op.',
+    title: 'Bedankt, ' + M.esc(f.voornaam) + '.',
+    blocks: [
+      { p: 'Je aanvraag voor een intakegesprek is goed aangekomen. Fijn dat je deze stap zet. Ik lees je bericht met aandacht en neem <b>binnen 48 uur op werkdagen</b> persoonlijk contact met je op om samen een moment te zoeken.' },
+      { rows: [['Dienst', M.esc(f.dienst)], ['Je gegevens', M.esc(f.email) + '<br>' + M.esc(f.telefoon)]] },
+      { p: 'In het intakegesprek maken we rustig kennis. Je vertelt wat je bezighoudt, en samen kijken we of en hoe ik je kan begeleiden. Er is geen goed of fout antwoord: je mag komen zoals je bent.' },
+      { small: 'Wil je nog iets aanvullen of klopt er iets niet? Beantwoord gewoon deze mail.' },
+    ],
+    footerNote: 'Je ontvangt deze mail omdat je een aanvraag deed via nuance-therapie.be.',
+  });
+  const ackText = M.text({ title: 'Bedankt, ' + f.voornaam + '.', lines: ['Je aanvraag voor een intakegesprek is goed aangekomen. Ik lees je bericht met aandacht en neem binnen 48 uur op werkdagen persoonlijk contact met je op.', '', 'Dienst: ' + f.dienst, '', 'Wil je nog iets aanvullen? Beantwoord gewoon deze mail.'] });
 
   try {
     const r = await fetch('https://api.resend.com/emails', {
@@ -70,11 +89,22 @@ module.exports = async (req, res) => {
         from: process.env.CONTACT_FROM || 'Website Nuance <website@solynglobal.be>',
         to: [process.env.CONTACT_TO || 'verbinding@nuance-therapie.be'],
         reply_to: f.email,
-        subject: 'Aanvraag intakegesprek — ' + f.voornaam + ' ' + f.naam + ' (' + f.dienst + ')',
+        subject: 'Nieuwe aanvraag: ' + f.voornaam + ' ' + f.naam + ' (' + f.dienst + ')',
         html, text, attachments,
       }),
     });
     if (!r.ok) throw new Error('resend ' + r.status);
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: process.env.CONTACT_FROM || 'Anne-Sophie · Nuance <website@solynglobal.be>',
+          to: [f.email], reply_to: process.env.CONTACT_TO || 'verbinding@nuance-therapie.be',
+          subject: 'Je aanvraag bij Nuance is goed aangekomen', html: ack, text: ackText,
+        }),
+      });
+    } catch (e) { console.error('[contact ack]', e && e.message); }
     return send(res, 200, { ok: true });
   } catch (e) {
     console.error('[contact]', e && e.message);

@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /admin.html
 Disallow: /beheer.html
+Disallow: /mail-sjablonen.html
 Sitemap: https://www.nuance-therapie.be/sitemap.xml
