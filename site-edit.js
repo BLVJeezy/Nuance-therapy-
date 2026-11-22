@@ -186,8 +186,14 @@
   }
 
   var busy = false;
+  /* Lijsten (bv. FAQ) en secties tonen/verbergen: de site zelf bouwt ze op (window.__nuanceApply). */
+  function structure() {
+    window.__beheerContent = draft;
+    if (typeof window.__nuanceApply === 'function') try { window.__nuanceApply(document); } catch (e) {}
+  }
   function apply(root) {
     root = root || document.body; if (!root || busy) return;
+    if (root === document.body) structure();
     busy = true;
     try {
       buildRepl();

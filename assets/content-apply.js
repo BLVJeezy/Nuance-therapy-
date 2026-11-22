@@ -3,7 +3,14 @@
 (function () {
   'use strict';
   var FONTS = { serif: "'Playfair Display', Georgia, serif", sans: "Inter, 'Helvetica Neue', Arial, sans-serif" };
-  function NC() { return window.NUANCE_CONTENT || {}; }
+  /* Teksten/foto's: oude beheer (NUANCE_CONTENT). Lijsten en secties: het gedeelde beheer (SITE_CONTENT, of het concept in het beheer). */
+  function NC() {
+    var a = window.NUANCE_CONTENT || {}, b = window.__beheerContent || window.SITE_CONTENT || {}, o = {};
+    for (var k in a) o[k] = a[k];
+    if (b.lists) o.lists = b.lists;
+    if (b.hidden) o.hidden = b.hidden;
+    return o;
+  }
   function clean(h) { return String(h == null ? '' : h).replace(/<\/?(script|style|iframe|object|embed|link|meta)[^>]*>/gi, '').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '').replace(/javascript:/gi, ''); }
   function each(list, fn) { Array.prototype.forEach.call(list, fn); }
 
@@ -58,7 +65,8 @@
     Object.keys(found).forEach(function (n) { if (!BASE.lists[n]) BASE.lists[n] = found[n]; });
     each(doc.querySelectorAll('[data-list]'), function (box) {
       var name = box.getAttribute('data-list'), want = data[name], base = BASE.lists[name];
-      if (!want || !base) return;
+      if (!base) return;
+      if (!want) { if (box.hasAttribute('data-applied')) { want = base.items; } else return; }
       var sig = JSON.stringify(want);
       if (box.getAttribute('data-applied') === sig && box.querySelector('[data-item]')) return;
       if (base.kind === 'faq') {
