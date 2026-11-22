@@ -10,6 +10,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
+.cf .cf-s{display:none;flex-direction:column;gap:16px}
+.cf[data-step="1"] .cf-s1,.cf[data-step="2"] .cf-s2,.cf[data-step="3"] .cf-s3,.cf[data-step="4"] .cf-s4{display:flex}
+.cf[data-step="1"] .cf-prev,.cf[data-step="3"] .cf-next,.cf[data-step="4"] .cf-nav,.cf[data-step="4"] .cf-head{display:none !important}
+.cf:not([data-step="3"]) .cf-send{display:none !important}
+.cf-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cf-bar{display:block;height:4px;border-radius:4px;background:rgba(234,227,218,.14);transition:background 300ms ease}
+.cf[data-step="1"] .cf-bar:nth-child(-n+1),.cf[data-step="2"] .cf-bar:nth-child(-n+2),.cf[data-step="3"] .cf-bar:nth-child(-n+3){background:#D6C3B2}
+.cf-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.cf-two{grid-template-columns:1fr}}
+.cf-photos{display:flex;flex-wrap:wrap;gap:10px}
+.cf-ph{position:relative;width:76px;height:76px;border-radius:14px;overflow:hidden;background:#2E1F28}
+.cf-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.cf-x{position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(30,15,24,.78);color:#fff;cursor:pointer;font-size:17px;line-height:1;padding:0}
+.cf-add{position:relative;width:76px;height:76px;box-sizing:border-box;border-radius:14px;border:1.5px dashed rgba(214,195,178,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#D6C3B2;cursor:pointer}
+.cf-add input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.cf-add[data-full="true"]{display:none}
+.cf-rec{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.cf-recbtn{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 18px;border-radius:999px;border:0;background:rgba(234,227,218,.1);color:#EAE3DA;font:inherit;font-size:14.5px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(234,227,218,.18)}
+.cf-dot{display:block;width:10px;height:10px;border-radius:50%;background:#E07A8B}
+.cf[data-rec="rec"] .cf-recbtn{background:rgba(224,122,139,.16)}
+.cf[data-rec="rec"] .cf-dot{animation:cfpulse 1s ease-in-out infinite}
+@keyframes cfpulse{50%{opacity:.2}}
+.cf-audio{display:none;height:40px;max-width:100%}
+.cf[data-rec="done"] .cf-audio{display:block}
+.cf-recdel{display:none}
+.cf[data-rec="done"] .cf-recdel{display:inline-flex}
+.cf-recdel,.cf-back{align-items:center;background:none;border:0;color:#D6C3B2;font:inherit;font-size:14.5px;cursor:pointer;min-height:44px;padding:0 6px;text-decoration:underline;text-underline-offset:4px}
+.cf-back{display:inline-flex;align-self:flex-start}
+.cf-err{margin:0;font-size:14px;color:#F1C9CF}
+.cf-err:empty{display:none}
+.cf-nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cf[data-sending="true"] .cf-send{opacity:.6;pointer-events:none}
+.cf-hp{position:absolute !important;left:-9999px !important;width:1px;height:1px;opacity:0}
+@media (prefers-reduced-motion:reduce){.cf[data-rec="rec"] .cf-dot{animation:none}}
 :root{--accent:#74425C}
 html{scroll-behavior:smooth}
 body{margin:0;background:#3E2A35}
@@ -335,7 +369,7 @@ html{scroll-behavior:auto}
 </div>
 <div class="foot-bottom" style="max-width: 1240px; margin: 0 auto; padding: 20px 24px 40px; border-top: 1px solid rgba(234,227,218,0.14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #BFAEA3">
 <span data-ek="t8ae2c73130">© 2026 Nuance</span>
-<span><a href="faq.html" style="text-underline-offset: 4px" data-ek="tdc4a05600f">Veelgestelde vragen</a> · [Privacyverklaring · Voorwaarden — volgen na juridische controle]</span>
+<span><a href="faq.html" style="text-underline-offset: 4px" data-ek="tdc4a05600f">Veelgestelde vragen</a> · <a href="privacy.html" style="text-underline-offset: 4px" data-ek="te748070198">Privacyverklaring</a></span>
 </div>
 </footer>
 
@@ -461,10 +495,51 @@ html{scroll-behavior:auto}
 <p style="margin: 0; font-size: 14px; color: #BFAEA3" data-ek="tcdbef6b059">Uitsluitend op afspraak · geen telefonische oproepen · je krijgt doorgaans binnen 48 uur op werkdagen een persoonlijk antwoord.</p>
 <div role="img" aria-label="Boeken en een glas water" style="position: relative; margin-top: 8px; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden"><img src="assets/sfeer-boeken-water.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block" data-ei="i9782c2de00"></div>
 </div>
-<form onSubmit="{{sendForm}}" style="display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; padding: clamp(22px, 3vw, 36px); border-radius: 24px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07)">
-<div style="display: flex; flex-direction: column; gap: 8px"><label for="f-naam" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t9d6a4202fd">Naam</label><input class="fld" id="f-naam" name="naam" type="text" autocomplete="name" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-email" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t1750cc3d45">E-mailadres</label><input class="fld" id="f-email" name="email" type="email" autocomplete="email" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-bericht" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t6c119ce623">Bericht</label><textarea class="fld" id="f-bericht" name="bericht" rows="5" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; resize: vertical; min-height: 140px"></textarea></div>
-<button class="btn form-send" type="submit" style="appearance: none; display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; background: var(--accent); color: #EAE3DA; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.2)" data-ek="tef8e012f3f">Versturen<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
-<p role="status" style="margin: 0; font-size: 14px; color: #BFAEA3">{{formNote}}</p>
+<form class="cf" data-step="{{formStep}}" data-rec="{{recState}}" data-sending="{{formSending}}" onSubmit="{{sendForm}}" novalidate style="display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; padding: clamp(22px, 3vw, 36px); border-radius: 24px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07)">
+<input class="cf-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<div class="cf-head" style="display: flex; flex-direction: column; gap: 10px">
+<div class="cf-bars" aria-hidden="true"><i class="cf-bar"></i><i class="cf-bar"></i><i class="cf-bar"></i></div>
+<p style="margin: 0; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #D6C3B2">{{stepLabel}}</p>
+</div>
+<div class="cf-s cf-s1">
+<div class="cf-two"><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-voornaam" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t89f88df828">Voornaam</label><input class="fld" id="f-voornaam" name="voornaam" type="text" autocomplete="given-name" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-naam" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t9d6a4202fd">Naam</label><input class="fld" id="f-naam" name="naam" type="text" autocomplete="family-name" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="f-email" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t1750cc3d45">E-mailadres</label><input class="fld" id="f-email" name="email" type="email" autocomplete="email" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-telefoon" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t96496461de">Telefoonnummer</label><input class="fld" id="f-telefoon" name="telefoon" type="tel" autocomplete="tel" required style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5"></div>
+</div>
+<div class="cf-s cf-s2">
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="f-dienst" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="ta62d037780">Dienst</label><select class="fld" id="f-dienst" name="dienst" required style="width: 100%; box-sizing: border-box; padding: 14px 44px 14px 16px; border: 1px solid transparent; border-radius: 12px; background-color: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #3E2A35 50%), linear-gradient(135deg, #3E2A35 50%, transparent 50%); background-position: calc(100% - 24px) 52%, calc(100% - 18px) 52%; background-size: 6px 6px; background-repeat: no-repeat"><option value="">Kies een dienst</option><option>Individuele begeleiding &amp; life coaching</option><option>Angstcoaching</option><option>Relatietherapie</option><option>Kinder- &amp; jongerencoaching</option><option>Edelstenen Zielenkompas</option><option>Luistergesprek</option><option>Ik weet het nog niet</option></select></div><div style="display: flex; flex-direction: column; gap: 8px"><label for="f-bericht" style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t6c119ce623">Bericht</label><textarea class="fld" id="f-bericht" name="bericht" rows="5" required placeholder="Vertel kort waarvoor je komt of wat je bezighoudt." style="width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid transparent; border-radius: 12px; background: #D6C3B2; color: #3E2A35; font-family: inherit; font-size: 16px; line-height: 1.5; resize: vertical; min-height: 140px"></textarea></div>
+</div>
+<div class="cf-s cf-s3">
+<p style="margin: 0; font-size: 14.5px; color: #DDD0C6" data-ek="t5c355e42b5">Allebei vrijblijvend: je kan ook meteen versturen.</p>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="tf5ce4ec629">Foto's <span style="color: #BFAEA3; font-weight: 400" data-ek="tcf4b8fb4d6">(max. 3)</span></span>
+<div class="cf-photos">
+<sc-for list="{{photos}}" as="ph" hint-placeholder-count="0"><div class="cf-ph"><img src="{{ph.url}}" alt="{{ph.name}}"><button type="button" class="cf-x" onClick="{{ph.remove}}" aria-label="Foto verwijderen" data-ek="tce5c2e4017">×</button></div></sc-for>
+<label class="cf-add" data-full="{{photosFull}}"><input type="file" accept="image/*" multiple onChange="{{pickPhotos}}"><span aria-hidden="true" style="font-size: 26px; line-height: 1">+</span><span style="font-size: 12px" data-ek="t03d321d92c">Foto</span></label>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; font-weight: 500; color: #EAE3DA" data-ek="t142db38aa7">Spraakbericht <span style="color: #BFAEA3; font-weight: 400" data-ek="t47a1e68878">(max. 2 min)</span></span>
+<div class="cf-rec">
+<button type="button" class="cf-recbtn" onClick="{{recToggle}}"><i class="cf-dot" aria-hidden="true"></i><span>{{recLabel}}</span></button>
+<audio class="cf-audio" controls preload="metadata" src="{{recUrl}}"></audio>
+<button type="button" class="cf-recdel" onClick="{{recDelete}}" data-ek="t6f7382f6fa">Verwijderen</button>
+</div>
+<p style="margin: 0; font-size: 13px; color: #BFAEA3">{{recNote}}</p>
+</div>
+</div>
+<div class="cf-s cf-s4" role="status">
+<span aria-hidden="true" style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(214,195,178,0.16); color: #D6C3B2; font-size: 26px">✓</span>
+<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.6rem, 2.4vw, 2rem); color: #EAE3DA">{{doneTitle}}</h3>
+<p style="margin: 0; color: #DDD0C6">{{doneText}}</p>
+<button type="button" class="cf-back" onClick="{{formReset}}" data-ek="t89e95399dd">Nieuwe aanvraag</button>
+</div>
+<p class="cf-err" role="alert">{{formErr}}</p>
+<div class="cf-nav">
+<button type="button" class="cf-back cf-prev" onClick="{{formPrev}}" data-ek="t29af96aa10">← Vorige</button>
+<button type="button" class="btn cf-next" onClick="{{formNext}}" style="appearance: none; display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; background: var(--accent); color: #EAE3DA; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.2)" data-ek="ta69bb1c63e">Volgende<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
+<button class="btn form-send cf-send" type="submit" style="appearance: none; display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; background: var(--accent); color: #EAE3DA; cursor: pointer; font-family: inherit; font-size: 15.5px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.2)">{{sendLabel}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
+</div>
+<p style="margin: 0; font-size: 12.5px; color: #BFAEA3" data-ek="t86fbeef014">Je gegevens gaan enkel naar Anne-Sophie en worden vertrouwelijk behandeld. Lees de <a href="privacy.html" style="text-underline-offset: 3px" data-ek="te7683d1db8">privacyverklaring</a>.</p>
 </form>
 </div>
 </template>
@@ -487,6 +562,7 @@ html{scroll-behavior:auto}
       }).join('');
     });
     html = html.replace(/onClick="\{\{\s*([\w.]+)\s*\}\}"/gi, function (_, p) { return 'data-h="' + p + '"'; });
+    html = html.replace(/onChange="\{\{\s*([\w.]+)\s*\}\}"/gi, function (_, p) { return 'data-hc="' + p + '"'; });
     html = html.replace(/onSubmit="\{\{\s*([\w.]+)\s*\}\}"/gi, function (_, p) { return 'data-hs="' + p + '"'; });
     return html.replace(/\{\{\s*([\w.]+)\s*\}\}/g, function (_, p) { return esc(get(vals, p)); });
   }
@@ -647,14 +723,95 @@ html{scroll-behavior:auto}
   values: VALUES.map((v, i) => ({ ...v, pressed: i === sel ? 'true' : 'false', bg: i === sel ? '#EAE3DA' : 'transparent', fg: i === sel ? '#3E2A35' : 'rgba(234,227,218,0.55)', shadow: i === sel ? '0 18px 36px -18px rgba(0,0,0,0.45)' : 'none', track: i === sel ? 'rgba(62,42,53,0.18)' : 'transparent', barCls: i === sel && auto ? 'run' : '', barW: i === sel ? '100%' : '0%', pick: () => this.setState({ val: i, picked: true }) })),
   cur: { ...VALUES[sel], num: sel + 1, anim: sel % 2 ? 'valA' : 'valB' },
   nextVal: () => this.setState({ val: (sel + 1) % VALUES.length, picked: true }),
-  formNote: st.sent ? 'Je e-mailprogramma is geopend met je bericht. Verstuur het daar om je aanvraag af te ronden.' : 'Je bericht wordt klaargezet in je eigen e-mailprogramma.',
+  formStep: String(st.fstep || 1),
+  stepLabel: ['', 'Stap 1 van 3 · Over jou', 'Stap 2 van 3 · Je vraag', 'Stap 3 van 3 · Foto of spraakbericht (optioneel)', 'Verstuurd'][st.fstep || 1],
+  formSending: st.fsending ? 'true' : 'false',
+  sendLabel: st.fsending ? 'Bezig met versturen…' : 'Versturen',
+  formErr: st.ferr || '',
+  doneTitle: 'Bedankt' + (st.fdoneName ? ', ' + st.fdoneName : '') + '.',
+  doneText: st.fdoneMail ? 'Je e-mailprogramma is geopend met je aanvraag. Verstuur het bericht daar om af te ronden.' : 'Je aanvraag is goed aangekomen. Anne-Sophie neemt doorgaans binnen 48 uur op werkdagen persoonlijk contact met je op.',
+  photos: (this._photos || []).map((p, i) => ({ url: p.url, name: p.name, remove: () => { this._photos.splice(i, 1); this.setState({ fp: Date.now() }); } })),
+  photosFull: (this._photos || []).length >= 3 ? 'true' : 'false',
+  recState: st.frec || 'idle',
+  recLabel: st.frec === 'rec' ? 'Stop opname · ' + Math.floor((st.frecSec || 0) / 60) + ':' + String((st.frecSec || 0) % 60).padStart(2, '0') : st.frec === 'done' ? 'Opnieuw opnemen' : 'Spraakbericht opnemen',
+  recUrl: this._voice ? this._voice.url : '',
+  recNote: st.frecErr || (st.frec === 'done' ? 'Beluister je bericht hierboven. Klopt het? Dan kan je versturen.' : 'Liever iets vertellen dan typen? Neem een kort bericht op.'),
+  formNext: () => {
+  const f = document.querySelector('form.cf'); if (!f) return;
+  const step = st.fstep || 1;
+  const box = f.querySelector('.cf-s' + step);
+  const bad = box ? Array.from(box.querySelectorAll('input, select, textarea')).find((el) => !el.checkValidity()) : null;
+  if (bad) { bad.reportValidity(); bad.focus(); return; }
+  this.setState({ fstep: Math.min(step + 1, 3), ferr: '' });
+  setTimeout(() => { const t = f.querySelector('.cf-s' + Math.min(step + 1, 3) + ' input, .cf-s' + Math.min(step + 1, 3) + ' select'); const r = f.getBoundingClientRect(); if (r.top < 70) f.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (t && step + 1 < 3) t.focus({ preventScroll: true }); }, 30);
+  },
+  formPrev: () => this.setState({ fstep: Math.max((st.fstep || 1) - 1, 1), ferr: '' }),
+  formReset: () => { const f = document.querySelector('form.cf'); if (f) f.reset(); this._photos = []; if (this._voice) { URL.revokeObjectURL(this._voice.url); this._voice = null; } this.setState({ fstep: 1, frec: 'idle', fdoneName: '', fdoneMail: false, ferr: '' }); },
+  pickPhotos: (e) => {
+  const input = e && e.target; const files = Array.from((input && input.files) || []);
+  this._photos = this._photos || [];
+  const room = 3 - this._photos.length;
+  files.filter((x) => /^image\//.test(x.type)).slice(0, Math.max(room, 0)).forEach((file) => {
+  const url = URL.createObjectURL(file); const img = new Image();
+  img.onload = () => {
+  const max = 1400, k = Math.min(1, max / Math.max(img.width, img.height));
+  const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  this._photos.push({ name: file.name, url: url, data: c.toDataURL('image/jpeg', 0.82) });
+  this.setState({ fp: Date.now() });
+  };
+  img.onerror = () => this.setState({ ferr: 'Deze foto kan niet gelezen worden. Probeer een jpg of png.' });
+  img.src = url;
+  });
+  if (files.length > room) this.setState({ ferr: 'Je kan maximaal 3 foto’s toevoegen.' });
+  if (input) input.value = '';
+  },
+  recToggle: () => {
+  if (st.frec === 'rec') { if (this._rec && this._rec.state !== 'inactive') this._rec.stop(); return; }
+  if (!navigator.mediaDevices || !window.MediaRecorder) { this.setState({ frecErr: 'Opnemen werkt niet in deze browser. Typ je bericht gerust, of probeer een andere browser.' }); return; }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+  const types = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg;codecs=opus'];
+  const type = types.find((t) => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || '';
+  const rec = new MediaRecorder(stream, type ? { mimeType: type, audioBitsPerSecond: 32000 } : { audioBitsPerSecond: 32000 });
+  const chunks = []; this._rec = rec;
+  rec.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+  rec.onstop = () => {
+  clearInterval(this._recTimer); stream.getTracks().forEach((t) => t.stop());
+  const blob = new Blob(chunks, { type: rec.mimeType || type || 'audio/webm' });
+  if (this._voice) URL.revokeObjectURL(this._voice.url);
+  const reader = new FileReader();
+  reader.onload = () => { this._voice = { url: URL.createObjectURL(blob), data: reader.result, type: blob.type }; this.setState({ frec: 'done' }); };
+  reader.readAsDataURL(blob);
+  };
+  rec.start(1000);
+  this.setState({ frec: 'rec', frecSec: 0, frecErr: '' });
+  this._recTimer = setInterval(() => { const n = (this.state.frecSec || 0) + 1; if (n >= 120 && rec.state !== 'inactive') rec.stop(); this.setState({ frecSec: n }); }, 1000);
+  }).catch(() => this.setState({ frecErr: 'Geen toegang tot je microfoon. Geef toestemming in je browser, of typ je bericht.' }));
+  },
+  recDelete: () => { if (this._voice) URL.revokeObjectURL(this._voice.url); this._voice = null; this.setState({ frec: 'idle' }); },
   sendForm: (e) => {
   if (e && e.preventDefault) e.preventDefault();
-  const f = e && e.target; if (!f || !f.elements) return;
+  const f = (e && e.target && e.target.elements) ? e.target : document.querySelector('form.cf'); if (!f || st.fsending) return;
+  if ((st.fstep || 1) < 3) { this.state.fstep = st.fstep || 1; return; }
+  if (st.frec === 'rec' && this._rec) { this._rec.stop(); }
   const val = (n) => (f.elements[n] && f.elements[n].value ? String(f.elements[n].value).trim() : '');
-  const body = val('bericht') + '\n\n' + val('naam') + '\n' + val('email');
-  window.location.href = 'mailto:verbinding@nuance-therapie.be?subject=' + encodeURIComponent('Aanvraag intakegesprek — ' + val('naam')) + '&body=' + encodeURIComponent(body);
-  this.setState({ sent: true });
+  const bad = Array.from(f.querySelectorAll('.cf-s1 input, .cf-s2 select, .cf-s2 textarea')).find((el) => !el.checkValidity());
+  if (bad) { const s = bad.closest('.cf-s2') ? 2 : 1; this.setState({ fstep: s }); setTimeout(() => bad.reportValidity(), 30); return; }
+  const data = { voornaam: val('voornaam'), naam: val('naam'), email: val('email'), telefoon: val('telefoon'), dienst: val('dienst'), bericht: val('bericht'),
+  photos: (this._photos || []).map((p) => p.data), voice: this._voice ? { data: this._voice.data, type: this._voice.type } : null, website: val('website') };
+  this.setState({ fsending: true, ferr: '' });
+  const mailto = () => {
+  const body = 'Voornaam: ' + data.voornaam + '\nNaam: ' + data.naam + '\nE-mail: ' + data.email + '\nTelefoon: ' + data.telefoon + '\nDienst: ' + data.dienst + '\n\n' + data.bericht;
+  window.location.href = 'mailto:verbinding@nuance-therapie.be?subject=' + encodeURIComponent('Aanvraag intakegesprek — ' + data.voornaam + ' ' + data.naam) + '&body=' + encodeURIComponent(body);
+  };
+  fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+  .then((r) => r.json().catch(() => ({})).then((j) => ({ ok: r.ok, status: r.status, j })))
+  .then(({ ok, status, j }) => {
+  if (ok) { this.setState({ fsending: false, fstep: 4, fdoneName: data.voornaam, fdoneMail: false }); return; }
+  if (status === 503 || status === 404) { mailto(); this.setState({ fsending: false, fstep: 4, fdoneName: data.voornaam, fdoneMail: true }); return; }
+  this.setState({ fsending: false, ferr: (j && j.error) || 'Versturen lukte niet. Probeer het opnieuw of mail naar verbinding@nuance-therapie.be.' });
+  })
+  .catch(() => { mailto(); this.setState({ fsending: false, fstep: 4, fdoneName: data.voornaam, fdoneMail: true }); });
   }
   };
   }
@@ -663,6 +820,10 @@ html{scroll-behavior:auto}
   document.addEventListener('submit', function (e) {
     var f = e.target.closest ? e.target.closest('[data-hs]') : null;
     if (f) { e.preventDefault(); var fn = get(view, f.getAttribute('data-hs')); if (typeof fn === 'function') fn(e); }
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-hc]') : null;
+    if (t) { var fn = get(view, t.getAttribute('data-hc')); if (typeof fn === 'function') fn(e); }
   });
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('[data-h]') : null;
