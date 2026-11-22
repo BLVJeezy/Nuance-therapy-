@@ -122,7 +122,15 @@
     var c = NC(), t = c.text || {}, st = c.style || {};
     textEls(doc).forEach(function (x) {
       var v = x.kn in t ? t[x.kn] : t[x.k];
-      if (v != null && x.el.innerHTML !== clean(v)) x.el.innerHTML = clean(v);
+      if (v != null) {
+        /* Oude aanpassing met dezelfde tekst maar oude opmaak (bv. een oude kleur): ontwerp laten staan. */
+        if (!x.el.hasAttribute('data-o-html')) x.el.setAttribute('data-o-html', '1'), x.el.__oHTML = x.el.innerHTML;
+        var probe = document.createElement('div'); probe.innerHTML = clean(v);
+        var base = document.createElement('div'); base.innerHTML = x.el.__oHTML || x.el.innerHTML;
+        var same = probe.textContent.replace(/\s+/g, ' ').trim() === base.textContent.replace(/\s+/g, ' ').trim();
+        var want = same ? (x.el.__oHTML || x.el.innerHTML) : clean(v);
+        if (x.el.innerHTML !== want) x.el.innerHTML = want;
+      }
       var s = st[x.kn] || st[x.k];
       if (s || x.el.hasAttribute('data-fs0')) styleEl(x.el, s);
     });
