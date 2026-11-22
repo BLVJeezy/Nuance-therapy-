@@ -162,6 +162,16 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 .scrim{display:none}
 .toast{position:fixed;left:50%;bottom:calc(24px + var(--safe,0px));transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ivory);color:var(--dk);padding:12px 18px;border-radius:14px;font-size:14.5px;font-weight:500;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);transition:all 260ms ease;z-index:50;max-width:calc(100vw - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.undo{display:flex;gap:6px;flex:none}
+.undo button{width:40px;height:40px;border-radius:50%;border:0;background:var(--panel);color:var(--ivory);display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line);transition:transform 100ms ease-out,opacity 160ms ease}
+.undo button svg{width:19px;height:19px}
+.undo button:active:not(:disabled){transform:scale(.92)}
+.undo button:disabled{opacity:.35;cursor:default}
+.undo button:not(:disabled):hover{background:var(--ivory);color:var(--dk)}
+.bar .btn,.bar .seg button{white-space:nowrap}
+@media (max-width:1400px){.brand b{display:none}}
+@media (max-width:1180px) and (min-width:901px){.status span{display:none}.status{padding:0 4px}}
+@media (max-width:900px){.undo{gap:4px}.undo button{width:38px;height:38px}.pagesel{min-width:88px !important}.seg.mode button{padding:0 9px !important}}
 .only-phone{display:none}
 .fab,.menu-scrim,.fan-help{display:none}
 @media (max-width:900px){.fab{display:grid}.menu-scrim{display:block}}
@@ -257,6 +267,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 <div class="app" id="app" hidden>
   <header class="bar">
     <div class="brand"><img src="/assets/logo-licht.png" alt=""><b>Nuance · Beheer</b></div>
+    <div class="undo" role="group" aria-label="Terug of opnieuw"><button type="button" id="undoBtn" aria-label="Terug" title="Terug (Ctrl+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button type="button" id="redoBtn" aria-label="Opnieuw" title="Opnieuw (Ctrl+Shift+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button></div>
     <select class="pagesel" id="pageSel" aria-label="Pagina"></select>
     <div class="seg mode" role="group" aria-label="Modus">
       <button type="button" data-mode="edit" aria-pressed="true" title="Tik op een tekst om te typen">Tekst</button>
@@ -465,7 +476,36 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
   function sha(t) { return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); }); }
   function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2600); }
   function api() { try { return frame.contentWindow && frame.contentWindow.__siteEdit; } catch (e) { return null; } }
+  /* ---------- terug / opnieuw ---------- */
+  var HIST = [], FUT = [], lastSnap = null, histT = null, restoring = false;
+  function snapNow() { return JSON.stringify(draft); }
+  function undoUi() { $('#undoBtn').disabled = !HIST.length && !histT; $('#redoBtn').disabled = !FUT.length; }
+  function commitHist() {
+    clearTimeout(histT); histT = null;
+    var cur = snapNow();
+    if (lastSnap !== null && cur !== lastSnap) { HIST.push(lastSnap); if (HIST.length > 100) HIST.shift(); FUT = []; }
+    lastSnap = cur; undoUi();
+  }
+  function restoreSnap(json, msg) {
+    var a = api(); if (a && a.setMode) { var m = a.mode; a.setMode('browse'); a.setMode(m); }
+    restoring = true; draft = norm(JSON.parse(json)); lastSnap = json; save(); push(); restoring = false;
+    if ($('[data-pane="fotos"]').classList.contains('on')) photos();
+    if ($('[data-pane="contact"]').classList.contains('on')) contacts();
+    if ($('[data-pane="indeling"]').classList.contains('on')) layout();
+    if ($('[data-pane="teksten"]').classList.contains('on')) syncFonts();
+    undoUi(); toast(msg);
+  }
+  function undo() { if (histT) commitHist(); if (!HIST.length) return; FUT.push(snapNow()); restoreSnap(HIST.pop(), 'Teruggezet'); }
+  function redo() { if (histT) commitHist(); if (!FUT.length) return; HIST.push(snapNow()); restoreSnap(FUT.pop(), 'Opnieuw toegepast'); }
+  $('#undoBtn').addEventListener('click', undo);
+  $('#redoBtn').addEventListener('click', redo);
+  document.addEventListener('keydown', function (e) {
+    if (!(e.ctrlKey || e.metaKey) || (e.key !== 'z' && e.key !== 'Z' && e.key !== 'y')) return;
+    var t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+    e.preventDefault(); if (e.key === 'y' || e.shiftKey) redo(); else undo();
+  });
   function save() {
+    if (!restoring && draft) { if (lastSnap === null) lastSnap = snapNow(); else { clearTimeout(histT); histT = setTimeout(commitHist, 700); undoUi(); } }
     try { localStorage.setItem(KEY, JSON.stringify(draft)); $('#status').textContent = 'Alles is bewaard'; $('#statusBox').classList.remove('warn'); }
     catch (e) { $('#status').textContent = 'Niet bewaard'; $('#statusBox').classList.add('warn'); toast('Geen plek meer op dit toestel. Verstuur je wijzigingen of gebruik minder foto’s.'); }
     counts(); texts();
@@ -483,7 +523,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 
   /* ---------- toegang (houdt alleen toevallige bezoekers weg, geen echte beveiliging) ---------- */
   function open() {
-    $('#gate').hidden = true; $('#app').hidden = false; barH(); draft = load();
+    $('#gate').hidden = true; $('#app').hidden = false; barH(); draft = load(); lastSnap = snapNow(); undoUi();
     pages(); counts(); texts();
     try { if (!localStorage.getItem(COACH)) setTimeout(function () { tour(0); }, 700); } catch (e) {}
   }
