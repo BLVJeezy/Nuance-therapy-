@@ -10,6 +10,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
+.svc-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;align-items:stretch}
+.svc-cards>.svc-card{flex:0 1 calc((100% - 48px) / 3);min-width:0}
+.svc-card{display:flex;flex-direction:column;background:#F3EAE2;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(62,42,53,.06),0 24px 48px -32px rgba(62,42,53,.45);transition:transform 220ms cubic-bezier(.2,.8,.2,1),box-shadow 220ms ease}
+.svc-card:hover{transform:translateY(-3px);box-shadow:0 1px 0 rgba(62,42,53,.06),0 30px 56px -30px rgba(62,42,53,.55)}
+.svc-card-img{position:relative;aspect-ratio:4/3;overflow:hidden;background:#C9B4A5}
+.svc-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(.2,.8,.2,1)}
+.svc-card:hover .svc-card-img img{transform:scale(1.04)}
+.svc-card-body{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px 22px 24px}
+.svc-card-n{font-size:12px;font-weight:600;letter-spacing:.18em;color:#74425C}
+.svc-card h3{margin:0;font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(1.3rem,1.7vw,1.5rem);line-height:1.2;letter-spacing:-.005em;color:#3E2A35}
+.svc-card .svc-text{margin:0;font-size:15px;line-height:1.65;color:#5A4450;white-space:pre-line}
+.svc-more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:36px;font-size:14px;font-weight:600;color:#74425C;text-decoration:underline;text-underline-offset:4px}
+.svc-more summary::-webkit-details-marker{display:none}
+.svc-more .m-close,.svc-more[open] .m-open{display:none}
+.svc-more[open] .m-close{display:inline}
+.svc-more[open] summary{order:2}
+.svc-more[open]{display:flex;flex-direction:column;gap:8px}
+.svc-meta{margin:auto 0 0;align-self:stretch;padding:12px 14px;border-radius:14px;background:rgba(62,42,53,.06);font-size:13.5px;font-weight:500;line-height:1.7;color:#3E2A35;white-space:pre-line}
+.svc-cta{display:inline-flex;align-items:center;gap:10px;min-height:48px;margin-top:2px;padding:0 20px;border-radius:999px;background:#74425C;color:#F6EEE8 !important;text-decoration:none;font-size:14.5px;font-weight:500;transition:transform 100ms ease-out,filter 160ms ease}
+.svc-cta:hover{filter:brightness(1.08)}
+.svc-cta:active{transform:scale(.97)}
+@media (max-width:1060px){.svc-cards>.svc-card{flex-basis:calc((100% - 24px) / 2)}}
+@media (max-width:640px){
+.svc-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -24px;padding:4px 24px 18px;scroll-padding:0 24px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.svc-cards::-webkit-scrollbar{display:none}
+.svc-cards>.svc-card{flex:0 0 84%;scroll-snap-align:start}
+.svc-cards{justify-content:flex-start}
+}
+@media (prefers-reduced-motion:reduce){.svc-card,.svc-card-img img{transition:none}.svc-card:hover{transform:none}.svc-card:hover .svc-card-img img{transform:none}}
 .cf .cf-s{display:none;flex-direction:column;gap:16px}
 .cf[data-step="1"] .cf-s1,.cf[data-step="2"] .cf-s2,.cf[data-step="3"] .cf-s3,.cf[data-step="4"] .cf-s4{display:flex}
 .cf[data-step="1"] .cf-prev,.cf[data-step="3"] .cf-next,.cf[data-step="4"] .cf-nav,.cf[data-step="4"] .cf-head{display:none !important}
@@ -242,6 +271,9 @@ html{scroll-behavior:auto}
 </ul>
 </section>
 
+<section id="diensten" style="background: #D6C3B2; color: #3E2A35; scroll-margin-top: 90px">
+</section>
+
 <section id="praktijk" aria-label="De praktijk" style="background: #D6C3B2; color: #3E2A35; scroll-margin-top: 90px">
 <div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
 <div style="display: flex; flex-direction: column; gap: 20px">
@@ -266,11 +298,8 @@ html{scroll-behavior:auto}
 </div>
 </section>
 <svg class="seam seam-sk1" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true" style="display: block; position: relative; z-index: 1; overflow: hidden; width: 100%; height: clamp(70px, 10vw, 150px); margin-top: -1px; margin-bottom: -1px; background: #D6C3B2"><defs><linearGradient id="sk1-r" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7E5E52"></stop><stop offset="0.3" stop-color="#B08B78"></stop><stop offset="0.52" stop-color="#7E5E52"></stop><stop offset="0.78" stop-color="#B08B78"></stop><stop offset="1" stop-color="#7E5E52"></stop></linearGradient><linearGradient id="sk1-v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1EA" stop-opacity="0.3"></stop><stop offset="0.3" stop-color="#FFF1EA" stop-opacity="0"></stop><stop offset="0.8" stop-color="#12050C" stop-opacity="0"></stop><stop offset="1" stop-color="#12050C" stop-opacity="0.45"></stop></linearGradient><linearGradient id="sk1-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F4DCCB" stop-opacity="0"></stop><stop offset="0.35" stop-color="#F4DCCB" stop-opacity="0.95"></stop><stop offset="0.7" stop-color="#F4DCCB" stop-opacity="0.6"></stop><stop offset="1" stop-color="#F4DCCB" stop-opacity="0"></stop></linearGradient><filter id="sk1-b" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="6"></feGaussianBlur></filter><filter id="sk1-s" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="2"></feGaussianBlur></filter></defs><g transform="translate(1440 0) scale(-1 1)"><path d="M-20 34 C 260 140, 560 150, 820 108 C 1080 66, 1260 36, 1460 64 L1460 196 L-20 196 Z" fill="#12050C" opacity="0.4" filter="url(#sk1-b)" transform="translate(0 -6)"></path><path d="M-20 34 C 260 140, 560 150, 820 108 C 1080 66, 1260 36, 1460 64 L1460 220 L-20 220 Z" fill="url(#sk1-r)"></path><path d="M-20 34 C 260 140, 560 150, 820 108 C 1080 66, 1260 36, 1460 64 L1460 220 L-20 220 Z" fill="url(#sk1-v)"></path><path d="M-20 34 C 260 140, 560 150, 820 108 C 1080 66, 1260 36, 1460 64" fill="none" stroke="url(#sk1-g)" stroke-width="8" opacity="0.5" filter="url(#sk1-b)"></path><path d="M-20 34 C 260 140, 560 150, 820 108 C 1080 66, 1260 36, 1460 64" fill="none" stroke="url(#sk1-g)" stroke-width="1.4" vector-effect="non-scaling-stroke"></path><path d="M-20 152 C 280 192, 600 172, 860 140 C 1100 112, 1280 100, 1460 122 L1460 196 L-20 196 Z" fill="#12050C" opacity="0.5" filter="url(#sk1-b)" transform="translate(0 -5)"></path><path d="M-20 152 C 280 192, 600 172, 860 140 C 1100 112, 1280 100, 1460 122 L1460 220 L-20 220 Z" fill="#3E2A35"></path><path d="M-20 152 C 280 192, 600 172, 860 140 C 1100 112, 1280 100, 1460 122" fill="none" stroke="#F4DCCB" stroke-width="4" opacity="0.5" filter="url(#sk1-s)"></path></g></svg>
-<section id="diensten" style="background: #3E2A35; scroll-margin-top: 90px">
-</section>
-
 <section id="technieken" aria-label="Werkwijze en praktische informatie" style="background: #3E2A35; scroll-margin-top: 90px">
-<div style="max-width: 1240px; margin: 0 auto; padding: 0 24px clamp(56px, 7vw, 104px); display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px)">
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) 24px clamp(56px, 7vw, 104px); display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px)">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 760px">
 <p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2" data-ek="te4a14fecf0">Technieken</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance" data-ek="t85fb9b1767">Welke technieken gebruiken we bij Nuance?</h2>
 <p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6" data-ek="t72d0b09994">Ieder mens is uniek. Daarom werk ik niet vanuit één vaste methode, maar maak ik gebruik van verschillende coaching-, bewustwordings- en ontspanningstechnieken, afgestemd op jouw persoonlijke behoeften.</p>
@@ -380,47 +409,28 @@ html{scroll-behavior:auto}
 
 </div>
 <template id="tpl-diensten">
-<div style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) 24px clamp(56px, 7vw, 104px); display: flex; flex-direction: column; gap: clamp(24px, 3vw, 40px)">
-<div class="svc-wrap" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: clamp(24px, 4vw, 64px)">
-<div style="flex: 1 1 360px; max-width: 500px; min-width: 0; display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 30px)">
-<div style="display: flex; flex-direction: column; gap: 14px">
-<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2" data-ek="t3d0f29b35d">Begeleidingsvormen</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance" data-ek="t564bbb8248">Onze diensten</h2>
-<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #DDD0C6" data-ek="tc81317760d">Een aanbod van coaching en psychosociale begeleiding, met aandacht voor jou, je relaties en je gezin. Bij Nuance gaan we niet de mens aanpassen aan een methode, maar de begeleiding afstemmen op de mens.</p>
+<div style="max-width: 1240px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) 24px clamp(48px, 6vw, 88px); display: flex; flex-direction: column; gap: clamp(28px, 3.4vw, 44px)">
+<div class="svc-head" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px 48px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 620px">
+<p style="margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #74425C" data-ek="t3d0f29b35d">Begeleidingsvormen</p><h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.16; letter-spacing: -0.01em; text-wrap: balance" data-ek="t564bbb8248">Onze diensten</h2>
+<p style="margin: 0; font-size: clamp(1rem, 1.25vw, 1.1rem); color: #5A4450" data-ek="tc81317760d">Een aanbod van coaching en psychosociale begeleiding, met aandacht voor jou, je relaties en je gezin. Bij Nuance gaan we niet de mens aanpassen aan een methode, maar de begeleiding afstemmen op de mens.</p>
 </div>
-<div class="tabs" role="group" aria-label="Kies een dienst" style="display: flex; flex-direction: column; gap: 0">
+<a class="svc-all" href="#contact" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 500; color: #74425C; text-underline-offset: 5px" data-ek="tff3df876dd">Niet zeker wat past? Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="svc-cards" role="list">
 <sc-for list="{{services}}" as="s" hint-placeholder-count="5">
-<div class="acc-item">
-<button class="tab" type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="appearance: none; display: flex; align-items: center; gap: 18px; width: 100%; min-height: 84px; box-sizing: border-box; padding: 10px 16px 10px 10px; border: 0; border-bottom: 1px solid rgba(234,227,218,0.14); border-radius: 16px; cursor: pointer; text-align: left; font-family: inherit; color: #EAE3DA; background: {{s.bg}}">
-<span aria-hidden="true" style="position: relative; flex: none; width: 92px; height: 64px; border-radius: 12px; overflow: hidden; background: #4A3540"><img src="{{s.thumb}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
-<span class="tab-title" style="flex: 1; font-size: clamp(1rem, 1.3vw, 1.1rem); font-weight: 500; line-height: 1.35">{{s.short}}</span>
-<span class="tab-arrow" style="display: inline-flex; transition: transform 220ms ease-out; color: #D6C3B2; opacity: {{s.arrowOp}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></span>
-</button>
-<div class="acc-wrap {{s.openCls}}">
-<div class="acc-clip" style="min-height: 0; overflow: hidden">
-<div class="acc-panel" style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 6px 16px 20px">
-<div style="position: relative; align-self: stretch; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: #3E2A35"><img src="{{s.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
-<p class="svc-text" style="margin: 0; color: #DDD0C6; white-space: pre-line">{{s.text}}</p>
-<span class="svc-meta" style="display: inline-flex; align-items: flex-start; gap: 10px; min-height: 36px; box-sizing: border-box; padding: 8px 16px 8px 12px; border-radius: 16px; background: rgba(234,227,218,0.1); color: #EAE3DA; font-size: 14px; font-weight: 500; line-height: 1.6; white-space: pre-line"><svg style="flex: none; margin-top: 2px" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D6C3B2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg>{{s.meta}}</span>
-<a class="btn" href="#contact" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; align-self: stretch; min-height: 54px; padding: 0 20px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15px; font-weight: 500; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)" data-ek="tdacf02ecfa">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+<article class="svc-card" role="listitem">
+<div class="svc-card-img"><img src="{{s.img}}" alt="{{s.short}}" loading="lazy" decoding="async"></div>
+<div class="svc-card-body">
+<span class="svc-card-n" aria-hidden="true">{{s.num}}</span>
+<h3>{{s.title}}</h3>
+<p class="svc-text">{{s.intro}}</p>
+<sc-if value="{{s.hasMore}}" hint-placeholder-val="{{true}}"><details class="svc-more"><summary><span class="m-open" data-ek="tcf14395129">Lees meer</span><span class="m-close" data-ek="t7cafc26b43">Minder</span></summary><p class="svc-text">{{s.more}}</p></details></sc-if>
+<p class="svc-meta">{{s.meta}}</p>
+<a class="svc-cta" href="#contact" onClick="{{s.book}}" data-ek="tdacf02ecfa">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
 </div>
-</div>
-</div>
-</div>
+</article>
 </sc-for>
-</div>
-</div>
-<div aria-live="polite" class="svc-panel" style="flex: 2 1 460px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: clamp(20px, 3vw, 40px); align-items: center; box-sizing: border-box; padding: clamp(16px, 2vw, 24px); border-radius: 28px; background: #4A3540; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.07), 0 30px 60px -34px rgba(20,10,16,0.8)">
-<div class="svc-img" style="position: relative; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; background: #3E2A35">
-<img src="{{cur_s.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
-</div>
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 4px clamp(4px, 1.2vw, 14px) clamp(8px, 1.2vw, 14px)">
-<span style="display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.16em; color: #D6C3B2"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: rgba(234,227,218,0.1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EAE3DA" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="{{cur_s.icon}}"></path></svg></span>{{cur_s.n}} / 05</span>
-<h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(1.55rem, 2.4vw, 2.05rem); line-height: 1.18; color: #EAE3DA">{{cur_s.title}}</h3>
-<p class="svc-text" style="margin: 0; color: #DDD0C6; white-space: pre-line">{{cur_s.text}}</p>
-<span class="svc-meta" style="display: inline-block; box-sizing: border-box; padding: 10px 16px; border-radius: 16px; background: rgba(234,227,218,0.1); color: #EAE3DA; font-size: 14px; font-weight: 500; line-height: 1.7; white-space: pre-line">{{cur_s.meta}}</span>
-<a class="btn" href="#contact" style="display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 26px; margin-top: 4px; border-radius: 999px; background: var(--accent); color: #EAE3DA; text-decoration: none; font-size: 15px; font-weight: 500; white-space: nowrap; box-shadow: inset 0 0 0 1px rgba(234,227,218,0.16)" data-ek="tdacf02ecfa">Vraag een intake aan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
-</div>
-</div>
 </div>
 </div>
 </template>
@@ -720,7 +730,7 @@ html{scroll-behavior:auto}
   menuOpen: !!st.menuOpen,
   toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
   closeMenu: () => this.setState({ menuOpen: false }),
-  services: SERVICES.map((x, i) => ({ ...x, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? 'rgba(234,227,218,0.09)' : 'transparent', arrowOp: i === svc ? 1 : 0.5, pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
+  services: SERVICES.map((x, i) => ({ ...x, num: String(i + 1).padStart(2, '0'), intro: String(x.text || '').split('\n')[0], more: String(x.text || '').split('\n').slice(1).join('\n'), hasMore: String(x.text || '').indexOf('\n') > 0, book: () => { const sel = document.getElementById('f-dienst'); if (sel) { const o = Array.from(sel.options).find((op) => op.text.indexOf(x.short) === 0 || x.short.indexOf(op.text) === 0); if (o) sel.value = o.value || o.text; } this.setState({ fstep: 1 }); }, openCls: i === svc ? 'open' : '', pressed: i === svc ? 'true' : 'false', bg: i === svc ? 'rgba(234,227,218,0.09)' : 'transparent', arrowOp: i === svc ? 1 : 0.5, pick: () => { this.setState({ svc: i }); this.revealService(i); } })),
   cur_s: SERVICES[svc],
   moments: MOMENTS.map((m, i) => ({ ...m, op: i === ab ? 1 : 0, tf: i === ab ? 'scale(1)' : 'scale(1.06)', pressed: i === ab ? 'true' : 'false', ring: i === ab ? '0 0 0 3px #35232D, 0 0 0 5px #D6C3B2' : '0 0 0 3px #35232D', thumbOp: i === ab ? 1 : 0.72, pick: () => this.setState({ ab: i, abPicked: true }) })),
   curM: { ...MOMENTS[ab], anim: ab % 2 ? 'valA' : 'valB' },
