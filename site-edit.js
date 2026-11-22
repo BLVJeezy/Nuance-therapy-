@@ -16,7 +16,7 @@
   var SKIP = 'script,style,noscript,template,svg,textarea,input,select,option,code,pre,[data-se-skip]';
   var BLOCK_TAGS = /^(H[1-6]|P|LI|A|BUTTON|SPAN|LABEL|BLOCKQUOTE|FIGCAPTION|TD|TH|DT|DD|SMALL|STRONG|EM|B|I|DIV|SUMMARY|CITE|Q|TIME|ADDRESS|LEGEND|CAPTION)$/;
 
-  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
+  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
   var draft = norm(window.SITE_CONTENT);
 
   /* ---------- contactgegevens: één keer aanpassen, overal op de site vervangen (tekst én links) ---------- */
@@ -103,31 +103,55 @@
     return out.replace(/\s+/g, ' ').trim().slice(0, 300);
   }
   var STY_SEL = 'h1,h2,h3,h4,h5,h6,p,li,a,button,span,label,blockquote,figcaption,td,th,dt,dd,small,strong,em,summary,cite,address';
-  function elFonts(root) {
-    var map = draft.style.el, keys = Object.keys(map), had = root.querySelectorAll ? root.querySelectorAll('[data-se-st]') : [];
-    if (!keys.length && !had.length) return;
-    var list = root.querySelectorAll ? root.querySelectorAll(keys.length ? STY_SEL : '[data-se-st]') : [];
-    Array.prototype.forEach.call(list, function (el) {
+  /* Opmaak per tekst geldt enkel voor dat ene stuk tekst: staat dezelfde tekst nog elders (menu, footer),
+     dan krijgt elke volgende plek een eigen sleutel ("tekst §2", "tekst §3"). Een element dat enkel een
+     ander element met dezelfde tekst omhult, telt niet apart (anders zou de grootte dubbel tellen). */
+  function styleMap() {
+    var out = new Map(), counts = {};
+    Array.prototype.forEach.call(document.body.querySelectorAll(STY_SEL), function (el) {
       if (el.closest(SKIP)) return;
       var txt = el.textContent; if (!txt || txt.length > 700) return;
-      var k = keyOf(el), r = keys.length ? map[k] : null;
+      var k = keyOf(el); if (!k) return;
+      var up = el.parentElement && el.parentElement.closest(STY_SEL);
+      if (up && out.has(up) && out.get(up).base === k) return;
+      var n = counts[k] = (counts[k] || 0) + 1;
+      out.set(el, { base: k, key: n > 1 ? k + ' §' + n : k });
+    });
+    return out;
+  }
+  function styleKey(el) {
+    if (!el) return '';
+    var m = styleMap(), r = m.get(el);
+    if (!r) { var up = el.parentElement && el.parentElement.closest(STY_SEL); if (up && m.has(up) && m.get(up).base === keyOf(el)) r = m.get(up); }
+    if (!r && el.querySelector) { var c = el.querySelector(STY_SEL); if (c) r = m.get(c); }
+    return r ? r.key : keyOf(el);
+  }
+  function elFonts() {
+    var map = draft.style.el, keys = Object.keys(map), had = document.querySelectorAll('[data-se-st]');
+    if (!keys.length && !had.length) return;
+    var m = keys.length ? styleMap() : new Map(), seen = new Set();
+    m.forEach(function (info, el) {
+      var r = map[info.key];
       if (r && (r.f || r.s)) {
+        seen.add(el);
         if (r.f && fontInfo(r.f)) { face(r.f); el.style.setProperty('font-family', fam(r.f), 'important'); } else el.style.removeProperty('font-family');
         if (r.s && r.s !== 100) {
           if (!el.hasAttribute('data-se-fs0')) { el.style.removeProperty('font-size'); el.setAttribute('data-se-fs0', parseFloat(getComputedStyle(el).fontSize) || 16); }
           el.style.setProperty('font-size', Math.round(+el.getAttribute('data-se-fs0') * r.s) / 100 + 'px', 'important');
         } else el.style.removeProperty('font-size');
         el.setAttribute('data-se-st', '');
-      } else if (el.hasAttribute('data-se-st')) {
-        el.style.removeProperty('font-family'); el.style.removeProperty('font-size'); el.removeAttribute('data-se-st'); el.removeAttribute('data-se-fs0');
       }
+    });
+    Array.prototype.forEach.call(had, function (el) {
+      if (seen.has(el)) return;
+      el.style.removeProperty('font-family'); el.style.removeProperty('font-size'); el.removeAttribute('data-se-st'); el.removeAttribute('data-se-fs0');
     });
   }
   function styles(root) {
     if (!needFonts() && !document.getElementById('se-style') && !document.querySelector('[data-se-st]')) return;
     if (needFonts() && !window.BEHEER_FONTS) { loadFonts(function () { apply(document.body); }); return; }
     if (root === document.body) siteFonts();
-    elFonts(root);
+    elFonts();
   }
   var M = new WeakMap(); // gestructureerde gegevens (Google) en meta-omschrijvingen
   function headData() {
@@ -161,11 +185,27 @@
   function wrap(orig, txt) { var m = /^(\s*)[\s\S]*?(\s*)$/.exec(orig); return m[1] + txt + m[2]; }
   function skipped(n) { var el = n.nodeType === 1 ? n : n.parentElement; return !el || !!el.closest(SKIP); }
 
+  /* Staat dezelfde tekst meerdere keren op de pagina, dan krijgt elke plek een eigen sleutel ("tekst §2").
+     Een aanpassing geldt dan enkel voor de plek die je aanpaste. Oude aanpassingen zonder § blijven overal gelden. */
+  var OCC = null, SLOTS = {};
+  function occMap() {
+    if (OCC) return OCC;
+    OCC = new Map(); OCC.totals = {};
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return skipped(n) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), n;
+    while ((n = w.nextNode())) {
+      var r = T.get(n), o = r && n.nodeValue === r.applied ? r.orig : n.nodeValue, k = key(o); if (!k) continue;
+      var c = OCC.totals[k] = (OCC.totals[k] || 0) + 1; OCC.set(n, { k: k, n: c });
+    }
+    return OCC;
+  }
+  function slots() { SLOTS = {}; Object.keys(draft.text).forEach(function (k) { var i = k.lastIndexOf(' §'); if (i > 0 && /^\d+$/.test(k.slice(i + 2))) SLOTS[k.slice(0, i)] = 1; }); }
   function textNode(n) {
     var cur = n.nodeValue, rec = T.get(n);
     var orig = rec && cur === rec.applied ? rec.orig : cur;
     var k = key(orig); if (!k) return;
-    var want = contactText(Object.prototype.hasOwnProperty.call(draft.text, k) ? wrap(orig, draft.text[k]) : orig);
+    var has = Object.prototype.hasOwnProperty, val = has.call(draft.text, k) ? draft.text[k] : null;
+    if (SLOTS[k]) { var o = occMap().get(n), sk = o && o.k === k ? k + ' §' + o.n : null; if (sk && has.call(draft.text, sk)) val = draft.text[sk]; }
+    var want = contactText(val !== null ? wrap(orig, val) : orig);
     if (cur !== want) n.nodeValue = want;
     T.set(n, { orig: orig, applied: want });
   }
@@ -194,6 +234,7 @@
   function apply(root) {
     root = root || document.body; if (!root || busy) return;
     if (root === document.body) structure();
+    OCC = null; slots();
     busy = true;
     try {
       buildRepl();
@@ -256,13 +297,15 @@
     active = el;
     snapHTML = el.innerHTML;
     snap = texts(el).map(function (n) { var r = T.get(n); return { node: n, orig: r && n.nodeValue === r.applied ? r.orig : n.nodeValue }; });
+    OCC = null; var om = occMap();
+    snap.forEach(function (s) { var o = om.get(s.node); s.slot = o && om.totals[o.k] > 1 ? o.k + ' §' + o.n : null; });
     el.setAttribute('data-se-active', '');
     try { el.contentEditable = 'plaintext-only'; } catch (e) {}
     if (el.contentEditable !== 'plaintext-only') el.contentEditable = 'true';
     el.spellcheck = true;
     if (typeof api.onActive === 'function') { try { api.onActive(info()); } catch (e) {} }
   }
-  function info() { return active ? { tag: active.tagName, orig: snap.map(function (s) { return s.orig; }).join(''), now: active.textContent || '', key: keyOf(active), size: parseFloat(getComputedStyle(active).fontSize) || 0 } : null; }
+  function info() { return active ? { tag: active.tagName, orig: snap.map(function (s) { return s.orig; }).join(''), now: active.textContent || '', key: styleKey(active), size: parseFloat(getComputedStyle(active).fontSize) || 0 } : null; }
   function deactivate() {
     if (!active) return;
     active.removeAttribute('contenteditable'); active.removeAttribute('data-se-active');
@@ -276,27 +319,52 @@
     if (snap.length === 1 && (nodes.length !== 1 || nodes[0] !== snap[0].node)) {
       // browser heeft de tekstknoop vervangen: hele blok = die ene tekst
       var all = (active.textContent || '');
-      setText(snap[0].orig, all);
+      setText(snap[0].orig, all, snap[0].slot);
       if (!nodes.length) { var t = document.createTextNode(''); active.appendChild(t); nodes = [t]; }
       snap[0].node = nodes[0];
     } else {
-      snap.forEach(function (s) { if (s.node.isConnected) setText(s.orig, s.node.nodeValue); });
+      snap.forEach(function (s) { if (s.node.isConnected) setText(s.orig, s.node.nodeValue, s.slot); });
     }
     if (typeof api.onChange === 'function') api.onChange(info());
   }
-  function setText(orig, val) {
+  function setText(orig, val, slot) {
     var k = key(orig), v = key(val); if (!k) return;
+    if (slot) {
+      if (v === k && !Object.prototype.hasOwnProperty.call(draft.text, k)) delete draft.text[slot]; else draft.text[slot] = v;
+      SLOTS[k] = 1; return;
+    }
     if (v === k) delete draft.text[k]; else draft.text[k] = v;
+  }
+  function imgAt(t) {
+    if (!t || !t.closest) return null;
+    if (t.tagName === 'IMG') return t;
+    var box = t.closest('[role="img"], figure, picture');
+    return box ? box.querySelector('img') : null;
+  }
+  function origSrc(img) { var r = I.get(img); return r && img.getAttribute('src') === r.applied ? r.orig : img.getAttribute('src'); }
+  function imgLabel(el) {
+    var alt = (el.getAttribute('alt') || '').trim(); if (alt) return alt;
+    var btn = el.closest('button, a'); var bt = btn && btn.textContent.replace(/\s+/g, ' ').trim(); if (bt) return bt;
+    var box = el.closest('[aria-label]'); if (box && box.getAttribute('aria-label')) return box.getAttribute('aria-label');
+    var sec = el.closest('section'), h = sec && sec.querySelector('h1, h2, h3');
+    return h ? 'Foto bij “' + h.textContent.trim().slice(0, 40) + '”' : 'Foto';
   }
   function editMode() {
     var st = document.createElement('style');
-    st.textContent = 'html.se-edit [data-se-t]{outline:1px dashed rgba(127,127,127,.55);outline-offset:2px;cursor:text !important}html.se-edit [data-se-t]:hover{outline:1px dashed currentColor}[data-se-active]{outline:2px solid #2f80ed !important;outline-offset:3px;border-radius:2px}*{-webkit-user-select:auto}';
+    st.textContent = 'html.se-edit img,html.se-edit [role="img"]{cursor:pointer !important}html.se-edit img:hover{outline:2px solid #D6C3B2;outline-offset:-2px}html.se-edit [data-se-t]{outline:1px dashed rgba(127,127,127,.55);outline-offset:2px;cursor:text !important}html.se-edit [data-se-t]:hover{outline:1px dashed currentColor}[data-se-active]{outline:2px solid #2f80ed !important;outline-offset:3px;border-radius:2px}*{-webkit-user-select:auto}';
     document.head.appendChild(st);
     document.documentElement.classList.add('se-edit');
     window.addEventListener('pointerdown', function (e) {
       if (MODE !== 'edit') return;
       var el = block(e.target);
       if (el) activate(el); else if (active && !active.contains(e.target)) deactivate();
+    }, true);
+    window.addEventListener('click', function (e) {
+      if (MODE !== 'edit' || inBanner(e.target) || block(e.target)) return;
+      var img = imgAt(e.target); if (!img) return;
+      var k = srcKey(origSrc(img)); if (!k) return;
+      e.preventDefault(); e.stopPropagation();
+      if (typeof api.onImage === 'function') api.onImage({ key: k, src: img.currentSrc || img.getAttribute('src'), alt: imgLabel(img) });
     }, true);
     ['click', 'auxclick', 'dblclick'].forEach(function (t) {
       window.addEventListener(t, function (e) {
@@ -321,13 +389,13 @@
     edit: EDIT,
     get draft() { return draft; },
     attach: function (d) { draft = norm(d); apply(document.body); },
-    keyOf: function (el) { return el ? keyOf(el) : ''; },
+    keyOf: function (el) { return styleKey(el); },
     revertActive: function () {
       if (!active) return;
-      var origs = snap.map(function (s) { return s.orig; });
+      var old = snap.slice();
       active.innerHTML = snapHTML;
-      origs.forEach(function (o) { setText(o, o); });
-      snap = texts(active).map(function (n, i) { return { node: n, orig: n.nodeValue }; });
+      old.forEach(function (s) { setText(s.orig, s.orig, s.slot); });
+      snap = texts(active).map(function (n, i) { return { node: n, orig: n.nodeValue, slot: (old[i] || {}).slot || null }; });
       if (typeof api.onChange === 'function') api.onChange(info());
     },
     apply: function () { apply(document.body); },
@@ -338,13 +406,17 @@
         var rec = I.get(el), orig = rec ? rec.orig : el.getAttribute('src'), k = srcKey(orig);
         if (!k || seen[k]) return; seen[k] = 1;
         var r = el.getBoundingClientRect();
-        out.push({ key: k, src: draft.img[k] || el.currentSrc || orig, alt: el.getAttribute('alt') || '', tiny: r.width > 0 && r.width < 24 });
+        var sec = el.closest('section, header, footer'), sh = sec && (sec.getAttribute('aria-label') || ((sec.querySelector('h1, h2') || {}).textContent || '').trim());
+        if (sec && sec.tagName === 'HEADER') sh = 'Bovenaan (logo)';
+        if (sec && sec.tagName === 'FOOTER') sh = 'Onderaan';
+        if (sec && sec.classList.contains('hero')) sh = 'Bovenaan de pagina';
+        out.push({ key: k, src: draft.img[k] || el.currentSrc || orig, orig: orig, alt: imgLabel(el), sec: (sh || 'Foto’s').replace(/\s+/g, ' ').slice(0, 48), tiny: r.width > 0 && r.width < 24 });
       });
       return out;
     },
     get mode() { return MODE; },
     setMode: function (m) { MODE = m === 'browse' ? 'browse' : 'edit'; if (MODE === 'browse') deactivate(); document.documentElement.classList.toggle('se-edit', MODE === 'edit'); },
-    onChange: null, onRender: null
+    onChange: null, onRender: null, onImage: null
   };
 
   // Door de server opgebouwde React-pagina's (TanStack Start, Next.js): eerst React laten opstarten, dan pas aanpassen.

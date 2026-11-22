@@ -153,6 +153,12 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 .photo img.contain{object-fit:contain;padding:6px}
 .photo small{display:block;color:var(--body);font-size:13.5px;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
+.card.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,30%{box-shadow:0 0 0 3px var(--acc)}100%{box-shadow:0 0 0 0 rgba(214,195,178,0)}}
+.photo img{cursor:zoom-in}
+.photo-sec{margin:10px 2px 0;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.photo-big{width:100%;max-height:260px;object-fit:contain;border-radius:14px;background:rgba(255,255,255,.05);display:block}
+@media (prefers-reduced-motion:reduce){.card.flash{animation:none;box-shadow:0 0 0 3px var(--acc)}}
 .scrim{display:none}
 .toast{position:fixed;left:50%;bottom:calc(24px + var(--safe,0px));transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ivory);color:var(--dk);padding:12px 18px;border-radius:14px;font-size:14.5px;font-weight:500;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);transition:all 260ms ease;z-index:50;max-width:calc(100vw - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -196,6 +202,13 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
   .nav.five button:nth-child(3){--x:0px;--y:-132px}
   .nav.five button:nth-child(4){--x:82px;--y:-102px}
   .nav.five button:nth-child(5){--x:124px;--y:-20px;--d:140ms}
+  .nav.six button:nth-child(1){--x:-136px;--y:-4px;--d:0ms}
+  .nav.six button:nth-child(2){--x:-112px;--y:-92px;--d:30ms}
+  .nav.six button:nth-child(3){--x:-44px;--y:-146px;--d:60ms}
+  .nav.six button:nth-child(4){--x:44px;--y:-146px;--d:90ms}
+  .nav.six button:nth-child(5){--x:112px;--y:-92px;--d:120ms}
+  .nav.six button:nth-child(6){--x:136px;--y:-4px;--d:150ms}
+  .nav.six ~ .fan-help, body .nav.six + .fan-help{bottom:calc(270px + env(safe-area-inset-bottom,0px))}
   .nav:not(.open) button{transition-delay:0ms;transition-duration:220ms,160ms;transition-timing-function:cubic-bezier(.4,0,.2,1),ease}
   .fab{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:13;width:64px;height:64px;margin-left:-32px;border-radius:50%;border:0;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 16px 32px -10px rgba(0,0,0,.65),0 0 0 4px rgba(0,0,0,.12);transition:transform 260ms cubic-bezier(.2,.8,.2,1),opacity 200ms ease}
   .fab:active{transform:scale(.93)}
@@ -273,7 +286,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
       <button role="tab" aria-selected="true" data-tab="teksten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Teksten</button>
       <button role="tab" aria-selected="false" data-tab="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Foto's</button>
       <button role="tab" aria-selected="false" data-tab="contact" id="contactTab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Contact</button>
-      <button role="tab" aria-selected="false" data-tab="indeling" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="4" rx="1.5"/><rect x="3" y="17" width="11" height="3" rx="1.5"/></svg>Indeling</button>
+      <button role="tab" aria-selected="false" data-tab="indeling"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="4" rx="1.5"/><rect x="3" y="17" width="11" height="3" rx="1.5"/></svg>Indeling</button>
       <button role="tab" aria-selected="false" data-tab="klaar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Publiceren<span class="badge" id="count" data-n="0">0</span></button>
       <button type="button" id="projBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>Projecten</button>
     </nav>
@@ -301,7 +314,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
           <div class="meta">Goed om te weten</div>
           <ul class="steps">
             <li>Enter of ergens anders tikken = klaar met die tekst.</li>
-            <li>Een tekst die op meerdere plaatsen staat (bv. in het menu of de footer), verandert overal mee.</li>
+            <li>Staat dezelfde tekst op meerdere plaatsen (bv. in het menu en de footer)? Dan pas je enkel de plek aan waar je tikt.</li>
             <li>In <b>Tekst</b> doen knoppen en links niets, zodat je hun tekst rustig kan aanpassen. Wil je de taal wisselen, een menu openen of doorklikken? Zet bovenaan op <b>Klikken</b>.</li>
           </ul>
         </div>
@@ -310,7 +323,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 
       <section class="pane" data-pane="fotos">
         <h2 class="pane-title">Foto's <button class="help-btn" type="button" data-help="fotos" aria-label="Uitleg">?</button></h2>
-        <p class="hint">De foto's op deze pagina. Kies er een om te vervangen: neem er een met je camera of kies er een uit je galerij. Grote foto's worden automatisch verkleind.</p>
+        <p class="hint">Tik in de website op een foto, of kies er hieronder een. Met <b>Vervang</b> neem je een nieuwe foto of kies je er een uit je galerij; met <b>Download</b> bewaar je de foto op je toestel. Grote foto's worden automatisch verkleind.</p>
         <div id="photoList" style="display:flex;flex-direction:column;gap:12px"></div>
       </section>
 
@@ -442,7 +455,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
   window.addEventListener('resize', barH); window.addEventListener('orientationchange', function () { setTimeout(barH, 300); });
   var TITLES = { teksten: 'Teksten', fotos: "Foto's", contact: 'Contactgegevens', indeling: 'Indeling', klaar: 'Publiceren' };
 
-  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
+  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function load() { try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) return norm(d); } catch (e) {} return norm(clone(published)); }
   function call(action, data) {
@@ -458,11 +471,14 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     counts(); texts();
   }
   function push() { var a = api(); if (a) a.attach(draft); }
+  /* Indeling (lijsten en verborgen blokken) reist mee als één tekstveld, zodat de bestaande beheer-API het aanvaardt. */
   function outContent() {
-    var c = { text: draft.text, img: draft.img, contact: draft.contact, style: draft.style };
-    if (draft.lists && Object.keys(draft.lists).length) c.lists = draft.lists;
-    if (draft.hidden && draft.hidden.length) c.hidden = draft.hidden;
-    return c;
+    var text = {}; Object.keys(draft.text).forEach(function (k) { text[k] = draft.text[k]; });
+    var L = {};
+    if (draft.lists && Object.keys(draft.lists).length) L.lists = draft.lists;
+    if (draft.hidden && draft.hidden.length) L.hidden = draft.hidden;
+    if (Object.keys(L).length) { var j = JSON.stringify(L); for (var i = 0; i * 5000 < j.length; i++) text['__nuance_indeling__.' + i] = j.slice(i * 5000, (i + 1) * 5000); }
+    return { text: text, img: draft.img, contact: draft.contact, style: draft.style };
   }
 
   /* ---------- toegang (houdt alleen toevallige bezoekers weg, geen echte beveiliging) ---------- */
@@ -595,6 +611,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     a.onChange = function (info) { save(); seoCheck(info); };
     a.onActive = function (info) { seoCheck(info); typeBar(info); };
     a.onRender = function () { if ($('[data-pane="fotos"]').classList.contains('on')) photosSoon(); };
+    a.onImage = function (info) { focusPhoto(info.key, true); };
     if ($('[data-pane="indeling"]').classList.contains('on')) setTimeout(layout, 300);
     if ($('[data-pane="fotos"]').classList.contains('on')) photosSoon();
   });
@@ -661,13 +678,18 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
   function photos() {
     var box = $('#photoList'), a = api(); box.innerHTML = '';
     var list = a ? a.images().filter(function (x) { return !x.tiny; }) : [];
+    var lastSec = null;
     list.forEach(function (it) {
+      if (it.sec && it.sec !== lastSec) { lastSec = it.sec; var hd = document.createElement('p'); hd.className = 'photo-sec'; hd.textContent = it.sec; box.appendChild(hd); }
       var card = document.createElement('div'); card.className = 'card';
       var row = document.createElement('div'); row.className = 'photo';
-      row.innerHTML = '<img alt=""><div><small></small><div class="acts"><button class="btn small" type="button">Vervang</button></div></div>';
+      card.setAttribute('data-key', it.key);
+      row.innerHTML = '<img alt=""><div style="min-width:0"><small></small><div class="acts"><button class="btn small" type="button" data-a="swap">Vervang</button><button class="btn ghost small" type="button" data-a="dl">Download</button></div></div>';
+      $('img', row).addEventListener('click', function () { focusPhoto(it.key, true); });
+      $('[data-a="dl"]', row).addEventListener('click', function () { downloadImg(draft.img[it.key] || it.src, it.alt); });
       $('img', row).src = it.src; if (/\.(png|svg)($|\?)|image\/(png|svg)/.test(it.src)) $('img', row).classList.add('contain');
       $('small', row).textContent = it.alt || it.key.split('/').pop();
-      $('button', row).addEventListener('click', function () { picker(function (data) {
+      $('[data-a="swap"]', row).addEventListener('click', function () { picker(function (data) {
         draft.img[it.key] = data; save(); push(); photos();
         if (!store) { toast('Foto vervangen'); return; }
         toast('Foto wordt opgeladen…');
@@ -682,6 +704,30 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
       card.appendChild(row); box.appendChild(card);
     });
     if (!list.length) box.innerHTML = '<p class="hint">' + (a ? 'Op deze pagina staan geen foto’s die je kan vervangen.' : 'Even geduld, de website laadt nog.') + '</p>';
+  }
+
+  function slugName(t) { return (String(t || 'foto').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'foto'); }
+  function downloadImg(src, label) {
+    if (!src) return;
+    var name = slugName(label);
+    var go = function (url, ext) { var a = document.createElement('a'); a.href = url; a.download = name + '.' + ext; document.body.appendChild(a); a.click(); a.remove(); };
+    if (/^data:image\/(\w+)/.test(src)) { go(src, RegExp.$1 === 'jpeg' ? 'jpg' : RegExp.$1); return; }
+    toast('Foto wordt gedownload…');
+    fetch(src).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (b) {
+      var ext = (b.type.split('/')[1] || 'jpg').replace('jpeg', 'jpg'); var u = URL.createObjectURL(b); go(u, ext); setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
+    }).catch(function () { window.open(src, '_blank', 'noopener'); });
+  }
+  /* Een foto in de website aangetikt: open Foto's en toon die foto groot, met Vervang en Download. */
+  function focusPhoto(key, big) {
+    if (!$('[data-pane="fotos"]').classList.contains('on')) show('fotos');
+    if (phone.matches && !$('#side').classList.contains('open')) sheet(true);
+    var card = document.querySelector('#photoList [data-key="' + (window.CSS && CSS.escape ? CSS.escape(key) : key) + '"]');
+    if (!card) { photos(); card = document.querySelector('#photoList [data-key="' + (window.CSS && CSS.escape ? CSS.escape(key) : key) + '"]'); }
+    if (!card) return;
+    Array.prototype.forEach.call(document.querySelectorAll('#photoList .photo-big'), function (x) { x.remove(); });
+    if (big) { var im = document.createElement('img'); im.className = 'photo-big'; im.alt = ''; im.src = $('img', card).src; card.insertBefore(im, card.firstChild); }
+    card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
   }
 
   /* ---------- overzicht ---------- */
@@ -838,7 +884,9 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     reviews: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'
   };
   var PROJ = CFG.projects || [];
-  if (PROJ.length > 1) { $('#projBtn').hidden = false; $('#nav').classList.add('five'); }
+  function fanLayout() { var n = $$('#nav button').filter(function (b) { return !b.hidden; }).length; $('#nav').classList.toggle('five', n === 5); $('#nav').classList.toggle('six', n >= 6); }
+  if (PROJ.length > 1) { $('#projBtn').hidden = false; }
+  fanLayout();
   function projOpen() {
     var box = $('#projList'); box.innerHTML = '';
     PROJ.forEach(function (p) {

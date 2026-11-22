@@ -7,8 +7,13 @@
   function NC() {
     var a = window.NUANCE_CONTENT || {}, b = window.__beheerContent || window.SITE_CONTENT || {}, o = {};
     for (var k in a) o[k] = a[k];
-    if (b.lists) o.lists = b.lists;
-    if (b.hidden) o.hidden = b.hidden;
+    var L = { lists: b.lists, hidden: b.hidden };
+    if (b.text && !b.lists && !b.hidden) {
+      var parts = []; Object.keys(b.text).forEach(function (k) { if (k.indexOf('__nuance_indeling__') === 0) parts[+k.slice(20) || 0] = b.text[k]; });
+      if (parts.length) try { L = JSON.parse(parts.join('')) || {}; } catch (e) {}
+    }
+    if (L.lists) o.lists = L.lists;
+    if (L.hidden) o.hidden = L.hidden;
     return o;
   }
   function clean(h) { return String(h == null ? '' : h).replace(/<\/?(script|style|iframe|object|embed|link|meta)[^>]*>/gi, '').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '').replace(/javascript:/gi, ''); }
