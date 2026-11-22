@@ -55,6 +55,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .hero-shade{background:radial-gradient(60% 70% at 78% 52%,rgba(122,70,96,.45) 0%,rgba(58,28,43,0) 70%),linear-gradient(to bottom,rgba(28,10,20,.45) 0%,rgba(28,10,20,0) 22%)}
 .hero-pop{position:absolute;z-index:2;right:clamp(24px,8vw,150px);top:50%;transform:translateY(-46%);width:clamp(300px,29vw,430px);aspect-ratio:4/5.2}
 .hero-pop-card{position:absolute;inset:0;border-radius:999px 999px 28px 28px;overflow:hidden;background:#B98597;box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.about-stage > p{font-size:12px !important;padding:8px 12px !important;gap:8px !important;left:10px !important;bottom:10px !important;max-width:none !important}
 .hero-pop-ring{position:absolute;inset:-14px;border-radius:999px 999px 40px 40px;border:1px solid rgba(230,195,201,.35)}
 .hero-pop-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;pointer-events:none}
 .hero-pop-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(58,28,43,.85) 0%,rgba(58,28,43,.35) 16%,rgba(58,28,43,0) 34%),linear-gradient(to right,rgba(58,28,43,.28) 0%,rgba(58,28,43,0) 22%)}
@@ -98,7 +99,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .acc-wrap.open{grid-template-rows:1fr}
 .acc-clip{visibility:hidden;opacity:0;transition:opacity 260ms ease-out,visibility 0s linear 420ms}
 .acc-wrap.open .acc-clip{visibility:visible;opacity:1;transition:opacity 320ms ease-out 120ms,visibility 0s}
-.about-stage{padding-right:76px !important}
+.about-stage{max-width:300px !important}
 .thumb{width:60px !important;height:60px !important}
 .plek-quote{position:relative !important;right:auto !important;bottom:auto !important;width:auto !important;margin-top:-56px !important;margin-left:18px !important}
 .foot-grid{text-align:center}
@@ -413,13 +414,13 @@ html{scroll-behavior:auto}
 </template>
 <template id="tpl-welkom">
 <div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: center">
-<div class="about-stage" style="position: relative; width: 100%; max-width: 420px; justify-self: center; box-sizing: border-box">
+<div class="about-stage" style="position: relative; width: 100%; max-width: 320px; justify-self: center; box-sizing: border-box">
 <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden; background: #4A3540">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
 <img class="about-img" src="{{m.img}}" alt="{{m.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; opacity: {{m.op}}; transform: {{m.tf}}">
 </sc-for>
 </div>
-<p aria-live="polite" style="position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 28px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #EAE3DA; box-shadow: 0 16px 32px -18px rgba(20,10,16,0.8); font-size: 14px; font-weight: 500; color: #3E2A35"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: #A58572"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
+<p aria-live="polite" style="white-space: nowrap; position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 28px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #EAE3DA; box-shadow: 0 16px 32px -18px rgba(20,10,16,0.8); font-size: 14px; font-weight: 500; color: #3E2A35"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: #A58572"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
 <div role="group" aria-label="Kies een foto" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: none; flex-direction: column; gap: 14px">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
 <button class="thumb" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.caption}}" style="appearance: none; position: relative; width: 68px; height: 68px; padding: 0; border: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: #4A3540; box-shadow: {{m.ring}}; opacity: {{m.thumbOp}}">
@@ -627,7 +628,7 @@ html{scroll-behavior:auto}
   __nc('services', SERVICES);
   const svc = st.svc || 0;
   const MOMENTS = [
-  { img: 'assets/anne-sophie.jpg', pos: '50% 28%', caption: 'De mens achter Nuance: Anne-Sophie', alt: 'Portret van Anne-Sophie Houwaer' }
+  { img: 'assets/anne-sophie.jpg', pos: '50% 18%', caption: 'De persoon achter Nuance: Anne-Sophie', alt: 'Portret van Anne-Sophie Houwaer' }
   ];
   __nc('moments', MOMENTS);
   const ab = st.ab || 0;
