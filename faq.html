@@ -228,6 +228,7 @@ html{scroll-behavior:auto}
 .faq-none{max-width:1240px;margin:0 auto;padding:0 24px 48px;box-sizing:border-box;color:#DDD0C6}
 .faq-group{scroll-margin-top:100px}
 .faq-a a{color:#E6C3C9}
+.faq-a .faq-a-split{margin:0}
 mark.faq-hit{background:rgba(230,195,201,.35);color:inherit;border-radius:3px;padding:0 1px}
 .faq-cta{max-width:1240px;margin:0 auto clamp(64px,8vw,110px);padding:0 24px;box-sizing:border-box}
 .faq-cta div{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:clamp(24px,3vw,40px);border-radius:24px;background:#4A3540;box-shadow:inset 0 0 0 1px rgba(234,227,218,.07)}
@@ -348,6 +349,32 @@ mark.faq-hit{background:rgba(230,195,201,.35);color:inherit;border-radius:3px;pa
     var h = location.hash && document.querySelector(location.hash); if (h && h.tagName === 'DETAILS') { h.open = true; }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+<script>
+/* Staat bij een vraag ook al het antwoord in de titel (zo aangepast in het beheer), dan tonen we enkel de vraag
+   in de titel en het stuk erna als antwoord bij het openklappen. In het beheer zelf blijft de echte tekst zichtbaar. */
+(function () {
+  function fix() {
+    var edit = document.documentElement.classList.contains('se-edit');
+    document.querySelectorAll('.faq-item').forEach(function (it) {
+      var q = it.querySelector('.faq-q:not(.faq-q-split)'), a = it.querySelector('.faq-a'); if (!q || !a) return;
+      var sq = it.querySelector('.faq-q-split'), sa = it.querySelector('.faq-a-split');
+      var t = q.textContent.split(String.fromCharCode(10)).join(' ').replace(/  +/g, ' ').trim(), i = t.indexOf('?');
+      var ok = !edit && i > 3 && t.length - i > 20;
+      if (!ok) { if (sq) { sq.remove(); q.style.display = ''; } if (sa) { sa.remove(); Array.prototype.forEach.call(a.children, function (c) { c.style.display = ''; }); } return; }
+      var qt = t.slice(0, i + 1), at = t.slice(i + 1).trim();
+      if (!sq) { sq = document.createElement('span'); sq.className = 'faq-q faq-q-split'; sq.setAttribute('data-se-skip', ''); q.parentNode.insertBefore(sq, q); }
+      if (sq.textContent !== qt) sq.textContent = qt;
+      q.style.display = 'none';
+      if (!sa) { sa = document.createElement('p'); sa.className = 'faq-a-split'; sa.setAttribute('data-se-skip', ''); a.insertBefore(sa, a.firstChild); }
+      if (sa.textContent !== at) sa.textContent = at;
+      Array.prototype.forEach.call(a.children, function (c) { if (c !== sa) c.style.display = 'none'; });
+    });
+  }
+  var t = 0; function soon() { clearTimeout(t); t = setTimeout(fix, 60); }
+  new MutationObserver(soon).observe(document.documentElement, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class'] });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fix); else fix();
 })();
 </script>
 <script src="assets/site-extra.js"></script>
