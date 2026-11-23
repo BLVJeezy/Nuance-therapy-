@@ -59,3 +59,10 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(sync, 300); }); else setTimeout(sync, 300);
   setTimeout(sync, 1200);
 })();
+
+/* Hero-video: altijd proberen af te spelen (ook als de browser autoplay even uitstelt). */
+(function () {
+  function go() { var v = document.querySelector('.hb-video'); if (!v) return; v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  ['DOMContentLoaded', 'load', 'touchstart', 'scroll', 'visibilitychange'].forEach(function (t) { (t === 'DOMContentLoaded' || t === 'load' ? window : document).addEventListener(t, go, { passive: true, once: t !== 'visibilitychange' }); });
+  setTimeout(go, 300);
+})();
