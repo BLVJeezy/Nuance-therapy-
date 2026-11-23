@@ -10,14 +10,14 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
-.hero-blob{position:relative;order:2;flex:none;width:min(50vw,940px);aspect-ratio:1.12/1;margin-right:calc((100vw - min(1240px,100vw))/-2 - 4px);margin-top:-20px}
+.hero-blob{position:relative;order:2;flex:none;width:min(42vw,600px);aspect-ratio:1.08/1;margin:0 20px 0 0}
 .hb-clip{position:absolute;inset:0;clip-path:url(#heroBlobClip);-webkit-clip-path:url(#heroBlobClip);background:#3E2A35}
 .hb-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .hb-lines{position:absolute;inset:-6% -2% -6% -6%;width:108%;height:112%;overflow:visible;pointer-events:none}
 .hb-lines path{fill:none;stroke:#8E5676;stroke-opacity:.55;stroke-width:1.2;vector-effect:non-scaling-stroke}
 .hb-lines path+path{stroke-opacity:.3}
-@media (min-width:761px) and (max-width:1060px){.hero-blob{width:48vw}}
-@media (max-width:760px){.hero-row{flex-direction:column !important}.hero-blob{order:0 !important;align-self:flex-end;width:calc(100% + 24px) !important;margin:96px -24px 0 0 !important;aspect-ratio:1.15/1}}
+@media (min-width:761px) and (max-width:1060px){.hero-blob{width:40vw}}
+@media (max-width:760px){.hero-row{flex-direction:column !important}.hero-blob{order:0 !important;align-self:center;width:82% !important;margin:104px 0 4px !important;aspect-ratio:1.12/1}}
 .about-oval{box-shadow:0 0 0 14px #3A2430,0 0 0 15px rgba(214,195,178,.35),0 40px 70px -40px rgba(0,0,0,.6);margin:15px}
 @media (min-width:761px){.about-stage{justify-self:end !important;margin-top:56px}}
 .tech-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:#4C3542;margin-bottom:6px}
@@ -263,7 +263,7 @@ html{scroll-behavior:auto}
 <path d="M-20 334 C 200 374, 480 364, 760 332 C 1020 302, 1220 262, 1460 272" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.7" filter="url(#silkSoft)"></path>
 </svg>
 <div class="hero-row" style="position: relative; z-index: 3; width: 100%; max-width: 1240px; margin: 0 auto; box-sizing: border-box">
-<div class="hero-blob" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><defs><clipPath id="heroBlobClip" clipPathUnits="objectBoundingBox"><path d="M0.60,0.02 C0.79,-0.02 0.97,0.07 1,0.27 L1,0.80 C0.96,0.96 0.79,1.02 0.60,0.98 C0.42,0.94 0.29,1.0 0.14,0.89 C0.0,0.78 -0.01,0.6 0.05,0.47 C0.11,0.34 0.2,0.31 0.27,0.21 C0.37,0.08 0.46,0.05 0.60,0.02 Z"></path></clipPath></defs></svg><svg class="hb-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M60,1 C80,-3 99,6 101,27 L101,81 C97,98 79,104 60,99 C42,95 28,102 13,90 C-2,79 -3,60 4,46 C10,33 19,30 26,20 C36,7 45,4 60,1 Z"></path><path d="M64,-3 C84,-6 103,8 103,30 L102,86 C96,103 76,105 57,102 C38,99 22,104 8,91 C-5,79 -4,58 3,44 C10,30 21,27 30,16 C40,4 49,-1 64,-3 Z"></path></svg><div class="hb-clip"><video class="hb-video" src="/_blob/30a753dbb0855b8b570c7a9b15a8c3bf" poster="/_blob/96cd58076c92d07b5c78342c4c6a9d41" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video></div></div>
+<div class="hero-blob" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><defs><clipPath id="heroBlobClip" clipPathUnits="objectBoundingBox"><path d="M0.60,0.02 C0.79,-0.02 0.94,0.07 0.97,0.27 C1.0,0.44 1.0,0.64 0.97,0.80 C0.93,0.96 0.79,1.02 0.60,0.98 C0.42,0.94 0.29,1.0 0.14,0.89 C0.0,0.78 -0.01,0.6 0.05,0.47 C0.11,0.34 0.2,0.31 0.27,0.21 C0.37,0.08 0.46,0.05 0.60,0.02 Z"></path></clipPath></defs></svg><svg class="hb-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M60,1 C80,-3 96,6 99,27 C102,45 102,64 99,81 C95,98 79,104 60,99 C42,95 28,102 13,90 C-2,79 -3,60 4,46 C10,33 19,30 26,20 C36,7 45,4 60,1 Z"></path><path d="M64,-3 C84,-6 103,8 103,30 L102,86 C96,103 76,105 57,102 C38,99 22,104 8,91 C-5,79 -4,58 3,44 C10,30 21,27 30,16 C40,4 49,-1 64,-3 Z"></path></svg><div class="hb-clip"><video class="hb-video" src="/_blob/30a753dbb0855b8b570c7a9b15a8c3bf" poster="/_blob/96cd58076c92d07b5c78342c4c6a9d41" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video></div></div>
 <div class="hero-copy" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; max-width: 640px; box-sizing: border-box; padding: clamp(120px, 11vw, 170px) 24px clamp(200px, 23vw, 330px)">
 <p class="rise hero-kicker" style="margin: 0; display: flex; align-items: center; gap: 14px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #74425C"><span aria-hidden="true" style="width: 40px; height: 1px; background: #B08B78; flex: none"></span><span class="k-long">Coaching &amp; begeleiding · Bilzen-Hoeselt</span><span class="k-short" style="display: none">Nuance · Bilzen-Hoeselt</span></p>
 <h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.4rem); line-height: 1.1; letter-spacing: -0.012em; color: #3E2A35; text-wrap: balance">Ruimte voor alles wat jou <span style="white-space: nowrap"><em style="font-style: normal; font-weight: 400; color: #6B3577">uniek maakt.</em></span></h1>
