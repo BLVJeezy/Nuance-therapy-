@@ -10,6 +10,7 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
+.about-oval{box-shadow:0 0 0 14px #3A2430,0 0 0 15px rgba(214,195,178,.35),0 40px 70px -40px rgba(0,0,0,.6);margin:15px}
 @media (min-width:761px){.about-stage{justify-self:end !important;margin-top:56px}}
 .tech-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:#4C3542;margin-bottom:6px}
 .tech-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -128,7 +129,7 @@ a{color:#D6C3B2}a:hover{color:#EAE3DA}
 .hero-row>.hero-copy{flex:1 1 auto;min-width:0}
 .hero-pop{position:relative;order:2;flex:none;width:clamp(260px,28vw,420px);aspect-ratio:4/5.2;margin-right:24px;margin-top:40px}
 .hero-pop-card{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#D6C3B2;box-shadow:0 40px 70px -40px rgba(62,42,53,.45)}
-.about-stage > p{font-size:12px !important;padding:8px 12px !important;gap:8px !important;left:10px !important;bottom:10px !important;max-width:none !important}
+.about-stage > p{font-size:12px !important;padding:8px 12px !important;gap:8px !important;left:50% !important;max-width:none !important}
 .hero-pop-ring{position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(116,66,92,.28)}
 .hero-pop-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;pointer-events:none}
 .hero-pop-fade{display:none}
@@ -254,10 +255,6 @@ html{scroll-behavior:auto}
 <path d="M-20 334 C 200 374, 480 364, 760 332 C 1020 302, 1220 262, 1460 272" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.7" filter="url(#silkSoft)"></path>
 </svg>
 <div class="hero-row" style="position: relative; z-index: 3; width: 100%; max-width: 1240px; margin: 0 auto; box-sizing: border-box">
-<div class="hero-pop" role="img" aria-label="Anne-Sophie Houwaer, coach en psychosociaal begeleider bij Nuance">
-<div class="hero-pop-ring" aria-hidden="true"></div>
-<div class="hero-pop-card" aria-hidden="true"><img class="hero-pop-img" src="/_blob/7b8776cf0d1658cb5a4817594599e875" alt="" aria-hidden="true" decoding="async" fetchpriority="high"><div class="hero-pop-fade"></div></div>
-</div>
 <div class="hero-copy" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; max-width: 640px; box-sizing: border-box; padding: clamp(120px, 11vw, 170px) 24px clamp(200px, 23vw, 330px)">
 <p class="rise hero-kicker" style="margin: 0; display: flex; align-items: center; gap: 14px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #74425C"><span aria-hidden="true" style="width: 40px; height: 1px; background: #B08B78; flex: none"></span><span class="k-long">Coaching &amp; begeleiding · Bilzen-Hoeselt</span><span class="k-short" style="display: none">Nuance · Bilzen-Hoeselt</span></p>
 <h1 class="rise d1 hero-title" style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.4rem); line-height: 1.1; letter-spacing: -0.012em; color: #3E2A35; text-wrap: balance">Ruimte voor alles wat jou <span style="white-space: nowrap"><em style="font-style: normal; font-weight: 400; color: #6B3577">uniek maakt.</em></span></h1>
@@ -345,13 +342,13 @@ html{scroll-behavior:auto}
 
 <section id="welkom" style="background: #35232D; scroll-margin-top: 90px">
 <div style="max-width: 1240px; margin: 0 auto; padding: clamp(36px, 5vw, 72px) 24px clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 96px); align-items: start">
-<div class="about-stage" style="position: relative; width: 100%; max-width: 280px; justify-self: center; box-sizing: border-box">
-<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 0; overflow: hidden; background: #4A3540">
+<div class="about-stage" style="position: relative; width: 100%; max-width: 340px; justify-self: center; box-sizing: border-box">
+<div class="about-oval" style="position: relative; aspect-ratio: 4 / 5.2; border-radius: 50%; overflow: hidden; background: #4A3540">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
 <img class="about-img" src="{{m.img}}" alt="{{m.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}; opacity: {{m.op}}; transform: {{m.tf}}">
 </sc-for>
 </div>
-<p aria-live="polite" style="white-space: nowrap; position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 28px); margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #EAE3DA; box-shadow: 0 16px 32px -18px rgba(20,10,16,0.8); font-size: 14px; font-weight: 500; color: #3E2A35"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: #A58572"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
+<p aria-live="polite" style="white-space: nowrap; position: relative; left: 50%; transform: translateX(-50%); width: max-content; max-width: none; margin: 22px 0 0; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #EAE3DA; box-shadow: 0 16px 32px -18px rgba(20,10,16,0.8); font-size: 14px; font-weight: 500; color: #3E2A35"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 999px; background: #A58572"></span><span style="animation: {{curM.anim}} 520ms cubic-bezier(.2,.7,.2,1) both">{{curM.caption}}</span></p>
 <div role="group" aria-label="Kies een foto" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: none; flex-direction: column; gap: 14px">
 <sc-for list="{{moments}}" as="m" hint-placeholder-count="3">
 <button class="thumb" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" aria-label="{{m.caption}}" style="appearance: none; position: relative; width: 68px; height: 68px; padding: 0; border: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: #4A3540; box-shadow: {{m.ring}}; opacity: {{m.thumbOp}}">
@@ -524,7 +521,7 @@ html{scroll-behavior:auto}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#74425C","options":["#74425C","#664B57","#A58572"]},"$preview":{"width":1440,"height":11325}}'>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#74425C","options":["#74425C","#664B57","#A58572"]},"$preview":{"width":1440,"height":11387}}'>
 class Component extends DCLogic {
 componentDidMount() {
 this.startHero();
