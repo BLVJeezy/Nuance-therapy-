@@ -10,13 +10,13 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
-.hero-blob{position:relative;order:2;flex:none;width:min(46vw,680px);aspect-ratio:1.05/1;margin-right:calc((100vw - min(1240px,100vw))/-2 - 4px);margin-top:-20px}
+.hero-blob{position:relative;order:2;flex:none;width:min(50vw,940px);aspect-ratio:1.12/1;margin-right:calc((100vw - min(1240px,100vw))/-2 - 4px);margin-top:-20px}
 .hb-clip{position:absolute;inset:0;clip-path:url(#heroBlobClip);-webkit-clip-path:url(#heroBlobClip);background:#3E2A35}
 .hb-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .hb-lines{position:absolute;inset:-6% -2% -6% -6%;width:108%;height:112%;overflow:visible;pointer-events:none}
 .hb-lines path{fill:none;stroke:#8E5676;stroke-opacity:.55;stroke-width:1.2;vector-effect:non-scaling-stroke}
 .hb-lines path+path{stroke-opacity:.3}
-@media (min-width:761px) and (max-width:1060px){.hero-blob{width:46vw}}
+@media (min-width:761px) and (max-width:1060px){.hero-blob{width:48vw}}
 @media (max-width:760px){.hero-row{flex-direction:column !important}.hero-blob{order:0 !important;align-self:flex-end;width:calc(100% + 24px) !important;margin:96px -24px 0 0 !important;aspect-ratio:1.15/1}}
 .about-oval{box-shadow:0 0 0 14px #3A2430,0 0 0 15px rgba(214,195,178,.35),0 40px 70px -40px rgba(0,0,0,.6);margin:15px}
 @media (min-width:761px){.about-stage{justify-self:end !important;margin-top:56px}}
@@ -525,7 +525,7 @@ html{scroll-behavior:auto}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#74425C","options":["#74425C","#664B57","#A58572"]},"$preview":{"width":1440,"height":11277}}'>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#74425C","options":["#74425C","#664B57","#A58572"]},"$preview":{"width":1440,"height":11350}}'>
 class Component extends DCLogic {
 componentDidMount() {
 this.startHero();
