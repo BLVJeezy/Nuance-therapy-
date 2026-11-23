@@ -16,7 +16,7 @@
   var SKIP = 'script,style,noscript,template,svg,textarea,input,select,option,code,pre,[data-se-skip]';
   var BLOCK_TAGS = /^(H[1-6]|P|LI|A|BUTTON|SPAN|LABEL|BLOCKQUOTE|FIGCAPTION|TD|TH|DT|DD|SMALL|STRONG|EM|B|I|DIV|SUMMARY|CITE|Q|TIME|ADDRESS|LEGEND|CAPTION)$/;
 
-  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
+  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; if (L.imgfx && !d.imgfx) d.imgfx = L.imgfx; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
   var draft = norm(window.SITE_CONTENT);
 
   /* ---------- contactgegevens: één keer aanpassen, overal op de site vervangen (tekst én links) ---------- */
@@ -223,7 +223,26 @@
       } else if (el.hasAttribute('data-se-srcset')) { el.setAttribute('srcset', el.getAttribute('data-se-srcset')); el.removeAttribute('data-se-srcset'); }
     }
     I.set(el, { orig: orig, applied: want });
+    imgFx(el, k);
   }
+  /* Vorm en grootte per foto (gekozen in het beheer). Het kader rond de foto krijgt de vorm, zodat de foto zelf mooi gevuld blijft. */
+  var CLIP = { square: 'inset(0)', round: 'inset(0 round 24px)', oval: 'ellipse(50% 50% at 50% 50%)', circle: 'circle(closest-side at 50% 50%)', arch: 'inset(0 round 50% 50% 0 0 / 34% 34% 0 0)', triangle: 'polygon(50% 0, 100% 100%, 0 100%)', hexagon: 'polygon(25% 2%, 75% 2%, 100% 50%, 75% 98%, 25% 98%, 0 50%)' };
+  function fxFrame(img) {
+    var f = img.closest('[role="img"], .tech-img, .g-tile, .svc-card-img, .about-oval, .hero-pop-card, picture');
+    if (f && f.contains(img)) return f;
+    return img;
+  }
+  function imgFx(el, k) {
+    var fx = k && draft.imgfx && draft.imgfx[k], f = fxFrame(el), P = ['clip-path', 'transform', 'transform-origin', 'border-radius', 'aspect-ratio'];
+    function restore() { P.forEach(function (q) { var o = f.getAttribute('data-se-o-' + q); f.style.removeProperty(q); if (o) f.style.setProperty(q, o); }); }
+    if (!fx) { if (f.hasAttribute('data-se-fx')) { restore(); f.removeAttribute('data-se-fx'); } return; }
+    if (!f.hasAttribute('data-se-fx')) { P.forEach(function (q) { var v = f.style.getPropertyValue(q); if (v) f.setAttribute('data-se-o-' + q, v); }); f.setAttribute('data-se-fx', ''); }
+    restore();
+    if (fx.shape && CLIP[fx.shape]) { f.style.setProperty('clip-path', CLIP[fx.shape], 'important'); f.style.setProperty('border-radius', '0', 'important'); }
+    if (fx.shape === 'circle') f.style.setProperty('aspect-ratio', '1 / 1', 'important');
+    if (fx.size && fx.size !== 100) { f.style.setProperty('transform', 'scale(' + fx.size / 100 + ')', 'important'); f.style.setProperty('transform-origin', 'center'); }
+  }
+
 
   var busy = false;
   /* Lijsten (bv. FAQ) en secties tonen/verbergen: de site zelf bouwt ze op (window.__nuanceApply). */

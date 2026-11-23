@@ -156,6 +156,15 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 .card.flash{animation:flash 1.6s ease-out}
 @keyframes flash{0%,30%{box-shadow:0 0 0 3px var(--acc)}100%{box-shadow:0 0 0 0 rgba(214,195,178,0)}}
 .photo img{cursor:zoom-in}
+.fx{display:flex;flex-direction:column;gap:12px;margin-top:4px;padding-top:12px;border-top:1px solid var(--line)}
+.fx-shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fx-shapes button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 2px;border:0;background:var(--dk2);color:var(--ivory);font:500 11.5px/1.1 inherit;cursor:pointer;min-height:58px;box-shadow:inset 0 0 0 1px var(--line)}
+.fx-shapes button[aria-pressed="true"]{background:var(--ivory);color:var(--dk)}
+.sh{display:block;width:22px;height:22px;background:currentColor;opacity:.85}
+.sh-orig{border-radius:4px;width:24px;height:18px}.sh-square{border-radius:0}.sh-round{border-radius:7px}.sh-oval{border-radius:50%;width:18px;height:24px}.sh-circle{border-radius:50%}
+.sh-arch{border-radius:11px 11px 0 0;width:18px;height:24px}.sh-triangle{clip-path:polygon(50% 0,100% 100%,0 100%)}.sh-hexagon{clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%)}
+.fx-size{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--mut)}.fx-size b{color:var(--ivory);font-weight:600}
+.fx-size input{width:100%;accent-color:var(--acc);height:28px}
 .photo-sec{margin:10px 2px 0;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .photo-big{width:100%;max-height:260px;object-fit:contain;border-radius:14px;background:rgba(255,255,255,.05);display:block}
 @media (prefers-reduced-motion:reduce){.card.flash{animation:none;box-shadow:0 0 0 3px var(--acc)}}
@@ -297,7 +306,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
       <button role="tab" aria-selected="true" data-tab="teksten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Teksten</button>
       <button role="tab" aria-selected="false" data-tab="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Foto's</button>
       <button role="tab" aria-selected="false" data-tab="contact" id="contactTab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Contact</button>
-      <button role="tab" aria-selected="false" data-tab="indeling"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="4" rx="1.5"/><rect x="3" y="17" width="11" height="3" rx="1.5"/></svg>Indeling</button>
+      <button role="tab" aria-selected="false" data-tab="indeling" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="4" rx="1.5"/><rect x="3" y="17" width="11" height="3" rx="1.5"/></svg>Indeling</button>
       <button role="tab" aria-selected="false" data-tab="klaar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Publiceren<span class="badge" id="count" data-n="0">0</span></button>
       <button type="button" id="projBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>Projecten</button>
     </nav>
@@ -334,7 +343,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
 
       <section class="pane" data-pane="fotos">
         <h2 class="pane-title">Foto's <button class="help-btn" type="button" data-help="fotos" aria-label="Uitleg">?</button></h2>
-        <p class="hint">Tik in de website op een foto, of kies er hieronder een. Met <b>Vervang</b> neem je een nieuwe foto of kies je er een uit je galerij; met <b>Download</b> bewaar je de foto op je toestel. Grote foto's worden automatisch verkleind.</p>
+        <p class="hint">Tik in de website op een foto, of kies er hieronder een. Met <b>Vervang</b> neem je een nieuwe foto of kies je er een uit je galerij; met <b>Download</b> bewaar je de foto op je toestel. Grote foto's worden automatisch verkleind. Kies onder elke foto ook een <b>vorm</b> en <b>grootte</b>.</p>
         <div id="photoList" style="display:flex;flex-direction:column;gap:12px"></div>
       </section>
 
@@ -466,7 +475,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
   window.addEventListener('resize', barH); window.addEventListener('orientationchange', function () { setTimeout(barH, 300); });
   var TITLES = { teksten: 'Teksten', fotos: "Foto's", contact: 'Contactgegevens', indeling: 'Indeling', klaar: 'Publiceren' };
 
-  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
+  function norm(d) { d = d && typeof d === 'object' ? d : {}; d.text = d.text || {}; var LK = '__nuance_indeling__', parts = []; Object.keys(d.text).forEach(function (k) { if (k.indexOf(LK) === 0) { parts[+k.slice(LK.length + 1) || 0] = d.text[k]; delete d.text[k]; } }); if (parts.length) { try { var L = JSON.parse(parts.join('')); if (L && typeof L === 'object') { if (L.lists && !d.lists) d.lists = L.lists; if (L.hidden && !d.hidden) d.hidden = L.hidden; if (L.imgfx && !d.imgfx) d.imgfx = L.imgfx; } } catch (e) {} }  d.img = d.img || {}; d.contact = d.contact && typeof d.contact === 'object' && !Array.isArray(d.contact) ? d.contact : {}; d.style = d.style && typeof d.style === 'object' ? d.style : {}; d.style.el = d.style.el && typeof d.style.el === 'object' ? d.style.el : {}; return d; }
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function load() { try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) return norm(d); } catch (e) {} return norm(clone(published)); }
   function call(action, data) {
@@ -517,6 +526,7 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     var L = {};
     if (draft.lists && Object.keys(draft.lists).length) L.lists = draft.lists;
     if (draft.hidden && draft.hidden.length) L.hidden = draft.hidden;
+    if (draft.imgfx && Object.keys(draft.imgfx).length) L.imgfx = draft.imgfx;
     if (Object.keys(L).length) { var j = JSON.stringify(L); for (var i = 0; i * 5000 < j.length; i++) text['__nuance_indeling__.' + i] = j.slice(i * 5000, (i + 1) * 5000); }
     return { text: text, img: draft.img, contact: draft.contact, style: draft.style };
   }
@@ -726,6 +736,20 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
       card.setAttribute('data-key', it.key);
       row.innerHTML = '<img alt=""><div style="min-width:0"><small></small><div class="acts"><button class="btn small" type="button" data-a="swap">Vervang</button><button class="btn ghost small" type="button" data-a="dl">Download</button></div></div>';
       $('img', row).addEventListener('click', function () { focusPhoto(it.key, true); });
+      var fx = (draft.imgfx && draft.imgfx[it.key]) || {};
+      var ctl = document.createElement('div'); ctl.className = 'fx';
+      ctl.innerHTML = '<div class="fx-shapes" role="group" aria-label="Vorm">' + SHAPES.map(function (sh) { return '<button type="button" data-shape="' + sh[0] + '" aria-pressed="' + ((fx.shape || '') === sh[0]) + '" title="' + sh[1] + '"><i class="sh sh-' + (sh[0] || 'orig') + '"></i><span>' + sh[1] + '</span></button>'; }).join('') + '</div>'
+        + '<label class="fx-size"><span>Grootte <b>' + (fx.size || 100) + '%</b></span><input type="range" min="50" max="150" step="5" value="' + (fx.size || 100) + '"></label>';
+      Array.prototype.forEach.call(ctl.querySelectorAll('[data-shape]'), function (b) {
+        b.addEventListener('click', function () {
+          setFx(it.key, { shape: b.getAttribute('data-shape') || undefined });
+          Array.prototype.forEach.call(ctl.querySelectorAll('[data-shape]'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        });
+      });
+      var rg = $('input[type=range]', ctl);
+      rg.addEventListener('input', function () { $('b', ctl).textContent = rg.value + '%'; setFx(it.key, { size: +rg.value === 100 ? undefined : +rg.value }, true); });
+      rg.addEventListener('change', function () { save(); });
+      setTimeout(function () { card.appendChild(ctl); }, 0);
       $('[data-a="dl"]', row).addEventListener('click', function () { downloadImg(draft.img[it.key] || it.src, it.alt); });
       $('img', row).src = it.src; if (/\.(png|svg)($|\?)|image\/(png|svg)/.test(it.src)) $('img', row).classList.add('contain');
       $('small', row).textContent = it.alt || it.key.split('/').pop();
@@ -756,6 +780,13 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     fetch(src).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (b) {
       var ext = (b.type.split('/')[1] || 'jpg').replace('jpeg', 'jpg'); var u = URL.createObjectURL(b); go(u, ext); setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
     }).catch(function () { window.open(src, '_blank', 'noopener'); });
+  }
+  var SHAPES = [['', 'Origineel'], ['square', 'Vierkant'], ['round', 'Afgerond'], ['oval', 'Ovaal'], ['circle', 'Cirkel'], ['arch', 'Boog'], ['triangle', 'Driehoek'], ['hexagon', 'Zeshoek']];
+  function setFx(key, patch, live) {
+    draft.imgfx = draft.imgfx || {};
+    var cur = draft.imgfx[key] || {}; Object.keys(patch).forEach(function (k) { if (patch[k] === undefined) delete cur[k]; else cur[k] = patch[k]; });
+    if (Object.keys(cur).length) draft.imgfx[key] = cur; else delete draft.imgfx[key];
+    if (!live) save(); push(); counts();
   }
   /* Een foto in de website aangetikt: open Foto's en toon die foto groot, met Vervang en Download. */
   function focusPhoto(key, big) {
@@ -796,11 +827,11 @@ h1,h2,h3{font-weight:600;margin:0;letter-spacing:-.01em}
     return { t: t, p: p, c: c, s: st };
   }
   function counts() {
-    if (!draft) return; var n = diff(); n.l = JSON.stringify([draft.lists || {}, draft.hidden || []]) !== JSON.stringify([published.lists || {}, published.hidden || []]) ? 1 : 0;
+    if (!draft) return; var n = diff(); n.l = JSON.stringify([draft.lists || {}, draft.hidden || [], draft.imgfx || {}]) !== JSON.stringify([published.lists || {}, published.hidden || [], published.imgfx || {}]) ? 1 : 0;
     var sum = n.t + n.p + n.c + n.s + n.l;
     $('#count').textContent = sum; $('#count').setAttribute('data-n', String(sum));
     $('#summary').textContent = sum ? (n.t + ' tekst(en) en ' + n.p + ' foto(’s) nog niet gepubliceerd.') : 'Alles wat je aanpaste, staat online.';
-    if (sum && (n.c || n.s || n.l)) $('#summary').textContent = [n.t ? n.t + ' tekst(en)' : '', n.p ? n.p + ' foto(’s)' : '', n.c ? n.c + ' contactgegeven(s)' : '', n.s ? 'lettertypes' : '', n.l ? 'de indeling' : ''].filter(Boolean).join(', ') + ' nog niet gepubliceerd.';
+    if (sum && (n.c || n.s || n.l)) $('#summary').textContent = [n.t ? n.t + ' tekst(en)' : '', n.p ? n.p + ' foto(’s)' : '', n.c ? n.c + ' contactgegeven(s)' : '', n.s ? 'lettertypes' : '', n.l ? 'indeling en fotovormen' : ''].filter(Boolean).join(', ') + ' nog niet gepubliceerd.';
     $('#publish').disabled = !sum; $('#publish').style.opacity = sum ? '' : '.5';
   }
   function when(iso) { try { return new Date(iso).toLocaleString('nl-BE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return iso; } }
