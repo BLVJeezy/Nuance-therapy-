@@ -239,6 +239,7 @@ html{scroll-behavior:auto}
 .faq-chips a:hover{background:rgba(234,227,218,.14)}
 .faq-none{max-width:1240px;margin:0 auto;padding:0 24px 48px;box-sizing:border-box;color:#DDD0C6}
 .faq-group{scroll-margin-top:100px}
+@media (min-width:980px){.faq-wrap.faq-masonry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:4px;grid-auto-flow:row dense;gap:0 clamp(40px,5vw,80px);align-items:start}.faq-wrap.faq-masonry .faq-group{padding-bottom:56px}}
 .faq-a a{color:#E6C3C9}
 .faq-a .faq-a-split{margin:0}
 mark.faq-hit{background:rgba(230,195,201,.35);color:inherit;border-radius:3px;padding:0 1px}
@@ -307,7 +308,7 @@ mark.faq-hit{background:rgba(230,195,201,.35);color:inherit;border-radius:3px;pa
 <div class="foot-grid" style="max-width: 1240px; margin: 0 auto; padding: 40px 24px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 40px">
 <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
 <img src="assets/logo-licht.png" alt="Nuance" style="height: 84px; width: auto" data-ei="ie9970e9760">
-<p style="margin: 0; color: #BFAEA3; font-size: 15px" data-ek="t31bdf7814f">Omdat het leven meer dan één kleur kent.</p>
+<p style="margin: 0 0 0 -0.07em; color: #BFAEA3; font-size: 15px" data-ek="t31bdf7814f">Omdat het leven meer dan één kleur kent.</p>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px">
 <h3 style="margin: 0 0 6px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #D6C3B2" data-ek="tdde5419f90">Praktijk</h3>
@@ -388,6 +389,37 @@ mark.faq-hit{background:rgba(230,195,201,.35);color:inherit;border-radius:3px;pa
   var t = 0; function soon() { clearTimeout(t); t = setTimeout(fix, 60); }
   new MutationObserver(soon).observe(document.documentElement, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class'] });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fix); else fix();
+})();
+</script>
+<script>
+/* Desktop: twee kolommen zonder gaten. Elke groep krijgt één vaste kolom (verdeeld op aantal vragen),
+   en de hoogte volgt mee bij open- en dichtklappen, zodat niets van kolom verspringt. */
+(function () {
+  var mq = window.matchMedia('(min-width:980px)');
+  function wrap() { return document.querySelector('.faq-wrap'); }
+  function assign() {
+    var w = wrap(); if (!w) return;
+    var gs = Array.prototype.filter.call(w.children, function (g) { return g.classList.contains('faq-group'); });
+    if (!mq.matches) { w.classList.remove('faq-masonry'); gs.forEach(function (g) { g.style.gridColumn = ''; g.style.gridRowEnd = ''; }); return; }
+    w.classList.add('faq-masonry');
+    var load = [0, 0];
+    gs.forEach(function (g) { var n = g.querySelectorAll('.faq-item').length + 1.5, c = load[0] <= load[1] ? 0 : 1; load[c] += n; g.style.gridColumn = String(c + 1); });
+    size();
+  }
+  function size() {
+    var w = wrap(); if (!w || !w.classList.contains('faq-masonry')) return;
+    Array.prototype.forEach.call(w.children, function (g) { if (!g.classList.contains('faq-group')) return; g.style.gridRowEnd = 'span ' + Math.max(1, Math.ceil(g.getBoundingClientRect().height / 4)); });
+  }
+  function start() {
+    assign();
+    var w = wrap(); if (!w) return;
+    new MutationObserver(function (m) { if (m.some(function (r) { return r.target === w; })) assign(); }).observe(w, { childList: true });
+    if (window.ResizeObserver) { var ro = new ResizeObserver(function () { requestAnimationFrame(size); }); Array.prototype.forEach.call(w.querySelectorAll('.faq-list'), function (l) { ro.observe(l); }); }
+    w.addEventListener('toggle', function () { requestAnimationFrame(size); }, true);
+    mq.addEventListener ? mq.addEventListener('change', assign) : mq.addListener(assign);
+    window.addEventListener('load', size);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 </script>
 <script src="assets/site-extra.js"></script>
