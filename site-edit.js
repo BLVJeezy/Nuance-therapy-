@@ -238,8 +238,9 @@
     if (!fx) { if (f.hasAttribute('data-se-fx')) { restore(); f.removeAttribute('data-se-fx'); } return; }
     if (!f.hasAttribute('data-se-fx')) { P.forEach(function (q) { var v = f.style.getPropertyValue(q); if (v) f.setAttribute('data-se-o-' + q, v); }); f.setAttribute('data-se-fx', ''); }
     restore();
-    if (fx.shape && CLIP[fx.shape]) { f.style.setProperty('clip-path', CLIP[fx.shape], 'important'); f.style.setProperty('border-radius', '0', 'important'); }
-    if (fx.shape === 'circle') f.style.setProperty('aspect-ratio', '1 / 1', 'important');
+    var organic = f.classList && (f.classList.contains('plek-blob') || f.classList.contains('hero-blob')); /* organische vorm met lijnen: geen extra vorm erover, enkel grootte */
+    if (!organic && fx.shape && CLIP[fx.shape]) { f.style.setProperty('clip-path', CLIP[fx.shape], 'important'); f.style.setProperty('border-radius', '0', 'important'); }
+    if (!organic && fx.shape === 'circle') f.style.setProperty('aspect-ratio', '1 / 1', 'important');
     if (fx.size && fx.size !== 100) { f.style.setProperty('transform', 'scale(' + fx.size / 100 + ')', 'important'); f.style.setProperty('transform-origin', 'center'); }
   }
 
