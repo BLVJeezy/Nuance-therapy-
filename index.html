@@ -11,9 +11,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <style>
 .hero-blob{position:relative;order:2;flex:none;width:min(42vw,600px);aspect-ratio:1.08/1;margin:0 20px 0 0}
-.pb-clip{position:absolute;inset:0;clip-path:url(#plekBlobClip);-webkit-clip-path:url(#plekBlobClip);overflow:hidden}
-.pb-lines{position:absolute;inset:-5% -5% -5% -5%;width:110%;height:110%;overflow:visible;pointer-events:none;z-index:1}
-.pb-lines path{fill:none;stroke:#F6EEE8;stroke-opacity:.6;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.pb-clip{position:absolute;inset:0;clip-path:url(#heroBlobClip);-webkit-clip-path:url(#heroBlobClip);overflow:hidden}
+.pb-lines{z-index:1}
 .hb-clip{position:absolute;inset:0;clip-path:url(#heroBlobClip);-webkit-clip-path:url(#heroBlobClip);background:#3E2A35}
 .hb-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .hb-lines{position:absolute;inset:-6% -2% -6% -6%;width:108%;height:112%;overflow:visible;pointer-events:none}
@@ -303,7 +302,7 @@ html{scroll-behavior:auto}
 </ul>
 </div>
 <div class="plek-media" style="position: relative; padding-bottom: clamp(48px, 6vw, 80px)">
-<div role="img" aria-label="De praktijk van Nuance in Bilzen-Hoeselt" class="plek-blob" style="position: relative; aspect-ratio: 3 / 4; max-height: 640px; margin-left: auto; width: min(100%, 480px)"><svg width="0" height="0" style="position:absolute"><defs><clipPath id="plekBlobClip" clipPathUnits="objectBoundingBox"><path d="M0.44,0.02 C0.62,-0.01 0.80,0.04 0.90,0.17 C0.99,0.29 0.97,0.43 0.95,0.56 C0.93,0.70 0.99,0.82 0.90,0.92 C0.80,1.01 0.62,0.99 0.46,0.98 C0.30,0.97 0.14,0.99 0.06,0.87 C-0.01,0.76 0.04,0.62 0.04,0.49 C0.04,0.36 -0.01,0.22 0.08,0.12 C0.17,0.03 0.30,0.04 0.44,0.02 Z"></path></clipPath></defs></svg><svg class="pb-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M44,1 C62,-2 81,3 91,16 C101,29 98,43 96,56 C94,70 101,83 91,93 C80,102 62,100 46,99 C29,98 13,100 5,88 C-2,76 3,62 3,49 C3,36 -2,21 7,11 C17,1 30,3 44,1 Z"></path><path d="M41,-2 C61,-5 84,1 94,15 C104,30 101,45 99,58 C97,72 103,86 92,96 C80,105 60,103 44,102 C26,101 9,103 1,90 C-6,77 0,62 0,48 C0,34 -5,19 5,8 C15,-2 27,0 41,-2 Z"></path></svg><div class="pb-clip"><img src="assets/praktijk.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block" data-ei="i3c3662be58"></div></div>
+<div role="img" aria-label="De praktijk van Nuance in Bilzen-Hoeselt" class="plek-blob" style="position: relative; aspect-ratio: 1.08 / 1; margin-left: auto; width: min(100%, 560px)"><svg class="hb-lines pb-lines" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M60,1 C80,-3 96,6 99,27 C102,45 102,64 99,81 C95,98 79,104 60,99 C42,95 28,102 13,90 C-2,79 -3,60 4,46 C10,33 19,30 26,20 C36,7 45,4 60,1 Z"></path><path d="M64,-3 C84,-6 103,8 103,30 L102,86 C96,103 76,105 57,102 C38,99 22,104 8,91 C-5,79 -4,58 3,44 C10,30 21,27 30,16 C40,4 49,-1 64,-3 Z"></path></svg><div class="pb-clip"><img src="assets/praktijk.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block" data-ei="i3c3662be58"></div></div>
 <figure class="plek-quote" style="position: absolute; left: clamp(-28px, -2vw, -8px); bottom: 0; width: min(80%, 360px); margin: 0; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: #3E2A35; color: #EAE3DA; box-shadow: 0 24px 48px -24px rgba(30,18,24,0.7)">
 <img src="assets/mark-licht.png" alt="" style="height: 30px; width: auto; align-self: flex-start" data-ei="i5f0b341dd4">
 <blockquote style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.08rem; line-height: 1.5" data-ek="t8f7c9dee48">“Je hoeft niet alles alleen te dragen. Soms begint een nieuwe stap bij iemand die echt luistert.”</blockquote>
