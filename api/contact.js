@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
     attachments.push({ filename: 'spraakbericht.' + ext, content: v.b64 });
   }
 
-  const key = process.env.RESEND_API_KEY;
+  const key = process.env.RESEND_API_KEY || process.env.resendapi;
   if (!key) return send(res, 503, { error: 'Het formulier is nog niet gekoppeld aan e-mail.', setup: true });
 
   const extra = [];
