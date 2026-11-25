@@ -29,7 +29,7 @@ function layout({ preheader = '', title, blocks = [], footerNote = '' }) {
 ${blocks.map(part).join('\n')}
 <p style="margin:24px 0 0;font:400 16px/1.6 ${sans};color:${C.body}">Warme groet,</p>
 <p style="margin:4px 0 0;font:italic 400 18px/1.4 ${serif};color:${C.text}">Anne-Sophie Houwaer</p>
-<p style="margin:2px 0 28px;font:400 13px/1.5 ${sans};color:${C.mut}">Coach &amp; psychosociaal begeleider · Nuance</p>
+<p style="margin:2px 0 28px;font:400 13px/1.5 ${sans};color:${C.mut}">Psychosociaal begeleider &amp; coach · Nuance</p>
 </td></tr>
 <tr><td style="background:${C.cream};padding:20px 32px;font:400 12.5px/1.7 ${sans};color:${C.mut}">
 Nuance · Wagenstraat 6, 3740 Bilzen-Hoeselt<br>
@@ -40,7 +40,7 @@ ${footerNote ? `<br><span style="color:${C.mut}">${footerNote}</span>` : ''}
 }
 
 function text({ title, lines }) {
-  return title + '\n\n' + lines.join('\n') + '\n\nWarme groet,\nAnne-Sophie Houwaer\nCoach & psychosociaal begeleider · Nuance\nWagenstraat 6, 3740 Bilzen-Hoeselt · verbinding@nuance-therapie.be';
+  return title + '\n\n' + lines.join('\n') + '\n\nWarme groet,\nAnne-Sophie Houwaer\nPsychosociaal begeleider & coach · Nuance\nWagenstraat 6, 3740 Bilzen-Hoeselt · verbinding@nuance-therapie.be';
 }
 
 module.exports = { layout, text, esc, C, SITE };
